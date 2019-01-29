@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header" style="color:blue">
+                <div class="card-header" style="color:red">
                     <i class="fab fa-font-awesome-flag"></i> Font Awesome @lang('strings.frontend.test')
                 </div>
                 <div class="card-body">
