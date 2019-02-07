@@ -16,8 +16,8 @@ use App\Http\Controllers\Frontend\Auth\PasswordExpiredController;
 Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
     /*
-    * These routes require the user to be logged in
-    */
+     * These routes require the user to be logged in
+     */
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 

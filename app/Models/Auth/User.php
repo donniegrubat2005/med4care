@@ -37,11 +37,13 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'id_code',
         'avatar_type',
         'avatar_location',
         'password',
         'password_changed_at',
         'active',
+        'verification_points',
         'confirmation_code',
         'confirmed',
         'timezone',
@@ -76,4 +78,5 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
     ];
+    
 }
