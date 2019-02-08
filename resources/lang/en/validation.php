@@ -181,7 +181,7 @@ return [
                     'first_name' => 'First Name',
                     'other_permissions' => 'Other Permissions',
                     'password' => 'Password',
-                    'password_confirmation' => 'Password Confirmation',
+                    'password_confirmation' => 'Confirm Password ',
                     'send_confirmation_email' => 'Send Confirmation E-mail',
                     'timezone' => 'Timezone',
                     'language' => 'Language',
@@ -191,17 +191,17 @@ return [
 
         'frontend' => [
             'avatar' => 'Avatar Location',
-            'code' => 'User Code',
-            'user_type' => 
+            'code' => 'Code, Tax id, etc.',
+            'user_type' =>
                 [
-                    'name' => 'User Type',
-                    'value' => [
-                        'User', 'Team Owner'
-                    ]
-                ],
+                'name' => 'User Type',
+                'value' => [
+                    'User', 'Team Owner'
+                ]
+            ],
             'document' => [
                 'name' => 'Documents',
-                'btn_name'=> 'Add File'
+                'btn_name' => 'Add File'
             ],
             'email' => 'E-mail Address',
             'first_name' => 'First Name',

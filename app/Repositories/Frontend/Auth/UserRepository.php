@@ -93,17 +93,11 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data)
     {
-
-
         return DB::transaction(function () use ($data) {
 
-            $vp = ($data['userType'] === 'user') ? 10 : 0;
+            $vp = ($data['userRole'] === 'user') ? 10 : 0;
 
-            $code = null;
-
-            if($data['code']){
-                $code = 'BTN-'.str_pad(User::count(), 3, '0', STR_PAD_LEFT).'-'.$data['code'];
-            }
+            $code = ($data['code']) ? $data['code'] : null;
 
             $user = parent::create([
                 'first_name' => $data['first_name'],
