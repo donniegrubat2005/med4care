@@ -56,7 +56,7 @@ class RegisterController extends Controller
     {
         abort_unless(config('access.registration'), 404);
 
-        $code = 'BTN-'.str_pad(User::count(), 3, '0', STR_PAD_LEFT).'-';
+        $code = 'BTN-' . str_pad(User::count(), 3, '0', STR_PAD_LEFT) . '-';
 
         return view('frontend.auth.register', ['code' => $code])->withSocialiteLinks((new Socialite)->getSocialLinks());
     }
@@ -69,23 +69,24 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        
+        // dd($request->all());
+
         abort_unless(config('access.registration'), 404);
 
-        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password','userType', 'code'));
+        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'userRole', 'code'));
 
-        if($request->hasFile('file')){
+        if ($request->hasFile('file')) {
 
             $userId = $user->id;
-            $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix().'documents/';
-            $path = $storagePath.$userId;
+            $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'documents/';
+            $path = $storagePath . $userId;
 
-            $folder = File::makeDirectory($path,    0777, true, true);
+            $folder = File::makeDirectory($path, 0777, true, true);
             $fileArray = [];
 
             foreach ($request->file('file') as $file) {
                 $filename = $file->getClientOriginalName();
-                $file->move( $storagePath.'/'.$userId, $filename);
+                $file->move($storagePath . '/' . $userId, $filename);
                 $fileArray[] = $filename;
             }
 
@@ -103,7 +104,7 @@ class RegisterController extends Controller
         if (config('access.users.confirm_email') || config('access.users.requires_approval')) {
             event(new UserRegistered($user));
 
-            return redirect($this->redirectPath())->withFlashSuccess(
+            return redirect()->route('frontend.auth.login')->withFlashSuccess(
                 config('access.users.requires_approval') ?
                     __('exceptions.frontend.auth.confirmation.created_pending') :
                     __('exceptions.frontend.auth.confirmation.created_confirm')
