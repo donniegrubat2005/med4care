@@ -1,8 +1,16 @@
 @extends('frontend.layouts.app') 
 @section('title', app_name() . ' | ' . __('navs.general.home')) 
 @section('content')
-<div class="row mb-4">
+
+
+<div class="row" style="margin-top:-400px;">
     <div class="col">
+        <ul class="list-inline ">
+            <li>
+                <a href="{{ route('frontend.auth.login') }}">Login</a>
+                <a href="{{ route('frontend.auth.register') }}">Register</a>
+            </li>
+        </ul>
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-home"></i> @lang('navs.general.home')
@@ -17,14 +25,8 @@
 </div>
 <!--row-->
 
-<div class="row mb-4">
-    <div class="col">
-        <example-component></example-component>
-    </div>
-    <!--col-->
-</div>
-<!--row-->
 
+<!--row-->
 <div class="row">
     <div class="col">
         <div class="card">

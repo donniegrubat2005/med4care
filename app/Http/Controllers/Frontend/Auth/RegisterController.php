@@ -69,25 +69,23 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-
-        // dd($request->all());
+        
         abort_unless(config('access.registration'), 404);
 
         $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password','userType', 'code'));
 
         if($request->hasFile('file')){
-            
-            $userId =  $user->id;
+
+            $userId = $user->id;
             $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix().'documents/';
             $path = $storagePath.$userId;
 
             $folder = File::makeDirectory($path,    0777, true, true);
-
             $fileArray = [];
 
             foreach ($request->file('file') as $file) {
                 $filename = $file->getClientOriginalName();
-                $file->move( $storagePath .'/'.$userId, $filename);
+                $file->move( $storagePath.'/'.$userId, $filename);
                 $fileArray[] = $filename;
             }
 
@@ -95,6 +93,7 @@ class RegisterController extends Controller
                 'user_id' => $userId,
                 'documents' => json_encode($fileArray),
             ]);
+
         }
 
         

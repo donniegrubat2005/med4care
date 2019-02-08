@@ -14,6 +14,17 @@ class AccountController extends Controller
      */
     public function index()
     {
+        // echo url()->current();
+
+        
+        
+        // $items = [];
+
+
+
+
         return view('frontend.user.account');
     }
+
+
 }
