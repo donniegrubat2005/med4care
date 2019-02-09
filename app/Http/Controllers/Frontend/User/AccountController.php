@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 use File;
+use Illuminate\Support\Facades\Response;
+use Faker\Provider\Image;
 /**
  * Class AccountController.
  */
@@ -21,6 +23,9 @@ class AccountController extends Controller
 
     public function index()
     {
+        // $storedPath = public_path('img/frontend/documents/');
+        
+        
         $userId = auth()->user()->id;
         $files = [];
 
@@ -40,7 +45,7 @@ class AccountController extends Controller
                     $files[] = [
                         'key' => true,
                         'image' => $file,
-                        'filePath' => $filePath . '/' . $file
+                        'filePath' => $filePath.'/'.$file
                     ];
                 } else {
                     $files[] = [
@@ -61,8 +66,13 @@ class AccountController extends Controller
 
         if ($request->hasFile('file')) {
 
-            $storedPath = public_path('img/frontend/documents/');
-            $folderPath = $storedPath . $userId;
+            $storedPath = public_path('img/frontend/documents');
+
+            if(!file_exists($storedPath)){
+                File::makeDirectory($storedPath, 0777, true, true);
+            }
+
+            $folderPath = $storedPath.'/'.$userId;
 
             if (!File::isDirectory($folderPath)) {
                 File::makeDirectory($folderPath, 0777, true, true);
@@ -73,8 +83,9 @@ class AccountController extends Controller
             $fileArray[] = $filename;
 
             Team::create(['user_id' => $userId, 'documents' => json_encode($fileArray, JSON_FORCE_OBJECT)]);
-
+           
             return redirect()->route('frontend.user.account')->withFlashSuccess('Document has added.');
+
         }
     }
 
