@@ -26,30 +26,33 @@
     .ul-profile-info li label {
         font-size: 25px;
     }
-    .nav-content .nav-item a{
+
+    .nav-content .nav-item a {
         color: #3a4248 !important;
     }
 
-    .nav-content .nav-item{
+    .nav-content .nav-item {}
 
-    }
-
-    .nav-content .nav-active  {
+    .nav-content .nav-active {
         border-bottom: 1.5px solid #219ec9;
     }
+
     .nav-content .nav-active a {
         color: #219ec9 !important;
     }
-    .nav-content .nav-item:hover{
+
+    .nav-content .nav-item:hover {
         border-bottom: 1.5px solid #219ec9;
     }
-    .nav-content .nav-item a:hover{
+
+    .nav-content .nav-item a:hover {
         border-bottom: 1.5px solid #219ec9;
         color: #219ec9 !important;
     }
 </style>
 <div class="row ">
     <div class="col ">
+    @include('includes.partials.messages')
         <div class="card">
             <div class="card-header">
                 <strong>
@@ -70,7 +73,7 @@
                             <li class="list-inline-item">
                                 <ul class="ul-profile-info">
                                     <li>
-                                        <label>{{ $logged_in_user->name }} </label>
+                                        <label>{{ ucwords($logged_in_user->name) }} </label>
                                     </li>
                                     <li>
                                         <i class="fa fa-barcode" aria-hidden="true"></i> {{ $logged_in_user->id_code }}
@@ -80,9 +83,9 @@
                                         <a href="javascript:;">{{ $logged_in_user->email }}</a>
                                     </li>
                                     <li>
-                                        <span class="badge badge-success">
-                                                Active
-                                            </span>
+                                        <span class="badge badge-success" style="font-size:12px; margin-top:5px;">
+                                            {{ $logged_in_user->active ? 'Active' : 'Inactive' }}
+                                        </span>
                                     </li>
                                     <li>
                                         <br>
@@ -91,7 +94,7 @@
                                                    <i class="fa fa-edit" aria-hidden="true"></i>Edit
                                                 </a> |
                                             <a href="javascript:;" class="text-danger">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>Delete
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>Deactivate
                                                 </a>
                                         </div>
                                     </li>
@@ -101,22 +104,24 @@
                     </div>
                     <br>
                 </div>
-                <hr>
+                <br>
+                <br>
                 <div class="row-fluid">
-                    <div class="col-md-12">
-                        <div class="nav-content">
+                    <div class="col-md-10">
+                        <div class="nav-content" style="border-bottom:1px solid #f0f3f5">
                             <ul class="nav">
+                                {{--
                                 <li class="nav-item  {{ Request::segment(2) === null ? 'nav-active' : '' }}">
                                     <a class="nav-link " href="{{ url('account') }}">PROFILE</a>
+                                </li> --}}
+                                <li class="nav-item {{  Request::segment(2) === null ? 'nav-active' : ''   }}">
+                                    <a class="nav-link" href="{{ url('account') }}">DOCUMENTS</a>
                                 </li>
-                                <li class="nav-item {{  Request::segment(2) === 'documents' ? 'nav-active' : ''  }}">
-                                    <a class="nav-link"  href="{{ url('account/documents') }}">DOCUMENTS</a>
-                                </li> 
                                 <li class="nav-item  {{ Request::segment(2) === 'records' ? 'nav-active' : '' }}">
-                                    <a class="nav-link"  href="{{ url('account/records') }}">RECORDS</a>
+                                    <a class="nav-link" href="{{ url('account/records') }}">RECORDS</a>
                                 </li>
                                 <li class="nav-item  {{ Request::segment(2) === 'summary' ? 'nav-active' : '' }}">
-                                    <a class="nav-link"  href="{{ url('account/summary') }}">SUMMARY</a>
+                                    <a class="nav-link" href="{{ url('account/summary') }}">SUMMARY</a>
                                 </li>
                             </ul>
                         </div>
@@ -124,24 +129,25 @@
                 </div>
 
 
-                
-                @switch(Request::segment(2))
-                    @case('documents')
-                        @include('frontend.user.account.tabs.documents')
-                        @break
+
+                @switch(Request::segment(2)) 
+                    {{-- @case('documents')
+                        @include('frontend.user.account.tabs.documents') 
+                    @break  --}}
                     @case('records')
-                        @include('frontend.user.account.tabs.records')
-                        @break
+                        @include('frontend.user.account.tabs.records') 
+                    @break 
                     @case('summary')
                         @include('frontend.user.account.tabs.summary')
-                        @break
-                    @default
-                        @include('frontend.user.account.tabs.profile')
-                    @break
-                        
-                @endswitch
+                    @break 
+                    @default 
+                        @include('frontend.user.account.tabs.documents') 
 
-                {{-- <div role="tabpanel">
+                        {{-- @include('frontend.user.account.tabs.profile')  --}}
+                    @break  
+                @endswitch 
+                    {{--
+                <div role="tabpanel">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a href="#profile" class="nav-link active" aria-controls="profile" role="tab" data-toggle="tab">@lang('navs.frontend.user.profile')</a>
@@ -160,14 +166,14 @@
 
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade show active pt-3" id="profile" aria-labelledby="profile-tab">
-                            @include('frontend.user.account.tabs.profile')
+    @include('frontend.user.account.tabs.profile')
                         </div>
                         <div role="tabpanel" class="tab-pane fade show pt-3" id="edit" aria-labelledby="edit-tab">
-                            @include('frontend.user.account.tabs.edit')
+    @include('frontend.user.account.tabs.edit')
                         </div>
                         @if($logged_in_user->canChangePassword())
                         <div role="tabpanel" class="tab-pane fade show pt-3" id="password" aria-labelledby="password-tab">
-                            @include('frontend.user.account.tabs.change-password')
+    @include('frontend.user.account.tabs.change-password')
                         </div>
                         @endif
                     </div>

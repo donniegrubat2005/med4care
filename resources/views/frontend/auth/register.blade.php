@@ -103,6 +103,8 @@
                 </div>
                 <hr> {{ form_submit(__('labels.frontend.auth.register_button'))->class('btn-block btn-primary') }}
             </div>
+            {{ html()->form()->close() }}
+
             <div class="card-footer p-4">
                 <div class="row">
                     <div class="col-6">

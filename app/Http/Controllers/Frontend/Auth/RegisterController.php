@@ -11,9 +11,9 @@ use App\Repositories\Frontend\Auth\UserRepository;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Auth\User;
+use App\Models\Auth\Team;
 use File;
 
-use DB;
 /**
  * Class RegisterController.
  */
@@ -69,8 +69,6 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        // dd($request->all());
-
         abort_unless(config('access.registration'), 404);
 
         $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'userRole', 'code'));
@@ -78,23 +76,22 @@ class RegisterController extends Controller
         if ($request->hasFile('file')) {
 
             $userId = $user->id;
-            $storagePath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'documents/';
-            $path = $storagePath . $userId;
+            // $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents/';
 
-            $folder = File::makeDirectory($path, 0777, true, true);
+            $storedPath = public_path('img/frontend/documents/');
+
+            $folderPath = $storedPath . $userId;
+
+            $folder = File::makeDirectory($folderPath, 0777, true, true);
             $fileArray = [];
 
             foreach ($request->file('file') as $file) {
                 $filename = $file->getClientOriginalName();
-                $file->move($storagePath . '/' . $userId, $filename);
+                $file->move($storedPath . $userId, $filename);
                 $fileArray[] = $filename;
             }
 
-            DB::table('user_team')->insert([
-                'user_id' => $userId,
-                'documents' => json_encode($fileArray),
-            ]);
-
+            Team::create(['user_id' => $userId, 'documents' => json_encode($fileArray, JSON_FORCE_OBJECT)]);
         }
 
         

@@ -30,16 +30,16 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
          * User Account Specific
          */
         Route::get('account', [AccountController::class, 'index'])->name('account');
-        Route::get('account/documents', [AccountController::class, 'index'])->name('account');
-        Route::get('account/records', [AccountController::class, 'index'])->name('account');
-        Route::get('account/summary', [AccountController::class, 'index'])->name('account');
+        Route::get('account/summary', [AccountController::class, 'index'])->name('summary');
+        Route::get('account/documents', [AccountController::class, 'index'])->name('documents');
+        Route::get('account/records', [AccountController::class, 'index'])->name('records');
+        Route::post('account/add_documents', [AccountController::class, 'add_documents'])->name('add_documents.post');
 
 
         /*
          * User Profile Specific
          */
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
 
 
 
