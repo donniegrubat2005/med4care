@@ -2,8 +2,7 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-title">
-                <small>Navigations</small>
-                 {{-- Main Navigations --}} {{-- @lang('menus.backend.sidebar.general') --}}
+                <small>Navigations</small> {{-- Main Navigations --}} {{-- @lang('menus.backend.sidebar.general') --}}
             </li>
             <li class="nav-item">
 
@@ -14,20 +13,18 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Active::checkUriPattern('account')) }} " href="{{ route('frontend.user.account') }}">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.account') }}">
                         <i class="nav-icon icon-user"></i> 
                         @lang('menus.backend.sidebar.account')
                     </a>
             </li>
+            {{--
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('general')) }} " href="{{ route('frontend.user.account') }}">
                     <i class="nav-icon icon-speedometer"></i>
                     @lang('menus.backend.sidebar.general')
                 </a>
-            </li>
-
-
-            {{--
+            </li> --}} {{--
             <li class="nav-title">
                 @lang('menus.backend.sidebar.system')
             </li>
