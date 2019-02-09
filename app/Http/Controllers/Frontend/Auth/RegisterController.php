@@ -56,7 +56,7 @@ class RegisterController extends Controller
     {
         abort_unless(config('access.registration'), 404);
 
-        $code = 'BTN-' . str_pad(User::count(), 3, '0', STR_PAD_LEFT) . '-';
+        // $code = 'BTN-' . str_pad(User::count(), 3, '0', STR_PAD_LEFT) . '-';
 
         return view('frontend.auth.register', ['code' => $code])->withSocialiteLinks((new Socialite)->getSocialLinks());
     }
@@ -76,18 +76,23 @@ class RegisterController extends Controller
         if ($request->hasFile('file')) {
 
             $userId = $user->id;
+            
             // $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents/';
 
-            $storedPath = public_path('img/frontend/documents/');
+            $storedPath = public_path('img/frontend/documents');
 
-            $folderPath = $storedPath . $userId;
+            if(!file_exists($storedPath)){
+                File::makeDirectory($storedPath, 0777, true, true);
+            }
+
+            $folderPath = $storedPath.'/'.$userId;
 
             $folder = File::makeDirectory($folderPath, 0777, true, true);
             $fileArray = [];
 
             foreach ($request->file('file') as $file) {
                 $filename = $file->getClientOriginalName();
-                $file->move($storedPath . $userId, $filename);
+                $file->move($folderPath, $filename);
                 $fileArray[] = $filename;
             }
 
