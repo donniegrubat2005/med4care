@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 use File;
 use Illuminate\Support\Facades\Response;
-use Faker\Provider\Image;
+use Image;
 /**
  * Class AccountController.
  */
@@ -23,7 +23,6 @@ class AccountController extends Controller
 
     public function index()
     {
-        // $storedPath = public_path('img/frontend/documents/');
         
         
         $userId = auth()->user()->id;
@@ -31,27 +30,26 @@ class AccountController extends Controller
 
         $documents = Team::where('user_id', $userId)->get();
 
-        $filePath = url('img/frontend/documents/' . $userId);
-        $docPath = url('img/frontend/documents/documents.PNG');
-
+        $filePath = url('storage/documents/' . $userId);
+       
         foreach ($documents as $document) {
             $fileArr = json_decode($document->documents);
             foreach ($fileArr as $file) {
                 $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
-
                 $fileExt = explode('.', $file);
-
                 if (in_array($fileExt[1], $ext)) {
                     $files[] = [
                         'key' => true,
                         'image' => $file,
-                        'filePath' => $filePath.'/'.$file
+                        'fileName' =>  $fileExt[0],
+                        'filePath' => $filePath.'/'.$file,
                     ];
                 } else {
                     $files[] = [
                         'key' => false,
                         'image' => 'documents.PNG',
-                        'filePath' => url('img/frontend/documents/documents.PNG')
+                        'fileName' =>  $fileExt[0],
+                        'filePath' => url('storage/documents/documents.PNG'),
                     ];
                 }
             }
@@ -60,18 +58,14 @@ class AccountController extends Controller
     }
     public function add_documents(Request $request)
     {
+        
         $userId = auth()->user()->id;
 
         $fileArray = [];
 
         if ($request->hasFile('file')) {
-
-            $storedPath = public_path('img/frontend/documents');
-
-            if(!file_exists($storedPath)){
-                File::makeDirectory($storedPath, 0777, true, true);
-            }
-
+            
+            $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents';
             $folderPath = $storedPath.'/'.$userId;
 
             if (!File::isDirectory($folderPath)) {

@@ -117,12 +117,12 @@
                                 <li class="nav-item {{  Request::segment(2) === null ? 'nav-active' : ''   }}">
                                     <a class="nav-link" href="{{ url('account') }}">DOCUMENTS</a>
                                 </li>
-                                <li class="nav-item  {{ Request::segment(2) === 'records' ? 'nav-active' : '' }}">
+                                {{-- <li class="nav-item  {{ Request::segment(2) === 'records' ? 'nav-active' : '' }}">
                                     <a class="nav-link" href="{{ url('account/records') }}">RECORDS</a>
                                 </li>
                                 <li class="nav-item  {{ Request::segment(2) === 'summary' ? 'nav-active' : '' }}">
                                     <a class="nav-link" href="{{ url('account/summary') }}">SUMMARY</a>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>

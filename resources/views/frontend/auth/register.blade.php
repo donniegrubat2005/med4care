@@ -16,7 +16,8 @@
                 <h2>Register</h2>
                 <p class="text-muted">Create your account</p>
                 {{ html()->form('POST', route('frontend.auth.register.post'))->attribute('enctype', 'multipart/form-data')->open() }}
-    @include('includes.partials.messages')
+                
+                @include('includes.partials.messages')
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

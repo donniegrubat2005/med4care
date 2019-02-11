@@ -34,43 +34,56 @@
         </div>
     </div>
     <div class="col-md-10">
-        <div class="row">
-            @foreach($files as $iKey => $file)
-            <div class="col-sm-2">
-                <div class="card">
-                    <div class="card-body p-0">
-                        <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail d-block img-doc">
-                    </div>
-                    <div class="card-footer">
+            @empty(!$files)
+            <div class="row">
+                @foreach($files as $iKey => $file)
+                    <div class="col-sm-2">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ ucwords($file['fileName']) }}
+                            </div>
+                            <div class="card-body p-0">
+                                <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail d-block img-doc">
+                            </div>
+                            <div class="card-footer">
 
-                        @if ($file['key'])
-                        <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
-                                <i class="fa fa-eye"></i> View
-                            </button> @endif
-                        <button class="btn btn-sm btn-outline-danger" type="reset">
-                            <i class="fa fa-trash"></i> Delete
-                        </button>
+                                @if ($file['key'])
+                                <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
+                                        <i class="fa fa-eye"></i> View
+                                    </button> @endif
+                                <button class="btn btn-sm btn-outline-danger" type="reset">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="imgModel-{{$iKey}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="border-radius:0px; border:1px solid #20a8d8">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">{{$file['image']}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body p-0">
+                                    <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail" style="width:100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="alert alert-danger" role="alert">
+                        <strong><i>No documents available.</i></strong>
+                        <span>Click Add Button to insert documents.</span>
                     </div>
                 </div>
             </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="imgModel-{{$iKey}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                <div class="modal-dialog" role="document" style="border-radius:0px; border:1px solid #20a8d8">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">{{$file['image']}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body p-0">
-                            <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail" style="width:100%">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
+        @endempty
     </div>
 </div>
