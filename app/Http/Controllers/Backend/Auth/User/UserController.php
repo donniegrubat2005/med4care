@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Auth\User;
 
 use App\Models\Auth\User;
+use App\Models\Auth\Team;
 use App\Http\Controllers\Controller;
 use App\Events\Backend\Auth\User\UserDeleted;
 use App\Repositories\Backend\Auth\RoleRepository;
@@ -88,9 +89,59 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
+        // dd($this->get_documents($user->id));
+
+        // dd($user->user_role);
+        $files = $this->get_documents($user->id);
+        // echo '<pre>';
+        // print_r( $documents);
+        // return ;
         return view('backend.auth.user.show')
-            ->withUser($user);
+        ->with(['files'=> $files])
+        ->withUser($user)
+        ->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
+        // return view('backend.auth.user.show')->withUser(['user' => $user , 'users' => $users]);
+
+        
     }
+
+    public function get_documents($userId)
+    {
+       
+        $files = [];
+
+        $documents = Team::where('user_id', $userId)->get();
+        $filePath = url('storage/documents/' . $userId);
+        if(!empty( $documents)){
+            foreach ($documents as $document) {
+                $fileArr = json_decode($document->documents);
+                foreach ($fileArr as $file) {
+                    $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
+                    $fileExt = explode('.', $file);
+                    if (in_array($fileExt[1], $ext)) {
+                        $files[] = [
+                            'key' => true,
+                            'image' => $file,
+                            'fileName' =>  $fileExt[0],
+                            'filePath' => $filePath.'/'.$file,
+                        ];
+                    } else {
+                        $files[] = [
+                            'key' => false,
+                            'image' => 'documents.PNG',
+                            'fileName' =>  $fileExt[0],
+                            'filePath' => url('storage/documents/documents.PNG'),
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $files;
+
+    }
+
+
 
     /**
      * @param ManageUserRequest    $request
