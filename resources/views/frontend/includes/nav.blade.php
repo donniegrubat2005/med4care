@@ -15,7 +15,8 @@
                     aria-expanded="false">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})</a>
     @include('includes.partials.lang')
             </li>
-            @endif @auth
+            @endif 
+            @auth
             <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
             @endauth @guest
             <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
@@ -64,14 +65,15 @@
         {{--
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('admin.dashboard') }}">@lang('navs.frontend.dashboard')</a>
-        </li> --}} @if(config('locale.status') && count(config('locale.languages')) > 1)
+        </li> --}} 
+        {{-- @if(config('locale.status') && count(config('locale.languages')) > 1)
         <li class="nav-item px-3 dropdown">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="d-md-down-none">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})</span>
                 </a>
     @include('includes.partials.lang')
         </li>
-        @endif
+        @endif --}}
     </ul>
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item d-md-down-none">
