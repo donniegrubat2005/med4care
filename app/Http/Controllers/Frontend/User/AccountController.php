@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 use File;
 use Illuminate\Support\Facades\Response;
-use Image;
+// use Image;
 /**
  * Class AccountController.
  */
@@ -23,8 +23,6 @@ class AccountController extends Controller
 
     public function index()
     {
-        
-        
         $userId = auth()->user()->id;
         $files = [];
 
