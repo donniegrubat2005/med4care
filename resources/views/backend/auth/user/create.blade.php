@@ -63,7 +63,7 @@
                         </div>
                         <span class="btn btn-block btn-outline-primary btn-file  " style="">
                                 <span style="">Select User Image</span>
-                        <input type="file" name="image-file" id="imgInp">
+                        <input type="file" name="image-file" id="createImg">
                         </span>
                     </div>
                     <div class="col-md-10 col-sm-10">
@@ -206,7 +206,7 @@
                                                 <h5 class="card-title">Documents :</h5>
                                             </div>
                                             <div class="col-sm-6">
-                                                <button type="button" class="btn btn-ghost-primary float-right" id="add-documents"> <i class="fa fa-plus-o" aria-hidden="true"></i> Document </button>
+                                                <button type="button" class="btn btn-ghost-primary float-right" id="btnCDocument"> <i class="fa fa-plus-o" aria-hidden="true"></i> Document </button>
                                             </div>
                                         </div>
 
@@ -214,7 +214,7 @@
                                             <div class="input-group">
                                                 <input class="form-control" type="file">
                                                 <span class="input-group-append">
-                                                        <button class="btn btn-ghost-danger rmvDoc" type="button">
+                                                        <button class="btn btn-ghost-danger btnCRmvDoc" type="button">
                                                             <i class="fa fa-times"></i>
                                                         </button>
                                                     </span>
@@ -226,7 +226,7 @@
                                                 <div class="input-group">
                                                     <input class="form-control" type="file" name="files[]">
                                                     <span class="input-group-append">
-                                                            <button class="btn btn-ghost-danger rmvDoc" type="button">
+                                                            <button class="btn btn-ghost-danger btnCRmvDoc" type="button">
                                                                 <i class="fa fa-times"></i>
                                                             </button>
                                                         </span>
@@ -308,45 +308,4 @@
 
 @endsection
 
-@push('after-scripts')
-    <script>
-        $(function(){
-            var doc = $(document);
-
-            doc.on('click', '#add-documents', function(){
-                var clone = $('#file-holder').clone();
-                clone.removeClass('d-none');
-                clone.find('input[type=file]').attr('name','files[]');
-                $('.files-content').append(clone.removeAttr('id'));
-            
-            })
-            doc.on('click', '.rmvDoc', function(){
-                var fileHolder = $('.files-content').find('.form-group');
-                if(fileHolder.length < 2){
-                    alert('This field Cannot be remove.')
-                }
-                else{
-                    $(this).parent().parent().parent().remove();
-                }
-            })
-        })
-
-
-
-
-        function get_image(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('.profile-image').show().html('<img src="#" name="image-file" id="chosse-image" class="user-image" />');
-                    $('#chosse-image').attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#imgInp").change(function(){
-            get_image(this);
-        });
-
-    </script>
-@endpush
+ 

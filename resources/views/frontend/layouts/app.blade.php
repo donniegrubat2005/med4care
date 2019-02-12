@@ -50,21 +50,12 @@
         @yield('content')
     </div>
 
-    @endauth @stack('before-scripts') {!! script(mix('js/manifest.js')) !!} {!! script(mix('js/vendor.js')) !!} {!! script(mix('js/backend.js'))
-    !!} @stack('after-scripts') {{--
-    <div id="app" class="app-body">
-    @include('includes.partials.logged-in-as')
-    @include('frontend.includes.nav')
-    @include('backend.includes.sidebar')
-
-        <div class="container">
-    @include('includes.partials.messages') @yield('content')
-        </div>
-    </div>
-
-    @stack('before-scripts') {!! script(mix('js/manifest.js')) !!} {!! script(mix('js/vendor.js')) !!} {!! script(mix('js/frontend.js'))
-    !!} @stack('after-scripts')
-    @include('includes.partials.ga') --}}
+    @endauth 
+    @stack('before-scripts') 
+        {!! script(mix('js/manifest.js')) !!} 
+        {!! script(mix('js/vendor.js')) !!} 
+        {!! script(mix('js/backend.js')) !!} 
+    @stack('after-scripts')  
 </body>
 
 </html>

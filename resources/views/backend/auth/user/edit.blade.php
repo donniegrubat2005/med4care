@@ -63,7 +63,7 @@
                 </div>
                 <span class="btn btn-block btn-outline-primary btn-file disabled " style="">
                         <span style="">User Image</span>
-                <input type="file" name="image-file" id="imgInp" disabled>
+                <input type="file" name="image-file" id="editImgInp" disabled>
                 </span>
             </div>
             <div class="col-sm-10 col-md-10">
@@ -73,9 +73,9 @@
                             <div class="col-md-6"><strong>User Information </strong>:</div>
                             <div class="col-md-6">
                                 <span class="float-right">
-                                        {{ form_cancel(route('admin.auth.user.index'), __('buttons.general.cancel')) }}
-                                        {{ form_submit(__('buttons.general.crud.update')) }}
-                                    </span>
+                                    {{ form_cancel(route('admin.auth.user.index'), __('buttons.general.cancel')) }}
+                                    {{ form_submit(__('buttons.general.crud.update')) }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -363,45 +363,4 @@
 <!--card-->
 {{ html()->closeModelForm() }} @endif
 @endsection
- @push('after-scripts')
-<script>
-    $(function(){
-        var doc = $(document);
-
-        doc.on('click', '#add-documents', function(){
-            var clone = $('#file-holder').clone();
-            clone.removeClass('d-none');
-            clone.find('input[type=file]').attr('name','files[]');
-            $('.files-content').append(clone.removeAttr('id'));
-          
-        })
-        doc.on('click', '.rmvDoc', function(){
-            var fileHolder = $('.files-content').find('.form-group');
-            if(fileHolder.length < 2){
-                alert('This field Cannot be remove.')
-            }
-            else{
-                $(this).parent().parent().parent().remove();
-            }
-        })
-    })
-
-
-
-
-    function get_image(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('.profile-image').show().html('<center><img src="#" id="chosse-image" class="user-image" /></center>');
-                $('#chosse-image').attr('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#imgInp").change(function(){
-        get_image(this);
-    });
-</script>
-
-@endpush
+ 

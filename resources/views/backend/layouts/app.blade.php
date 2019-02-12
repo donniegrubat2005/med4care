@@ -10,20 +10,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', app_name())</title>
     <meta name="description" content="@yield('meta_description', 'Laravel 5 Boilerplate')">
-    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')"> @yield('meta') {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
-    @stack('before-styles')
-
+    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')"> @yield('meta') @stack('before-styles')
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }} @stack('after-styles')
 
 </head>
 
-<body class="{{ config('backend.body_classes') }}">
+<body class="{{ config('backend.body_classes') }}" id="mainUrl" uval="{{ url('/') }}">
     @include('backend.includes.header')
 
     <div class="app-body">
-        @include('backend.includes.sidebar')
+    @include('backend.includes.sidebar')
 
         <main class="main">
             @include('includes.partials.logged-in-as') {!! Breadcrumbs::render() !!}
@@ -34,24 +32,21 @@
                         @yield('page-header')
                     </div>
                     <!--content-header-->
-                    @include('includes.partials.messages') @yield('content')
+                @include('includes.partials.messages') @yield('content')
                 </div>
                 <!--animated-->
             </div>
             <!--container-fluid-->
         </main>
         <!--main-->
-        @include('backend.includes.aside')
+    @include('backend.includes.aside')
     </div>
     <!--app-body-->
     @include('backend.includes.footer')
 
     <!-- Scripts -->
-    @stack('before-scripts') 
-        {!! script(mix('js/manifest.js')) !!} 
-        {!! script(mix('js/vendor.js')) !!} 
-        {!! script(mix('js/backend.js')) !!} 
-    @stack('after-scripts')
+    @stack('before-scripts') {!! script(mix('js/manifest.js')) !!} {!! script(mix('js/vendor.js')) !!} {!! script(mix('js/backend.js'))
+    !!} @stack('after-scripts')
 
 
 </body>

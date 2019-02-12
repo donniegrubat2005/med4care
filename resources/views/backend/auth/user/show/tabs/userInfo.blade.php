@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.name')</th>
-            <td>{{ $user->name }}</td>
+            <td>{{ ucwords($user->name ) }}</td>
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.email')</th>
