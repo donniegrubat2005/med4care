@@ -36,6 +36,19 @@ class UserStatusController extends Controller
             ->withUsers($this->userRepository->getInactivePaginated(25, 'id', 'asc'));
     }
 
+    public function getActive(ManageUserRequest $request)
+    {
+        $user = $this->userRepository->doActive($request->status, $request->userId);
+
+        return response()->json($user);
+
+    //    return ($request->all());
+    }
+
+
+
+
+
     /**
      * @param ManageUserRequest $request
      *

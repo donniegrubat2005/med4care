@@ -87,7 +87,7 @@
                                             {{ $logged_in_user->active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <br>
                                         <div class="cmd-func">
                                             <a href="javascript:;"> 
@@ -97,14 +97,12 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>Deactivate
                                                 </a>
                                         </div>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </li>
                         </ul>
                     </div>
-                    <br>
                 </div>
-                <br>
                 <br>
                 <div class="row-fluid">
                     <div class="col-md-10">

@@ -10,7 +10,7 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
+ 
 mix.setPublicPath('public');
 
 mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
@@ -33,6 +33,8 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
         '@fortawesome/free-regular-svg-icons',
         '@fortawesome/free-solid-svg-icons'
     ]);
+
+
 
 if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
     mix.version();

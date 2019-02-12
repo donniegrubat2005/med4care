@@ -29,6 +29,9 @@ Route::group([
         Route::get('user/deactivated', [UserStatusController::class, 'getDeactivated'])->name('user.deactivated');
         Route::get('user/deleted', [UserStatusController::class, 'getDeleted'])->name('user.deleted');
 
+        // is user active
+        Route::post('/active', [UserStatusController::class, 'getActive'])->name('user.active');
+
         /*
          * User CRUD
          */
@@ -45,6 +48,10 @@ Route::group([
             Route::get('edit', [UserController::class, 'edit'])->name('user.edit');
             Route::patch('/', [UserController::class, 'update'])->name('user.update');
             Route::delete('/', [UserController::class, 'destroy'])->name('user.destroy');
+
+
+          
+
 
             // Account
             Route::get('account/confirm/resend', [UserConfirmationController::class, 'sendConfirmationEmail'])->name('user.account.confirm.resend');

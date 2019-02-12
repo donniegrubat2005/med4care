@@ -25,7 +25,7 @@
                         {{ html()->file('file')->class('form-control')->required() }}
                     </div>
                     <div class="form-group">
-                        {{ form_submit('Add') }}
+                        {{ form_submit('Save')->class('btn btn-primary') }}
                     </div>
                     {{ html()->form()->close() }}
                 </div>
