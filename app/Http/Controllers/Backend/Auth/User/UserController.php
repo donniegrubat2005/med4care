@@ -70,7 +70,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // dd($request->all());
+        // if ( Storage::disk(‘resources’)->exists(‘/assets/js/country_names.json’) ) $country_names = json_decode(Storage::disk(‘resources’)->get( ‘/assets/js/country_names.json’ ), true);
+      
+      
+      
         $user = $this->userRepository->create($request->only(
             'code',
             'first_name',

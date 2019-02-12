@@ -19,7 +19,8 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
     .js([
         'resources/js/backend/before.js',
         'resources/js/backend/app.js',
-        'resources/js/backend/after.js'
+        'resources/js/backend/after.js',
+        'resources/js/backend/scripts.js'
     ], 'js/backend.js')
     .extract([
         'jquery',

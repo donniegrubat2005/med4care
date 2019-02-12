@@ -122,49 +122,4 @@
 @endsection
  @push('after-scripts') @if(config('access.captcha.registration')) {!! Captcha::script() !!} @endif
 
-<script>
-    $(function(){
-           var doc = $(document);
-
-            doc.on('change', '#userRole', function(){
-              
-                var userType = $(this).val();
-                var content = $('#doc-content');
-
-                switch(userType){
-                    case 'team-owner':
-                        content.removeClass('d-none');
-                        var clone = $('#file-holder').clone(); 
-                        clone.removeClass('d-none'); 
-                        clone.find('input[type=file]').attr('name', 'file[]');
-                        $('#file-content').append(clone.removeAttr('id'));
-                    break;
-                    case 'user': 
-                        content.addClass('d-none');      
-                        $('#file-content').html(null);          
-                    break;
-                }
-            });
-
-            doc.on('click', '#btnAddFile', function(){
-                var clone = $('#file-holder').clone();
-                clone.removeClass('d-none');                
-                clone.find('input[type=file]').attr('name', 'file[]');
-                $('#file-content').append(clone.removeAttr('id'));
-            })
-           
-            doc.on('click', '.rmvFile', function(){
-               var fileHolder = $('#file-content').find('.input-group');
-               if(fileHolder.length < 2){
-                    alert('This field Cannot be remove.')
-               }
-               else{
-                    $(this).parent().parent().remove();
-               }
-           })
-        })
-
-</script>
-
-{{-- @push('') --}} 
 @endpush
