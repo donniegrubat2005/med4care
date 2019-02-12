@@ -21,11 +21,23 @@
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.email')</th>
-            <td><a href="javascript:;">{{ $user->email }}</a></td>
+            <td><a href="javascript:;">{{ $user->email }} </td>
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.status')</th>
-            <td>{!! $user->status_label !!}</td>
+            <td >
+                 <ul class="list-inline" >
+                    <li class="list-inline-item" id="statusLabel">
+                       {!! $user->status_label !!} 
+                    </li>
+                    <li class="list-inline-item" >
+                        <label class="switch switch-label switch-pill switch-primary" style="position:absolute; margin-top:-18px;">
+                            {{ html()->checkbox('active', ($user->active) ? true : false, '1')->class('switch-input')->id('isActive') }}
+                            <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
+                        </label>
+                    </li>
+                </ul> 
+            </td>
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.confirmed')</th>
@@ -47,3 +59,5 @@
         </tr>
     </tbody>
 </table>
+
+

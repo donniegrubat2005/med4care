@@ -40,11 +40,31 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <strong> All Users</strong>
-                        <div class="btn-toolbar  float-right" role="toolbar" aria-label="@lang('labels.general.toolbar_btn_groups')">
-                            <a href="{{ route('admin.auth.user.create') }}" class="btn btn-ghost-primary btn-sm" data-toggle="tooltip" title="@lang('labels.general.create_new')"><i class="fas fa-plus-circle"></i></a>
+                        <div class="row">
+                            <div class="col-sm-6" style="margin-top:7px;">
+                                <strong class="float-left">
+                                    <i class="icon-user"></i> Users
+                                </strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="dropdown float-right">
+                                    <button id="my-dropdown" class="btn  btn-ghost-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        More
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="my-dropdown">
+                                        <a class="dropdown-item" href="{{ route('admin.auth.user.create') }}">
+                                            <i class="icon-user-follow text-primary"></i>@lang('menus.backend.access.users.create')
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('admin.auth.user.deactivated') }}">
+                                            <i class="icon-user-unfollow text-warning"></i>@lang('menus.backend.access.users.deactivated')
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('admin.auth.user.deleted') }}">
+                                            <i class="icon-trash text-danger"></i>@lang('menus.backend.access.users.deleted')
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                     <div class="card-body p-0">
                         <table class="table table-responsive-sm table-hover">
@@ -155,7 +175,6 @@
                                             <div class="col-md-6">
                                                 <div class="alert alert-danger" role="alert">
                                                     <strong><i>No documents available.</i></strong>
-                                                    <span>Click Add Button to insert documents.</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,3 +255,45 @@
 
 @endif
 @endsection
+
+
+
+@push('after-scripts')
+    <script>
+            
+        $(function(){
+            var doc = $(document);
+            doc.on('change', '#isActive', function(){
+                $.ajaxSetup({headers: {'X-XSRF-TOKEN': decodeURIComponent(/XSRF-Token=([^;]*)/ig.exec(document.cookie)[1])}});
+
+                var isActive;
+
+                if ($(this).is(':checked')) {
+                    $('#statusLabel span')
+                    .removeClass('badge-danger ')
+                    .removeClass('text-danger')
+                    .addClass('text-primary')
+                    .text('Activating...');
+                    isActive = 1;
+                }else{
+                    $('#statusLabel span')
+                    .removeClass('badge-success')
+                    .removeClass('text-primary')
+                    .addClass('text-danger')
+                    .text('Deactivating...');
+                    isActive = 0;
+                }
+                $.ajax({
+                    type: "post",
+                    url: "{{route('admin.auth.user.active')}}",
+                    data: {'status' : isActive , userId : '{{$user->id}}'  },
+                    success: function (response) {
+                        window.location.reload();
+                        // console.log(response)
+                    }
+                });
+                
+            })
+        })
+    </script>
+@endpush

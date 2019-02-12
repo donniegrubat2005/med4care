@@ -94,8 +94,7 @@ class UserRepository extends BaseRepository
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-
-            $vp = ($data['userRole'] === 'user') ? 10 : 0;
+        
 
             $code = ($data['code']) ? $data['code'] : null;
 
@@ -105,10 +104,10 @@ class UserRepository extends BaseRepository
                 'email' => $data['email'],
                 'id_code' => $code,
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
-                'verification_points' => $vp,
-                'active' => 1,
+                'verification_points' => ($data['userRole'] === 'user') ? 10 : 0,
+                'active' => ($data['userRole'] !== 'user') ? 0 : 1,
                 'password' => $data['password'],
-                                    // If users require approval or needs to confirm email
+                // If users require approval or needs to confirm email
                 'confirmed' => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,
             ]);
 

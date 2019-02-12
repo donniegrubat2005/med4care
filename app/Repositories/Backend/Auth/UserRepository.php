@@ -53,7 +53,7 @@ class UserRepository extends BaseRepository
     {
         return $this->model
             ->with('roles', 'permissions', 'providers')
-            ->active()
+            // ->active()
             ->orderBy($orderBy, $sort)
             ->paginate($paged);
     }
@@ -99,9 +99,23 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data) : User
     {
+        // for create user
         return DB::transaction(function () use ($data) {
+
+            $vp = 0;
+            if (is_array($data['roles'])) {
+                foreach ($data['roles'] as $roles) {
+                    if($roles === 'user')
+                        $v = 10;
+                }
+            }
+
+            $code = (!is_null($data['code'])) ? $data['code'] : null ;
+
             $user = parent::create([
                 'first_name' => $data['first_name'],
+                'id_code' => $code,
+                'verification_points' => $vp,
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
@@ -355,5 +369,14 @@ class UserRepository extends BaseRepository
                 throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
             }
         }
+    }
+
+
+    public function doActive($status , $userId)
+    {
+        $user = User::find($userId);
+        $user->active = $status;
+        $user->save();
+        return $user;
     }
 }

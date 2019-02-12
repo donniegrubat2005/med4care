@@ -10,6 +10,6 @@
             @endif
         @endforeach
 
-        @yield('breadcrumb-links')
+        {{-- @yield('breadcrumb-links') --}}
     </ol>
 @endif
