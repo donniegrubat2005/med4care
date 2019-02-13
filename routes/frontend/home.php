@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::get('account/documents', [AccountController::class, 'index'])->name('documents');
         Route::get('account/records', [AccountController::class, 'index'])->name('records');
         Route::post('account/add_documents', [AccountController::class, 'add_documents'])->name('add_documents.post');
+        Route::get('account/delete_document/{id}/{fileName}', [AccountController::class, 'delete_my_documents'])->name('delete_document');
 
 
         /*
