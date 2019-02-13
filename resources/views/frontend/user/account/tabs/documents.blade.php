@@ -4,7 +4,6 @@
     .img-doc {
         width: 100%;
         height: 260px;
-
     }
 </style>
 <div class="row" style="margin-left:10px;">
@@ -40,18 +39,19 @@
                     <div class="col-sm-2">
                         <div class="card">
                             <div class="card-header">
-                                {{ ucwords($file['fileName']) }}
+                               Document <strong>{{ $iKey+=1 }}</strong>
                             </div>
                             <div class="card-body p-0">
-                                <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail d-block img-doc">
+                                <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc">
                             </div>
                             <div class="card-footer">
 
                                 @if ($file['key'])
-                                <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
+                                    <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
                                         <i class="fa fa-eye"></i> View
-                                    </button> @endif
-                                <button class="btn btn-sm btn-outline-danger" type="reset">
+                                    </button> 
+                                @endif
+                                <button class="btn btn-sm btn-outline-danger accntDeleteFile" type="reset" id="{{$file['docId']}}">
                                     <i class="fa fa-trash"></i> Delete
                                 </button>
                             </div>
@@ -62,13 +62,13 @@
                         <div class="modal-dialog" role="document" style="border-radius:0px; border:1px solid #20a8d8">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">{{$file['image']}}</h5>
+                                    <h5 class="modal-title">{{$file['fileName']}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body p-0">
-                                    <img src="{{ $file['filePath'] }}" alt="{{$file['image']}}" class="img-thumbnail" style="width:100%">
+                                    <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%">
                                 </div>
                             </div>
                         </div>

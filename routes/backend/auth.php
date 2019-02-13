@@ -31,6 +31,7 @@ Route::group([
 
         // is user active
         Route::post('/active', [UserStatusController::class, 'getActive'])->name('user.active');
+        Route::get('/download/{id}', [UserController::class, 'download'])->name('user.download');
 
         /*
          * User CRUD
@@ -50,7 +51,6 @@ Route::group([
             Route::delete('/', [UserController::class, 'destroy'])->name('user.destroy');
 
 
-          
 
 
             // Account

@@ -87,17 +87,6 @@
                                             {{ $logged_in_user->active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </li>
-                                    {{-- <li>
-                                        <br>
-                                        <div class="cmd-func">
-                                            <a href="javascript:;"> 
-                                                   <i class="fa fa-edit" aria-hidden="true"></i>Edit
-                                                </a> |
-                                            <a href="javascript:;" class="text-danger">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>Deactivate
-                                                </a>
-                                        </div>
-                                    </li> --}}
                                 </ul>
                             </li>
                         </ul>

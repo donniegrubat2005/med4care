@@ -1,11 +1,9 @@
  // Custom script
+ var mainUrl = $('#mainUrl').attr('uval');
 
+ var doc = $(document);
 
  $(function () {
-
-     var mainUrl = $('#mainUrl').attr('uval');
-
-     var doc = $(document);
 
      doc.on('change', '#isActive', function () {
 
@@ -48,12 +46,10 @@
          });
 
      })
-
  });
 
 
  $(function(){
-    var doc = $(document);
     //  Edit blade script
     doc.on('click', '#add-documents', function(){
         var clone = $('#file-holder').clone();
@@ -126,10 +122,33 @@
        else{
             $(this).parent().parent().remove();
        }
-    })
-})
+    });
+
+
+   
+
+ })
  
 
+ // For account view & controller
+ $(function(){
+
+    doc.on('click', '.accntDeleteFile', function(){
+        var $this = $(this);
+        if(confirm('Are you sure you want to delete this file')){
+            var file =  $this.parent().siblings('.card-body').find('img').attr('id');
+            var docId = $this.attr('id');
+
+            $.get(mainUrl+"/account/delete_document/"+docId+"/"+file,
+                function (data, textStatus, jqXHR) {
+                    if(data === true){
+                        window.location.reload();
+                    }
+                }
+            );
+        }
+    });
+ });
 
 
 $("#editImgInp").change(function(){

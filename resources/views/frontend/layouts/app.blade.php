@@ -17,7 +17,7 @@
     {{ style(mix('css/frontend.css')) }} {{ style(mix('css/backend.css')) }} @stack('after-styles')
 </head>
 
-<body class="{{ (Auth::check() ) ? config('backend.body_classes') : 'app flex-row align-items-center  pace-done'   }}">
+<body class="{{ (Auth::check() ) ? config('backend.body_classes') : 'app flex-row align-items-center  pace-done'   }}"  id="mainUrl" uval="{{ url('/') }}">
 
 
 

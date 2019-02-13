@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 use File;
 use Illuminate\Support\Facades\Response;
+
+// use Illuminate\Contracts\Filesystem\Filesystem;
 // use Image;
 /**
  * Class AccountController.
@@ -23,37 +25,47 @@ class AccountController extends Controller
 
     public function index()
     {
-        $userId = auth()->user()->id;
         $files = [];
 
+        
+        $userId = auth()->user()->id;
         $documents = Team::where('user_id', $userId)->get();
 
-        $filePath = url('storage/documents/' . $userId);
-       
-        foreach ($documents as $document) {
-            $fileArr = json_decode($document->documents);
-            foreach ($fileArr as $file) {
-                $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
-                $fileExt = explode('.', $file);
-                if (in_array($fileExt[1], $ext)) {
-                    $files[] = [
-                        'key' => true,
-                        'image' => $file,
-                        'fileName' =>  $fileExt[0],
-                        'filePath' => $filePath.'/'.$file,
-                    ];
-                } else {
-                    $files[] = [
-                        'key' => false,
-                        'image' => 'documents.PNG',
-                        'fileName' =>  $fileExt[0],
-                        'filePath' => url('storage/documents/documents.PNG'),
-                    ];
-                }
+        $s3 = Storage::disk('s3');
+        $items = $s3->files('documents/'.$userId);
+
+        foreach($items as $sk => $item){
+            $docId = $documents[$sk]->id;
+            $docu = $documents[$sk]->documents;
+
+            $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
+            $docExt = explode('.', $documents[$sk]->documents);
+
+            if (in_array($docExt[1], $ext)) {
+                $files[] = [
+                    'docId' => $docId,
+                    'key' => true,
+                    'dbFile' => $docu,
+                    'fileName' => $docExt[0],
+                    'fileUrl' =>   $s3->url($item)
+                ];
             }
+            else{
+                $files[] = [
+                    'docId' => $docId,
+                    'key' => false,
+                    'dbFile' => $docu,
+                    'fileName' => $docExt[0],
+                    'fileUrl' =>   $s3->url('documents/documents.PNG') 
+                ];
+            }
+
         }
-        return view('frontend.user.account', compact('files', 'filePath'));
+        return view('frontend.user.account', compact('files'));
+
+ 
     }
+
     public function add_documents(Request $request)
     {
         
@@ -63,22 +75,34 @@ class AccountController extends Controller
 
         if ($request->hasFile('file')) {
             
-            $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents';
-            $folderPath = $storedPath.'/'.$userId;
+            $file = $request->file('file');
+            $name = time().'_'. $file->getClientOriginalName();
+            $filePath = 'documents/'.$userId.'/'. $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            if (!File::isDirectory($folderPath)) {
-                File::makeDirectory($folderPath, 0777, true, true);
-            }
+            Team::create(['user_id' => $userId, 'documents' => $name]);
 
-            $filename = $request->file('file')->getClientOriginalName();
-            $request->file('file')->move($folderPath, $filename);
-            $fileArray[] = $filename;
-
-            Team::create(['user_id' => $userId, 'documents' => json_encode($fileArray, JSON_FORCE_OBJECT)]);
-           
             return redirect()->route('frontend.user.account')->withFlashSuccess('Document has added.');
+        }
+    }
+
+    public function delete_my_documents($id, $file)
+    {
+        $userId = auth()->user()->id;
+       
+        $s3File = 'documents/'.$userId.'/'.$file;
+
+        if(Storage::disk('s3')->exists($s3File)) {
+          
+            $doc = Team::findOrFail($id);
+            $doc->delete();
+
+            Storage::disk('s3')->delete($s3File);
+
+            return response()->json(true);
 
         }
+        return response()->json(false);
     }
 
 }

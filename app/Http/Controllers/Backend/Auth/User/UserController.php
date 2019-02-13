@@ -111,39 +111,94 @@ class UserController extends Controller
             ->withUser($user)
             ->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
     }
+    public function download($id)
+    {
+        $documents = Team::find($id);
+        $userId =  $documents->user_id;
+        $file =  $documents->documents;
 
+        $s3File = 'documents/'.$userId.'/'.$file;
+
+        if(Storage::disk('s3')->exists($s3File)) {
+            return Storage::disk('s3')->download($s3File);
+        }
+    }
     public function get_documents($userId)
     {
 
         $files = [];
 
+        
+        // $userId = auth()->user()->id;
         $documents = Team::where('user_id', $userId)->get();
-        $filePath = url('storage/documents/' . $userId);
-        if (!empty($documents)) {
-            foreach ($documents as $document) {
-                $fileArr = json_decode($document->documents);
-                foreach ($fileArr as $file) {
-                    $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
-                    $fileExt = explode('.', $file);
-                    if (in_array($fileExt[1], $ext)) {
-                        $files[] = [
-                            'key' => true,
-                            'image' => $file,
-                            'fileName' => $fileExt[0],
-                            'filePath' => $filePath . '/' . $file,
-                        ];
-                    } else {
-                        $files[] = [
-                            'key' => false,
-                            'image' => 'documents.PNG',
-                            'fileName' => $fileExt[0],
-                            'filePath' => url('storage/documents/documents.PNG'),
-                        ];
-                    }
-                }
+
+        $s3 = Storage::disk('s3');
+        $items = $s3->files('documents/'.$userId);
+
+        foreach($items as $sk => $item){
+            $docId = $documents[$sk]->id;
+            $docu = $documents[$sk]->documents;
+
+            $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
+            $docExt = explode('.', $documents[$sk]->documents);
+
+            if (in_array($docExt[1], $ext)) {
+                $files[] = [
+                    'docId' => $docId,
+                    'key' => true,
+                    'dbFile' => $docu,
+                    'fileName' => $docExt[0],
+                    'fileUrl' =>   $s3->url($item)
+                ];
             }
+            else{
+                $files[] = [
+                    'docId' => $docId,
+                    'key' => false,
+                    'dbFile' => $docu,
+                    'fileName' => $docExt[0],
+                    'fileUrl' =>   $s3->url('documents/documents.PNG') 
+                ];
+            }
+
         }
         return $files;
+        // dd($files);
+        // return view('frontend.user.account', compact('files'));
+
+
+
+
+
+        // $files = [];
+
+        // $documents = Team::where('user_id', $userId)->get();
+        // $filePath = url('storage/documents/' . $userId);
+        // if (!empty($documents)) {
+        //     foreach ($documents as $document) {
+        //         $fileArr = json_decode($document->documents);
+        //         foreach ($fileArr as $file) {
+        //             $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
+        //             $fileExt = explode('.', $file);
+        //             if (in_array($fileExt[1], $ext)) {
+        //                 $files[] = [
+        //                     'key' => true,
+        //                     'image' => $file,
+        //                     'fileName' => $fileExt[0],
+        //                     'filePath' => $filePath . '/' . $file,
+        //                 ];
+        //             } else {
+        //                 $files[] = [
+        //                     'key' => false,
+        //                     'image' => 'documents.PNG',
+        //                     'fileName' => $fileExt[0],
+        //                     'filePath' => url('storage/documents/documents.PNG'),
+        //                 ];
+        //             }
+        //         }
+        //     }
+        // }
+        // return $files;
     }
 
     /**
@@ -190,41 +245,30 @@ class UserController extends Controller
 
     public function create_document($files, $userId)
     {
-        $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents';
-        $folderPath = $storedPath . '/' . $userId;
-
-        if (!File::exists($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
+        foreach($files as $file){
+            $name = time().'_'. $file->getClientOriginalName();
+            $filePath = 'documents/'.$userId.'/'. $name;
+            Storage::disk('s3')->put($filePath, file_get_contents($file));
+            Team::create(['user_id' => $userId, 'documents' => $name]);
         }
 
-        $fileArray = [];
-
-        foreach ($files as $file) {
-            $filename = $file->getClientOriginalName();
-            $file->move($folderPath, $filename);
-
-            $fileArray[] = $filename;
-        }
-
-        Team::create(['user_id' => $userId, 'documents' => json_encode($fileArray, JSON_FORCE_OBJECT)]);
     }
     
     public function create_userImage($file, $userId)
     {
-        $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/users';
-        $folderPath = $storedPath.'/'. $userId;
+        $name = time().'_'. $file->getClientOriginalName();
+        $filePath = 'images/'.$userId.'/'. $name;
+        Storage::disk('s3')->put($filePath, file_get_contents($file));
+        // Team::create(['user_id' => $userId, 'documents' => $name]);
+
+        // $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/users';
+        // $folderPath = $storedPath.'/'. $userId;
       
-        if (!File::exists($folderPath)) {
-            File::makeDirectory($folderPath, 0777, true, true);
-        }
-        $filename = $file->getClientOriginalName();
-        $file->move($folderPath, $filename);
-
-        // $fileArray = [];
-
-        // foreach ($files as $file) {
-          
+        // if (!File::exists($folderPath)) {
+        //     File::makeDirectory($folderPath, 0777, true, true);
         // }
+        // $filename = $file->getClientOriginalName();
+        // $file->move($folderPath, $filename);
     }
 
     /**
