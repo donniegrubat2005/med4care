@@ -259,16 +259,6 @@ class UserController extends Controller
         $name = time().'_'. $file->getClientOriginalName();
         $filePath = 'images/'.$userId.'/'. $name;
         Storage::disk('s3')->put($filePath, file_get_contents($file));
-        // Team::create(['user_id' => $userId, 'documents' => $name]);
-
-        // $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/users';
-        // $folderPath = $storedPath.'/'. $userId;
-      
-        // if (!File::exists($folderPath)) {
-        //     File::makeDirectory($folderPath, 0777, true, true);
-        // }
-        // $filename = $file->getClientOriginalName();
-        // $file->move($folderPath, $filename);
     }
 
     /**

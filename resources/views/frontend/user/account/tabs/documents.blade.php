@@ -47,12 +47,12 @@
                             <div class="card-footer">
 
                                 @if ($file['key'])
-                                    <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
-                                        <i class="fa fa-eye"></i> View
+                                    <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}" title="View Docouments">
+                                        <i class="fa fa-eye"></i> 
                                     </button> 
                                 @endif
-                                <button class="btn btn-sm btn-outline-danger accntDeleteFile" type="reset" id="{{$file['docId']}}">
-                                    <i class="fa fa-trash"></i> Delete
+                                <button class="btn btn-sm btn-outline-danger accntDeleteFile" type="reset" id="{{$file['docId']}}" title="Delete">
+                                    <i class="fa fa-trash"></i> 
                                 </button>
                             </div>
                         </div>

@@ -94,7 +94,7 @@ class UserRepository extends BaseRepository
     public function create(array $data)
     {
         return DB::transaction(function () use ($data) {
-        
+
 
             $code = ($data['code']) ? $data['code'] : null;
 
@@ -115,7 +115,15 @@ class UserRepository extends BaseRepository
                 /*
                  * Add the default site role to the new user
                  */
-                $user->assignRole(config('access.users.default_role'));
+
+                $this->insertModelHasRoles([
+                    'roleId' => $data['userRole'] === 'user' ? 3 : 4,
+                    'modelType' => 'App\Models\Auth\User',
+                    'modelId' => $user->id,
+                ]);
+                
+
+                // $user->assignRole(config('access.users.default_role'));
             }
 
             /*
@@ -135,6 +143,16 @@ class UserRepository extends BaseRepository
              */
             return $user;
         });
+    }
+
+
+    public function insertModelHasRoles($data = [])
+    {
+        return DB::table('model_has_roles')->insert([
+            'role_id' => $data['roleId'],
+            'model_type' => $data['modelType'],
+            'model_id' => $data['modelId']
+        ]);
     }
 
     /**

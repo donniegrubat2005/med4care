@@ -56,8 +56,6 @@ class RegisterController extends Controller
     {
         abort_unless(config('access.registration'), 404);
 
-        // $code = 'BTN-' . str_pad(User::count(), 3, '0', STR_PAD_LEFT) . '-';
-
         return view('frontend.auth.register')->withSocialiteLinks((new Socialite)->getSocialLinks());
     }
 
@@ -76,20 +74,13 @@ class RegisterController extends Controller
         if ($request->hasFile('file')) {
             
             $userId = $user->id;
-            $storedPath = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . 'public/documents';
-            $folderPath = $storedPath.'/'.$userId;
 
-            $folder = File::makeDirectory($folderPath, 0777, true, true);
-            $fileArray = [];
-
-            foreach ($request->file('file') as $file) {
-                $filename = $file->getClientOriginalName();
-                $file->move($folderPath, $filename);
-
-                $fileArray[] = $filename;
+            foreach($request->file('file') as $file){
+                $name = time().'_'. $file->getClientOriginalName();
+                $filePath = 'documents/'.$userId.'/'. $name;
+                Storage::disk('s3')->put($filePath, file_get_contents($file));
+                Team::create(['user_id' => $userId, 'documents' => $name]);
             }
-
-            Team::create(['user_id' => $userId, 'documents' => json_encode($fileArray, JSON_FORCE_OBJECT)]);
         }
 
         
