@@ -24,6 +24,14 @@
             <td><a href="javascript:;">{{ $user->email }} </td>
         </tr>
         <tr>
+            <th>User Role</th>
+            <td>
+                @foreach ($user->roles as $role)
+                    {{ ucwords($role->name) }}
+                @endforeach
+            </td>
+        </tr>
+        <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.status')</th>
             <td >
                  <ul class="list-inline" >

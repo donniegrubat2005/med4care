@@ -14,10 +14,44 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.account') }}">
-                        <i class="nav-icon icon-user"></i> 
-                        @lang('menus.backend.sidebar.account')
-                    </a>
+                    <i class="nav-icon icon-user"></i> 
+                    @lang('menus.backend.sidebar.account')
+                </a>
             </li>
+
+
+
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients') }}">
+                    <i class="fa fa-users"></i> 
+                    Manage Patients
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.payments') }}">
+                    <i class="fa fa-money"></i> 
+                    Manage Payments
+                </a>
+            </li>
+
+            
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.reports') }}">
+                    <i class="fa fa-signal"></i> 
+                    Reports
+                </a>
+            </li>
+
+
+
+
+
+
+
+
+
             {{--
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('general')) }} " href="{{ route('frontend.user.account') }}">

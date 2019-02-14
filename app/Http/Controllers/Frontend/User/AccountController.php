@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 use File;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\Backend\Auth\UserRepository;
+use App\Models\Auth\User;
 
 // use Illuminate\Contracts\Filesystem\Filesystem;
 // use Image;
@@ -22,17 +25,28 @@ class AccountController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
 
+    public $user;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->middleware(['role:user','permission:manage patients']);
+   
+        
+    }
+
+
 
     public function index()
     {
+
+
+        $user = auth()->user();
         $files = [];
 
-        
-        $userId = auth()->user()->id;
-        $documents = Team::where('user_id', $userId)->get();
-
         $s3 = Storage::disk('s3');
-        $items = $s3->files('documents/'.$userId);
+        $items = $s3->files('documents/'.$user->id);
+        $documents = Team::where('user_id', $user->id)->get();
 
         foreach($items as $sk => $item){
             $docId = $documents[$sk]->id;
@@ -63,9 +77,27 @@ class AccountController extends Controller
         }
         return view('frontend.user.account', compact('files'));
 
- 
     }
 
+    
+    public function patients()
+    {
+       
+        return view('frontend.pages.patients');
+    }
+    public function payments()
+    {
+
+        return view('frontend.pages.payments');
+    }
+    public function reports()
+    {
+
+        return view('frontend.pages.reports');
+    }
+    
+    
+    
     public function add_documents(Request $request)
     {
         

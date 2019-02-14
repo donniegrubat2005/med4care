@@ -175,29 +175,38 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        @if($roles->count()) @foreach($roles as $role)
-                                                        <div class="card">
-                                                            <div class="card-header">
-                                                                <div class="checkbox d-flex align-items-center">
-                                                                    {{ html()->label( html()->checkbox('roles[]', in_array($role->name, $userRoles), $role->name) ->class('switch-input') ->id('role-'.$role->id)
-                                                                    . '
-                                                                    <span
-                                                                        class="switch-slider" data-checked="on" data-unchecked="off"></span>') ->class('switch switch-label switch-pill
-                                                                        switch-primary mr-2') ->for('role-'.$role->id)
-                                                                        }} {{ html()->label(ucwords($role->name))->for('role-'.$role->id)
-                                                                        }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="card-body">
-                                                                @if($role->id != 1) @if($role->permissions->count()) @foreach($role->permissions as $permission)
-                                                                <i class="fas fa-dot-circle"></i> {{ ucwords($permission->name)
-                                                                }} @endforeach @else @lang('labels.general.none') @endif
-                                                                @else @lang('labels.backend.access.users.all_permissions')
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <!--card-->
-                                                        @endforeach @endif
+                                                        @if($roles->count()) 
+                                                            @foreach($roles as $role)
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <div class="checkbox d-flex align-items-center">
+                                                                            {{ html()->label( html()->checkbox('roles[]', in_array($role->name, $userRoles), $role->name)
+                                                                                ->class('switch-input') ->id('role-'.$role->id)
+                                                                                . '<span class="switch-slider" data-checked="on" data-unchecked="off"></span>')
+                                                                                ->class('switch switch-label switch-pill switch-primary mr-2')
+                                                                                ->for('role-'.$role->id) 
+                                                                            }} 
+                                                                            {{ html()->label(ucwords($role->name))->for('role-'.$role->id) }}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        {{-- {{$role->id}} --}}
+                                                                        @if($role->id != 1) 
+                                                                            @if($role->permissions->count()) 
+                                                                                @foreach($role->permissions as $permission)
+                                                                                    <i class="fas fa-dot-circle"></i> 
+                                                                                    {{ ucwords($permission->name) }} 
+                                                                                @endforeach 
+                                                                            @else 
+                                                                                @lang('labels.general.none') 
+                                                                            @endif
+                                                                        @else 
+                                                                            @lang('labels.backend.access.users.all_permissions')
+                                                                        @endif
+                                                                    </div>
+                                                                 </div>
+                                                            @endforeach 
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         @if($permissions->count()) @foreach($permissions as $permission)

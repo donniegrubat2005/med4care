@@ -96,4 +96,6 @@ Route::group([
             Route::delete('/', [RoleController::class, 'destroy'])->name('role.destroy');
         });
     });
+
 });
+

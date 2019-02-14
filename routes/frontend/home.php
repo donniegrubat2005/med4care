@@ -37,13 +37,22 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::get('account/delete_document/{id}/{fileName}', [AccountController::class, 'delete_my_documents'])->name('delete_document');
 
 
+
+        // test sample routes for aireenmay lavador
+
+        Route::get('patients', [AccountController::class, 'patients'])->name('patients');
+        Route::get('payments', [AccountController::class, 'payments'])->name('payments');
+        Route::get('reports', [AccountController::class, 'reports'])->name('reports');
+
+
+        
+
         /*
          * User Profile Specific
          */
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
-
-
-
     });
 });
+
+
