@@ -42,8 +42,8 @@
                         <div class="row">
                             <div class="col-sm-6" style="margin-top:7px;">
                                 <strong class="float-left">
-                                        <i class="icon-user"></i> Users
-                                    </strong>
+                                    <i class="icon-user"></i> Users
+                                </strong>
                             </div>
                             <div class="col-sm-6">
                                 <div class="dropdown float-right">
@@ -52,14 +52,14 @@
                                         </button>
                                     <div class="dropdown-menu" aria-labelledby="my-dropdown">
                                         <a class="dropdown-item" href="{{ route('admin.auth.user.create') }}">
-                                                <i class="icon-user-follow text-primary"></i>@lang('menus.backend.access.users.create')
-                                            </a>
+                                            <i class="icon-user-follow text-primary"></i>@lang('menus.backend.access.users.create')
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('admin.auth.user.deactivated') }}">
-                                                <i class="icon-user-unfollow text-warning"></i>@lang('menus.backend.access.users.deactivated')
-                                            </a>
+                                            <i class="icon-user-unfollow text-warning"></i>@lang('menus.backend.access.users.deactivated')
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('admin.auth.user.deleted') }}">
-                                                <i class="icon-trash text-danger"></i>@lang('menus.backend.access.users.deleted')
-                                            </a>
+                                            <i class="icon-trash text-danger"></i>@lang('menus.backend.access.users.deleted')
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -71,8 +71,8 @@
                             <tr>
                                 <td>
                                     <a href="{{route('admin.auth.user.show', $userTbl)}}">
-                                            <strong>{{ucwords($userTbl->last_name) }} {{ ucwords($userTbl->last_name) }}</strong>
-                                        </a>
+                                        <strong>{{ucwords($userTbl->first_name) }} {{ ucwords($userTbl->last_name) }}</strong>
+                                    </a>
                                 </td>
                                 <td class="text-right">
                                     {!! $userTbl->status_label !!}
@@ -118,7 +118,7 @@
                                         @foreach ($user->permissions as $permission)
                                             <li style="margin-bottom:3px;"> 
                                                 <i class="fa fa-check-circle text-info" aria-hidden="true"></i> 
-                                                <span style="font-size:16px;">{{$permission['name']}}</span>
+                                                <span style="font-size:16px;">{{ ucwords($permission['name']) }}</span>
                                             </li>
                                         @endforeach
                                     @else
@@ -134,7 +134,8 @@
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active show" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">
-                                            <i class="fa fa-file-o"></i> Documents</a>
+                                            <i class="fa fa-file-o"></i> Documents
+                                        </a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
@@ -154,13 +155,14 @@
                                                     <div class="card-footer">
 
                                                         @if ($file['key'])
-                                                        <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
-                                                                    <i class="fa fa-eye"></i> 
-                                                                </button>                                                        @endif
+                                                            <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
+                                                                <i class="fa fa-eye"></i> 
+                                                            </button>                                                       
+                                                        @endif
 
                                                         <a href="{{route('admin.auth.user.download', $file['docId'] ) }}" class="btn btn-sm btn-outline-info">
-                                                                    <i class="fa fa-download"></i> 
-                                                                </a>
+                                                            <i class="fa fa-download"></i> 
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

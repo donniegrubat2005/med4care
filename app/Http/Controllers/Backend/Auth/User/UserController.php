@@ -43,7 +43,6 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-        // dd($this->userRepository->getActivePaginated(25, 'id', 'asc'));
         return view('backend.auth.user.index')
             ->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
     }
@@ -71,8 +70,6 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         // if ( Storage::disk(‘resources’)->exists(‘/assets/js/country_names.json’) ) $country_names = json_decode(Storage::disk(‘resources’)->get( ‘/assets/js/country_names.json’ ), true);
-      
-      
       
         $user = $this->userRepository->create($request->only(
             'code',
@@ -105,6 +102,9 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
+        // $roles = Roles::all();
+        // $user->roles($user);
+
         $files = $this->get_documents($user->id);
         return view('backend.auth.user.show')
             ->with(['files' => $files])
@@ -211,6 +211,7 @@ class UserController extends Controller
      */
     public function edit(ManageUserRequest $request, RoleRepository $roleRepository, PermissionRepository $permissionRepository, User $user)
     {
+        // dd($permissionRepository->get(['id', 'name'])->where('model_id', $user->id));
         return view('backend.auth.user.edit')
             ->withUser($user)
             ->withRoles($roleRepository->get())
