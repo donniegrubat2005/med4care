@@ -30,16 +30,15 @@ class AccountController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+      
         $this->middleware(['role:user','permission:manage patients']);
    
-        
     }
 
 
 
     public function index()
     {
-
 
         $user = auth()->user();
         $files = [];
@@ -85,16 +84,16 @@ class AccountController extends Controller
        
         return view('frontend.pages.patients');
     }
-    public function payments()
-    {
+    // public function payments()
+    // {
 
-        return view('frontend.pages.payments');
-    }
-    public function reports()
-    {
+    //     return view('frontend.pages.payments');
+    // }
+    // public function reports()
+    // {
 
-        return view('frontend.pages.reports');
-    }
+    //     return view('frontend.pages.reports');
+    // }
     
     
     

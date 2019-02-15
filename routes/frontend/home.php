@@ -41,8 +41,8 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         // test sample routes for aireenmay lavador
 
         Route::get('patients', [AccountController::class, 'patients'])->name('patients');
-        Route::get('payments', [AccountController::class, 'payments'])->name('payments');
-        Route::get('reports', [AccountController::class, 'reports'])->name('reports');
+        // Route::get('payments', [AccountController::class, 'payments'])->name('payments');
+        // Route::get('reports', [AccountController::class, 'reports'])->name('reports');
 
 
         

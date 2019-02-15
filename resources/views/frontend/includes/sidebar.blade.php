@@ -7,9 +7,9 @@
             <li class="nav-item">
 
                 <a class="nav-link {{ active_class(Active::checkUriPattern('dashboard')) }} " href="{{ route('frontend.index') }}">
-                        <i class="nav-icon icon-home"></i>
-                        @lang('menus.backend.sidebar.dashboard')
-                    </a>
+                    <i class="nav-icon icon-home"></i>
+                    @lang('menus.backend.sidebar.dashboard')
+                </a>
             </li>
 
             <li class="nav-item">
@@ -25,11 +25,11 @@
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients') }}">
                     <i class="fa fa-users"></i> 
-                    Manage Patients
+                    &nbsp; Manage Patients
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.payments') }}">
                     <i class="fa fa-money"></i> 
                     Manage Payments
@@ -42,7 +42,7 @@
                     <i class="fa fa-signal"></i> 
                     Reports
                 </a>
-            </li>
+            </li> --}}
 
 
 
