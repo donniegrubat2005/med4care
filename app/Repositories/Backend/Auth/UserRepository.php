@@ -19,6 +19,12 @@ use App\Notifications\Backend\Auth\UserAccountActive;
 use App\Events\Backend\Auth\User\UserPermanentlyDeleted;
 use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 
+
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Frontend\Contact\SendContact;
+
+
 /**
  * Class UserRepository.
  */
@@ -110,7 +116,7 @@ class UserRepository extends BaseRepository
                 }
             }
 
-            $code = (!is_null($data['code'])) ? $data['code'] : null ;
+            $code = (!is_null($data['id_code'])) ? $data['id_code'] : null ;
 
             $user = parent::create([
                 'first_name' => $data['first_name'],
@@ -123,6 +129,19 @@ class UserRepository extends BaseRepository
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0,
             ]);
+        
+
+            // $message = 'You are register on med4care please login with your credentials \n email : '. $data['email'] .'\n'. 'password : '. $data['password'] ;
+            
+            // $credentials = ['name' => 'Med4Care', 'email' => $data['email'], 'message' => $message];
+
+
+
+
+
+
+
+
 
             // See if adding any additional permissions
             if (! isset($data['permissions']) || ! count($data['permissions'])) {

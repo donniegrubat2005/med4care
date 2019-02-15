@@ -36,6 +36,7 @@
     </div>
     <div class="card-body">
         <div class="row">
+            {{--
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -97,8 +98,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-8">
+            </div> --}}
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-body" style="border-top:2px solid lightblue">
                         <br>
@@ -109,20 +110,18 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
-                                @include('backend.auth.user.show.tabs.userInfo')
+    @include('backend.auth.user.show.tabs.userInfo')
                             </div>
                             <div class="col-md-5">
                                 <h5>Permissions</h5>
                                 <ul class="list-unstyled">
-                                    @if ($user->permissions->count() > 0)
-                                        @foreach ($user->permissions as $permission)
-                                            <li style="margin-bottom:3px;"> 
-                                                <i class="fa fa-check-circle text-info" aria-hidden="true"></i> 
-                                                <span style="font-size:16px;">{{ ucwords($permission['name']) }}</span>
-                                            </li>
-                                        @endforeach
-                                    @else
-                                        <li>N/A</li>
+                                    @if ($user->permissions->count() > 0) @foreach ($user->permissions as $permission)
+                                    <li style="margin-bottom:3px;">
+                                        <i class="fa fa-check-circle text-info" aria-hidden="true"></i>
+                                        <span style="font-size:16px;">{{ ucwords($permission['name']) }}</span>
+                                    </li>
+                                    @endforeach @else
+                                    <li>N/A</li>
                                     @endif
                                 </ul>
                             </div>
@@ -150,16 +149,15 @@
                                                         Document <strong>{{ $iKey+=1 }}</strong>
                                                     </div>
                                                     <div class="card-body p-0">
-                                                        {!! $file['files'] !!}
-                                                        {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
+                                                        {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}"
+                                                            id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
                                                     </div>
                                                     <div class="card-footer">
 
                                                         @if ($file['key'])
-                                                            <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
+                                                        <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
                                                                 <i class="fa fa-eye"></i> 
-                                                            </button>                                                       
-                                                        @endif
+                                                            </button>                                                        @endif
 
                                                         <a href="{{route('admin.auth.user.download', $file['docId'] ) }}" class="btn btn-sm btn-outline-info">
                                                             <i class="fa fa-download"></i> 
@@ -178,8 +176,8 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body p-0">
-                                                            {!! $file['files'] !!}
-                                                            {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%"> --}}
+                                                            {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}"
+                                                                alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%">                                                            --}}
                                                         </div>
                                                     </div>
                                                 </div>

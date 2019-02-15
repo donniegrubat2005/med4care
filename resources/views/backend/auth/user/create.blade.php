@@ -75,9 +75,9 @@
                                     </div>
                                     <div class="col-md-6">
                                         <span class="float-right">
-                                                {{ form_submit('Create User')->class('btn-primary') }}
-                                                {{ form_cancel(route('admin.auth.user.index'), __('buttons.general.cancel')) }}
-                                            </span>
+                                            {{ form_submit('Create User')->class('btn-primary') }}
+                                            {{ form_cancel(route('admin.auth.user.index'), __('buttons.general.cancel')) }}
+                                        </span>
                                     </div>
                                 </div>
                                 <!--row-->
@@ -86,68 +86,58 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group row">
-                                            {{ html()->label('User Code')->class('col-md-3 form-control-label')->for('code') }}
+                                            {{ html()->label('ID Code')->class('col-md-3 form-control-label')->for('id_code') }}
 
                                             <div class="col-md-9">
-                                                {{ html()->text('code') ->class('form-control') ->placeholder('User ID Code, Tax ID, Etc.') ->attribute('maxlength', 191)
-                                                ->autofocus() }}
+                                                {{ html()->text('id_code')->class('form-control')->attribute('maxlength', 191)->autofocus()->attribute('autocomplete', 'off') }}
                                             </div>
                                             <!--col-->
                                         </div>
                                         <!--form-group-->
                                         <div class="form-group row">
-                                            {{ html()->label(__('validation.attributes.backend.access.users.first_name'))->class('col-md-3 form-control-label')->for('first_name')
-                                            }}
+                                            {{ html()->label('First Name')->class('col-md-3 form-control-label')->for('first_name') }}
 
                                             <div class="col-md-9">
-                                                {{ html()->text('first_name') ->class('form-control') ->placeholder(__('validation.attributes.backend.access.users.first_name'))
-                                                ->attribute('maxlength', 191) ->required() ->autofocus() }}
+                                                {{ html()->text('first_name') ->class('form-control')->placeholder('Required')->attribute('maxlength', 191)->required()->attribute('autocomplete', 'off') }}
                                             </div>
                                             <!--col-->
                                         </div>
                                         <!--form-group-->
                                         <div class="form-group row">
-                                            {{ html()->label(__('validation.attributes.backend.access.users.last_name'))->class('col-md-3 form-control-label')->for('last_name')
+                                            {{ html()->label('Last Name')->class('col-md-3 form-control-label')->for('last_name')
                                             }}
                                             <div class="col-md-9">
-                                                {{ html()->text('last_name') ->class('form-control') ->placeholder(__('validation.attributes.backend.access.users.last_name'))
-                                                ->attribute('maxlength', 191) ->required() }}
-                                            </div>
-                                            <!--col-->
-                                        </div>
-                                        <!--form-group-->
-
-                                        <div class="form-group row">
-                                            {{ html()->label(__('validation.attributes.backend.access.users.email'))->class('col-md-3 form-control-label')->for('email')
-                                            }}
-
-                                            <div class="col-md-9">
-                                                {{ html()->email('email') ->class('form-control') ->placeholder(__('validation.attributes.backend.access.users.email')) ->attribute('maxlength',
-                                                191) ->required() }}
+                                                {{ html()->text('last_name') ->class('form-control')->placeholder('Required')->attribute('maxlength', 191)->required()->attribute('autocomplete', 'off') }}
                                             </div>
                                             <!--col-->
                                         </div>
                                         <!--form-group-->
 
                                         <div class="form-group row">
-                                            {{ html()->label(__('validation.attributes.backend.access.users.password'))->class('col-md-3 form-control-label')->for('password')
-                                            }}
+                                            {{ html()->label('Email Address')->class('col-md-3 form-control-label')->for('email') }}
 
                                             <div class="col-md-9">
-                                                {{ html()->password('password') ->class('form-control') ->placeholder(__('validation.attributes.backend.access.users.password'))
-                                                ->required() }}
+                                                {{ html()->email('email')->class('form-control')->placeholder("Required") ->attribute('maxlength',191)->required() }}
                                             </div>
                                             <!--col-->
                                         </div>
                                         <!--form-group-->
 
                                         <div class="form-group row">
-                                            {{ html()->label(__('validation.attributes.backend.access.users.password_confirmation'))->class('col-md-3 form-control-label')->for('password_confirmation')
-                                            }}
+                                            {{ html()->label('Password')->class('col-md-3 form-control-label')->for('password') }}
 
                                             <div class="col-md-9">
-                                                {{ html()->password('password_confirmation') ->class('form-control') ->placeholder(__('validation.attributes.backend.access.users.password_confirmation'))
-                                                ->required() }}
+                                                {{ html()->password('password') ->class('form-control') ->placeholder('*********')->required() }}
+                                            </div>
+                                            <!--col-->
+                                        </div>
+                                        <!--form-group-->
+
+                                        <div class="form-group row">
+                                            {{ html()->label('Confirm Password')->class('col-md-3 form-control-label')->for('password_confirmation') }}
+
+                                            <div class="col-md-9">
+                                                {{ html()->password('password_confirmation') ->class('form-control') ->placeholder('*********')->required() }}
                                             </div>
                                             <!--col-->
                                         </div>
@@ -156,13 +146,12 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group row">
-                                                    {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-6 form-control-label')->for('active')
-                                                    }}
+                                                    {{ html()->label(__('validation.attributes.backend.access.users.active'))->class('col-md-6 form-control-label')->for('active') }}
                                                     <div class="col-md-6">
                                                         <label class="switch switch-label switch-pill switch-primary">
-                                                                {{ html()->checkbox('active', true, '1')->class('switch-input') }}
-                                                                <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
-                                                            </label>
+                                                            {{ html()->checkbox('active', true, '1')->class('switch-input') }}
+                                                            <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
+                                                        </label>
                                                     </div>
                                                     <!--col-->
                                                 </div>
@@ -176,9 +165,9 @@
                                                     form-control-label')->for('confirmation_email') }}
                                                     <div class="col-md-2">
                                                         <label class="switch switch-label switch-pill switch-primary">
-                                                                    {{ html()->checkbox('confirmation_email', true, '1')->class('switch-input') }}
-                                                                    <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
-                                                                </label>
+                                                            {{ html()->checkbox('confirmation_email', true, '1')->class('switch-input') }}
+                                                            <span class="switch-slider" data-checked="yes" data-unchecked="no"></span>
+                                                        </label>
                                                     </div>
                                                     <!--col-->
                                                 </div>
