@@ -50,6 +50,7 @@ class AccountController extends Controller
         foreach($items as $sk => $item){
             $docId = $documents[$sk]->id;
             $docu = $documents[$sk]->documents;
+            $filesDocs = $documents[$sk]->files;
 
             $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
             $docExt = explode('.', $documents[$sk]->documents);
@@ -60,7 +61,8 @@ class AccountController extends Controller
                     'key' => true,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url($item)
+                    'fileUrl' =>   $s3->url($item),
+                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,'.base64_encode( $filesDocs ).'"/>' ,
                 ];
             }
             else{
@@ -69,7 +71,8 @@ class AccountController extends Controller
                     'key' => false,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url('documents/documents.PNG') 
+                    'fileUrl' =>   $s3->url('documents/documents.PNG'),
+                    'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
 
@@ -105,15 +108,43 @@ class AccountController extends Controller
         $fileArray = [];
 
         if ($request->hasFile('file')) {
-            
+
             $file = $request->file('file');
+            
             $name = time().'_'. $file->getClientOriginalName();
+            $data = file_get_contents($file->getRealPath());
+
+            // $name = time().'_'. $file->getClientOriginalName();
             $filePath = 'documents/'.$userId.'/'. $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            Team::create(['user_id' => $userId, 'documents' => $name]);
+            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
+
+
 
             return redirect()->route('frontend.user.account')->withFlashSuccess('Document has added.');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            // $file = $request->file('file');
+            // $name = time().'_'. $file->getClientOriginalName();
+            // $filePath = 'documents/'.$userId.'/'. $name;
+            // Storage::disk('s3')->put($filePath, file_get_contents($file));
+
+            // Team::create(['user_id' => $userId, 'documents' => $name]);
+
         }
     }
 

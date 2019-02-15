@@ -102,10 +102,8 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
-        // $roles = Roles::all();
-        // $user->roles($user);
-
         $files = $this->get_documents($user->id);
+
         return view('backend.auth.user.show')
             ->with(['files' => $files])
             ->withUser($user)
@@ -125,30 +123,28 @@ class UserController extends Controller
     }
     public function get_documents($userId)
     {
-
         $files = [];
-
-        
-        // $userId = auth()->user()->id;
         $documents = Team::where('user_id', $userId)->get();
-
         $s3 = Storage::disk('s3');
         $items = $s3->files('documents/'.$userId);
-
+        // header('Content-type: image/jpg');
         foreach($items as $sk => $item){
             $docId = $documents[$sk]->id;
             $docu = $documents[$sk]->documents;
+            $filesDocs = $documents[$sk]->files;
 
             $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
             $docExt = explode('.', $documents[$sk]->documents);
 
             if (in_array($docExt[1], $ext)) {
+
                 $files[] = [
                     'docId' => $docId,
                     'key' => true,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url($item)
+                    'fileUrl' =>   $s3->url($item),
+                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,'.base64_encode( $filesDocs ).'"/>' ,
                 ];
             }
             else{
@@ -157,48 +153,13 @@ class UserController extends Controller
                     'key' => false,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url('documents/documents.PNG') 
+                    'fileUrl' =>   $s3->url('documents/documents.PNG'),
+                    'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
 
         }
         return $files;
-        // dd($files);
-        // return view('frontend.user.account', compact('files'));
-
-
-
-
-
-        // $files = [];
-
-        // $documents = Team::where('user_id', $userId)->get();
-        // $filePath = url('storage/documents/' . $userId);
-        // if (!empty($documents)) {
-        //     foreach ($documents as $document) {
-        //         $fileArr = json_decode($document->documents);
-        //         foreach ($fileArr as $file) {
-        //             $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
-        //             $fileExt = explode('.', $file);
-        //             if (in_array($fileExt[1], $ext)) {
-        //                 $files[] = [
-        //                     'key' => true,
-        //                     'image' => $file,
-        //                     'fileName' => $fileExt[0],
-        //                     'filePath' => $filePath . '/' . $file,
-        //                 ];
-        //             } else {
-        //                 $files[] = [
-        //                     'key' => false,
-        //                     'image' => 'documents.PNG',
-        //                     'fileName' => $fileExt[0],
-        //                     'filePath' => url('storage/documents/documents.PNG'),
-        //                 ];
-        //             }
-        //         }
-        //     }
-        // }
-        // return $files;
     }
 
     /**
@@ -239,7 +200,7 @@ class UserController extends Controller
             'permissions'
         ));
         if ($request->hasFile('files')) {
-            $this->create_document($request->file('files'), $user->id);
+             $this->create_document($request->file('files'), $user->id);
         }
         return redirect()->route('admin.auth.user.show', $user)->withFlashSuccess(__('alerts.backend.users.updated'));
     }
@@ -247,10 +208,20 @@ class UserController extends Controller
     public function create_document($files, $userId)
     {
         foreach($files as $file){
+          
             $name = time().'_'. $file->getClientOriginalName();
+            $data = file_get_contents($file->getRealPath());
+
+            // $name = time().'_'. $file->getClientOriginalName();
             $filePath = 'documents/'.$userId.'/'. $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
-            Team::create(['user_id' => $userId, 'documents' => $name]);
+
+            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
+
+            // Team::create(['user_id' => $userId, 'documents' => $name]);
+
+
+
         }
 
     }
