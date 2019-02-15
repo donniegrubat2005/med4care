@@ -24,7 +24,7 @@ class Team extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'documents'];
+    protected $fillable = ['user_id', 'documents', 'files'];
 
     public $timestamps = false;
 

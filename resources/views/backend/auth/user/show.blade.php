@@ -150,7 +150,8 @@
                                                         Document <strong>{{ $iKey+=1 }}</strong>
                                                     </div>
                                                     <div class="card-body p-0">
-                                                        <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc">
+                                                        {!! $file['files'] !!}
+                                                        {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
                                                     </div>
                                                     <div class="card-footer">
 
@@ -173,11 +174,12 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">{{$file['fileName']}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
                                                         </div>
                                                         <div class="modal-body p-0">
-                                                            <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%">
+                                                            {!! $file['files'] !!}
+                                                            {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%"> --}}
                                                         </div>
                                                     </div>
                                                 </div>
