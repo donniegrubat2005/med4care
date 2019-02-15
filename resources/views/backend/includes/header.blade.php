@@ -56,7 +56,7 @@
         <div class="dropdown-header text-center">
           <strong>Account</strong>
         </div>
-        <a class="dropdown-item" href="#">
+        {{-- <a class="dropdown-item" href="#">
               <i class="fa fa-bell"></i> Updates
               <span class="badge badge-info">42</span>
             </a>
@@ -84,7 +84,7 @@
         <a class="dropdown-item" href="#">
               <i class="fa fa-file"></i> Projects
               <span class="badge badge-primary">42</span>
-            </a>
+            </a> --}}
         <div class="divider"></div>
         <a class="dropdown-item" href="{{ route('frontend.auth.logout') }}">
                 <i class="fas fa-lock"></i> @lang('navs.general.logout')

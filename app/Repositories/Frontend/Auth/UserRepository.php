@@ -96,7 +96,7 @@ class UserRepository extends BaseRepository
         return DB::transaction(function () use ($data) {
 
 
-            $code = ($data['code']) ? $data['code'] : null;
+            $code = ($data['id_code']) ? $data['id_code'] : null;
 
             $user = parent::create([
                 'first_name' => $data['first_name'],

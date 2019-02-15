@@ -4,16 +4,15 @@
  var doc = $(document);
 
  $(function () {
-
-     doc.on('change', '#isActive', function () {
+    doc.on('change', '#isActive', function () {
 
          var urlArr = $(location).attr("href").split('/');
          var userId = urlArr[urlArr.length - 1];
 
          $.ajaxSetup({
-             headers: {
-                 'X-XSRF-TOKEN': decodeURIComponent(/XSRF-Token=([^;]*)/ig.exec(document.cookie)[1])
-             }
+            headers: {
+               'X-XSRF-TOKEN': decodeURIComponent(/XSRF-Token=([^;]*)/ig.exec(document.cookie)[1])
+            }
          });
 
          var isActive;
@@ -45,7 +44,7 @@
              }
          });
 
-     })
+    })
  });
 
 
@@ -97,7 +96,7 @@
                 content.removeClass('d-none');
                 var clone = $('#file-holder').clone(); 
                 clone.removeClass('d-none'); 
-                clone.find('input[type=file]').attr('name', 'file[]');
+                clone.find('input[type=file]').attr('name', 'file[]').attr('required', true);
                 $('#file-content').append(clone.removeAttr('id'));
             break;
             case 'user': 
@@ -107,10 +106,12 @@
         }
     });
 
+    // user registration
     doc.on('click', '#btnAddFile', function(){
         var clone = $('#file-holder').clone();
         clone.removeClass('d-none');                
-        clone.find('input[type=file]').attr('name', 'file[]');
+        clone.find('input[type=file]').attr('name', 'file[]').attr('required', true);
+        // clone.attr('required', true);
         $('#file-content').append(clone.removeAttr('id'));
     })
    
@@ -125,14 +126,11 @@
     });
 
 
-   
-
  })
  
 
  // For account view & controller
  $(function(){
-
     doc.on('click', '.accntDeleteFile', function(){
         var $this = $(this);
         if(confirm('Are you sure you want to delete this file')){
@@ -148,6 +146,7 @@
             );
         }
     });
+
  });
 
 

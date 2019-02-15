@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Storage;
 use File;
 use Illuminate\Http\Request;
 
+
+
 /**
  * Class UserController.
  */
@@ -69,10 +71,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        // if ( Storage::disk(‘resources’)->exists(‘/assets/js/country_names.json’) ) $country_names = json_decode(Storage::disk(‘resources’)->get( ‘/assets/js/country_names.json’ ), true);
-      
         $user = $this->userRepository->create($request->only(
-            'code',
+            'id_code',
             'first_name',
             'last_name',
             'email',
@@ -90,6 +90,12 @@ class UserController extends Controller
         if ($request->hasFile('image-file')) {
             $this->create_userImage($request->file('image-file'), $user->id);
         }
+
+
+        // Mail::send(new SendContact([$request->on('')]));
+ 
+
+
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.created'));
     }
@@ -209,7 +215,7 @@ class UserController extends Controller
     {
         foreach($files as $file){
           
-            $name = time().'_'. $file->getClientOriginalName();
+            $name = time().'_'.$file->getClientOriginalName();
             $data = file_get_contents($file->getRealPath());
 
             // $name = time().'_'. $file->getClientOriginalName();
@@ -219,7 +225,6 @@ class UserController extends Controller
             Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
 
             // Team::create(['user_id' => $userId, 'documents' => $name]);
-
 
 
         }

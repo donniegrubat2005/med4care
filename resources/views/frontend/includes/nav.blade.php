@@ -9,24 +9,21 @@
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         <ul class="navbar-nav">
-           
-            {{config('locale.status')}}
-            @if(config('locale.status') && count(config('locale.languages')) > 1)
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})
+
+            {{config('locale.status')}} @if(config('locale.status') && count(config('locale.languages')) > 1)
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})
                     </a>
-                    @include('includes.partials.lang')
-                </li>
-            @endif 
-            @auth
-                <li class="nav-item">
-                    <a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">
+    @include('includes.partials.lang')
+            </li>
+            @endif @auth
+            <li class="nav-item">
+                <a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.user.dashboard')) }}">
                         @lang('navs.frontend.dashboard')
                     </a>
-                </li>
-            @endauth
-            @guest
+            </li>
+            @endauth @guest
             <li class="nav-item"><a href="{{route('frontend.auth.login')}}" class="nav-link {{ active_class(Active::checkRoute('frontend.auth.login')) }}">@lang('navs.frontend.login')</a></li>
 
             @if(config('access.registration'))
@@ -89,46 +86,46 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">
-            <span class="d-md-down-none">{{ ucwords($logged_in_user->full_name) }}</span>
-        </a>
+                <img src="{{ $logged_in_user->picture }}" class="img-avatar" alt="{{ $logged_in_user->email }}">
+                <span class="d-md-down-none">{{ ucwords($logged_in_user->full_name) }}</span>
+            </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-header text-center">
                     <strong>Account</strong>
                 </div>
+                {{-- <a class="dropdown-item" href="#">
+                <i class="fa fa-bell"></i> Updates
+                <span class="badge badge-info">42</span>
+                </a>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-bell"></i> Updates
-            <span class="badge badge-info">42</span>
-            </a>
+                <i class="fa fa-envelope"></i> Messages
+                <span class="badge badge-success">42</span>
+                </a>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-envelope"></i> Messages
-            <span class="badge badge-success">42</span>
-            </a>
+                <i class="fa fa-tasks"></i> Tasks
+                <span class="badge badge-danger">42</span>
+                </a>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-tasks"></i> Tasks
-            <span class="badge badge-danger">42</span>
-            </a>
-                <a class="dropdown-item" href="#">
-            <i class="fa fa-comments"></i> Comments
-            <span class="badge badge-warning">42</span>
-            </a>
+                <i class="fa fa-comments"></i> Comments
+                <span class="badge badge-warning">42</span>
+                </a>
                 <div class="dropdown-header text-center">
                     <strong>Settings</strong>
                 </div>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-user"></i> Profile
-            </a>
+                <i class="fa fa-user"></i> Profile
+                </a>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-wrench"></i> Settings
-            </a>
+                <i class="fa fa-wrench"></i> Settings
+                </a>
                 <a class="dropdown-item" href="#">
-            <i class="fa fa-file"></i> Projects
-            <span class="badge badge-primary">42</span>
-            </a>
+                <i class="fa fa-file"></i> Projects
+                <span class="badge badge-primary">42</span>
+                </a> --}}
                 <div class="divider"></div>
                 <a class="dropdown-item" href="{{ route('frontend.auth.logout') }}">
-                <i class="fas fa-lock"></i> @lang('navs.general.logout')
-            </a>
+                    <i class="fas fa-lock"></i> @lang('navs.general.logout')
+                </a>
             </div>
         </li>
         <li>
