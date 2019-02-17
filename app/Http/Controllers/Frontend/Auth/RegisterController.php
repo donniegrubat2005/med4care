@@ -69,7 +69,7 @@ class RegisterController extends Controller
     {
         abort_unless(config('access.registration'), 404);
 
-        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'userRole', 'code'));
+        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'userRole', 'id_code'));
 
         if ($request->hasFile('file')) {
             

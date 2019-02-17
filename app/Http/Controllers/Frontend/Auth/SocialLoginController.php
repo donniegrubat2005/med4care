@@ -47,6 +47,7 @@ class SocialLoginController extends Controller
      */
     public function login(Request $request, $provider)
     {
+
         // There's a high probability something will go wrong
         $user = null;
 
@@ -82,6 +83,11 @@ class SocialLoginController extends Controller
 
         // Account approval is on
         if ($user->isPending()) {
+            throw new GeneralException(__('exceptions.frontend.auth.confirmation.pending'));
+        }
+
+
+        if(!$user->status){
             throw new GeneralException(__('exceptions.frontend.auth.confirmation.pending'));
         }
 

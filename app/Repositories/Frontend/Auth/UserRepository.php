@@ -105,7 +105,8 @@ class UserRepository extends BaseRepository
                 'id_code' => $code,
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'verification_points' => ($data['userRole'] === 'user') ? 10 : 0,
-                'active' => ($data['userRole'] !== 'user') ? 0 : 1,
+                'active' => 1,
+                'status' => ($data['userRole'] !== 'user') ? 0 : 1,
                 'password' => $data['password'],
                 // If users require approval or needs to confirm email
                 'confirmed' => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,

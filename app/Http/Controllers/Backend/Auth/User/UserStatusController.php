@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Backend\Auth\UserRepository;
 use App\Http\Requests\Backend\Auth\User\ManageUserRequest;
 
+
+use App\Mail\Backend\Contact\SendEmail;
+use Illuminate\Support\Facades\Mail;
+
+
 /**
  * Class UserStatusController.
  */
@@ -40,9 +45,17 @@ class UserStatusController extends Controller
     {
         $user = $this->userRepository->doActive($request->status, $request->userId);
 
-        return response()->json($user);
+        if($user){
+            Mail::send(new SendEmail([
+                'title' => 'activate',
+                'email' => $user->email,
+                'name' => $user->name,
+                'subject' => 'Email From ' . app_name(),
+                'message' => 'Your account is successfully activated please login here <a href="http://staging.med4care.online/login"> '. app_name() .'</a> with your account',
+            ]));
+        }
 
-    //    return ($request->all());
+        return response()->json($user);
     }
 
 
