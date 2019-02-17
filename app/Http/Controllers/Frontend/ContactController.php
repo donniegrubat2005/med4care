@@ -24,9 +24,11 @@ class ContactController extends Controller
      * @param SendContactRequest $request
      *
      * @return mixed
+     * 
      */
     public function send(SendContactRequest $request)
     {
+        // dd($request->phone);
         Mail::send(new SendContact($request));
 
         return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));

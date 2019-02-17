@@ -11,6 +11,19 @@
 
 <table class="table table-light" id="table-info">
     <tbody>
+
+        @if (!$user->status)
+            <tr>
+                <th id="statusLabel">Approval Status : <span class="badge badge-danger">Pending</span></th>
+                <td>
+                    <label class="switch switch-label switch-pill switch-primary" style="position:absolute;  ">
+                        {{ html()->checkbox('active',false, '1')->class('switch-input')->id('isActive') }}
+                        <span class="switch-slider" data-checked="Yes" data-unchecked="No" style="border:1px solid lightgray"></span>
+                    </label>
+                </td>
+            </tr>
+        @endif
+       
         <tr>
             <th>User Code</th>
             <td><strong clas="text-info">{{ $user->id_code }}</strong></td>
@@ -33,19 +46,7 @@
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.status')</th>
-            <td >
-                 <ul class="list-inline" >
-                    <li class="list-inline-item" id="statusLabel">
-                       {!! $user->status_label !!} 
-                    </li>
-                    <li class="list-inline-item" >
-                        <label class="switch switch-label switch-pill switch-primary" style="position:absolute; margin-top:-18px;">
-                            {{ html()->checkbox('active', ($user->active) ? true : false, '1')->class('switch-input')->id('isActive') }}
-                            <span class="switch-slider" data-checked="Yes" data-unchecked="No"></span>
-                        </label>
-                    </li>
-                </ul> 
-            </td>
+            <td> {!! $user->status_label !!} </td>
         </tr>
         <tr>
             <th>@lang('labels.backend.access.users.tabs.content.overview.confirmed')</th>

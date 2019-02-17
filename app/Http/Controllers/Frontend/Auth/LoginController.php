@@ -77,6 +77,10 @@ class LoginController extends Controller
             auth()->logout();
             throw new GeneralException(__('exceptions.frontend.auth.deactivated'));
         }
+        else if(!$user->isStatus()){
+            auth()->logout();
+            throw new GeneralException(__('exceptions.frontend.auth.status'));
+        }
 
         event(new UserLoggedIn($user));
 

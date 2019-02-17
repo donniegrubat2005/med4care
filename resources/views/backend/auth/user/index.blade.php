@@ -92,7 +92,7 @@
             <!--col-->
 
             <div class="col-sm-7">
-    @include('backend.auth.user.includes.header-buttons')
+                @include('backend.auth.user.includes.header-buttons')
             </div>
             <!--col-->
         </div>

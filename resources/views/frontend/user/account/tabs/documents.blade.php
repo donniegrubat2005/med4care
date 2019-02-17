@@ -42,7 +42,7 @@
                                Document <strong>{{ $iKey+=1 }}</strong>
                             </div>
                             <div class="card-body p-0">
-                                    {!! $file['files'] !!}
+                                {!! $file['files'] !!}
 
                                 {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
                             </div>

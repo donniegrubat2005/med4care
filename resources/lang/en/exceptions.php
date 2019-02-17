@@ -63,13 +63,14 @@ return [
                 'created_pending' => 'Your account was successfully created and is pending approval. An e-mail will be sent when your account is approved.',
                 'mismatch' => 'Your confirmation code does not match.',
                 'not_found' => 'That confirmation code does not exist.',
-                'pending' => 'Your account is currently pending approval.',
+                'pending' => 'Your account is currently pending approval please contact Med4Care personnel.',
                 'resend' => 'Your account is not confirmed. Please click the confirmation link in your e-mail, or <a href=":url">click here</a> to resend the confirmation e-mail.',
                 'success' => 'Your account has been successfully confirmed!',
                 'resent' => 'A new confirmation e-mail has been sent to the address on file.',
             ],
 
-            'deactivated' => 'Your account has been deactivated.',
+            'deactivated' => 'Your account has been deactivate.',
+            'status' => 'Your account has been Inactive please contact <strong class="text-info">Med4Care</strong> personnel.',
             'email_taken' => 'That e-mail address is already taken.',
 
             'password' => [

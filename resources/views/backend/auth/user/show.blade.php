@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
-    @include('backend.auth.user.show.tabs.userInfo')
+                            @include('backend.auth.user.show.tabs.userInfo')
                             </div>
                             <div class="col-md-5">
                                 <h5>Permissions</h5>
@@ -156,8 +156,8 @@
 
                                                         @if ($file['key'])
                                                         <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
-                                                                <i class="fa fa-eye"></i> 
-                                                            </button>                                                        @endif
+                                                            <i class="fa fa-eye"></i> 
+                                                        </button>                                                        @endif
 
                                                         <a href="{{route('admin.auth.user.download', $file['docId'] ) }}" class="btn btn-sm btn-outline-info">
                                                             <i class="fa fa-download"></i> 

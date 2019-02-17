@@ -28,9 +28,13 @@
 @elseif(session()->get('flash_danger'))
 <div class="alert alert-danger" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button> @if(is_array(json_decode(session()->get('flash_danger'), true))) {{ implode('', session()->get('flash_danger')->all(':message<br/>'))
-    }} @else {{ session()->get('flash_danger') }} @endif
+        <span aria-hidden="true">&times;</span>
+    </button> 
+    @if(is_array(json_decode(session()->get('flash_danger'), true))) 
+        {!! implode('', session()->get('flash_danger')->all(':message<br/>')) !!} 
+    @else 
+        {!! session()->get('flash_danger') !!} 
+    @endif
 </div>
 @elseif(session()->get('flash_message'))
 <div class="alert alert-info" role="alert">

@@ -381,9 +381,7 @@ class UserRepository extends BaseRepository
      */
     protected function checkUserByEmail(User $user, $email)
     {
-        //Figure out if email is not the same
         if ($user->email != $email) {
-            //Check to see if email exists
             if ($this->model->where('email', '=', $email)->first()) {
                 throw new GeneralException(trans('exceptions.backend.access.users.email_error'));
             }
@@ -394,7 +392,7 @@ class UserRepository extends BaseRepository
     public function doActive($status , $userId)
     {
         $user = User::find($userId);
-        $user->active = $status;
+        $user->status = $status;
         $user->save();
         return $user;
     }

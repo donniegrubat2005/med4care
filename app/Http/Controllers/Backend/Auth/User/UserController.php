@@ -15,8 +15,8 @@ use App\Http\Requests\Backend\Auth\User\UpdateUserRequest;
 use Illuminate\Support\Facades\Storage;
 use File;
 use Illuminate\Http\Request;
-
-
+use App\Mail\Backend\Contact\SendEmail;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Class UserController.
@@ -45,10 +45,18 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-        return view('backend.auth.user.index')
-            ->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
+        
+        // return new SendEmail([
+        //     'title' => 'register',
+        //     'email' => 'sample@gmail.com',
+        //     'name' => 'bryan',
+        //     'subject' => 'Email From ' . app_name(),
+        //     'password' => '1112321',
+        //     'message' => 'You are register from ' . app_name() . ' with your credentials.'
+        // ]);
+        return view('backend.auth.user.index')->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
     }
- 
+
     /**
      * @param ManageUserRequest    $request
      * @param RoleRepository       $roleRepository
@@ -84,18 +92,28 @@ class UserController extends Controller
             'permissions'
         ));
 
-        if ($request->hasFile('files')) {
-            $this->create_document($request->file('files'), $user->id);
+        if ($user) {
+
+            // Create user documents
+            if ($request->hasFile('files')) {
+                $this->create_document($request->file('files'), $user->id);
+            }
+
+            // Create user image
+            if ($request->hasFile('image-file')) {
+                $this->create_userImage($request->file('image-file'), $user->id);
+            }
+
+            // send Email
+            Mail::send(new SendEmail([
+                'title' => 'register',
+                'email' => $user->email,
+                'name' => $user->name,
+                'subject' => 'Email From ' . app_name(),
+                'password' => $request->password,
+                'message' => 'You are register from ' . app_name() . ' with your Credenstials.'
+            ]));
         }
-        if ($request->hasFile('image-file')) {
-            $this->create_userImage($request->file('image-file'), $user->id);
-        }
-
-
-        // Mail::send(new SendContact([$request->on('')]));
- 
-
-
 
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('alerts.backend.users.created'));
     }
@@ -118,12 +136,12 @@ class UserController extends Controller
     public function download($id)
     {
         $documents = Team::find($id);
-        $userId =  $documents->user_id;
-        $file =  $documents->documents;
+        $userId = $documents->user_id;
+        $file = $documents->documents;
 
-        $s3File = 'documents/'.$userId.'/'.$file;
+        $s3File = 'documents/' . $userId . '/' . $file;
 
-        if(Storage::disk('s3')->exists($s3File)) {
+        if (Storage::disk('s3')->exists($s3File)) {
             return Storage::disk('s3')->download($s3File);
         }
     }
@@ -132,9 +150,9 @@ class UserController extends Controller
         $files = [];
         $documents = Team::where('user_id', $userId)->get();
         $s3 = Storage::disk('s3');
-        $items = $s3->files('documents/'.$userId);
+        $items = $s3->files('documents/' . $userId);
         // header('Content-type: image/jpg');
-        foreach($items as $sk => $item){
+        foreach ($items as $sk => $item) {
             $docId = $documents[$sk]->id;
             $docu = $documents[$sk]->documents;
             $filesDocs = $documents[$sk]->files;
@@ -149,17 +167,16 @@ class UserController extends Controller
                     'key' => true,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url($item),
-                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,'.base64_encode( $filesDocs ).'"/>' ,
+                    'fileUrl' => $s3->url($item),
+                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,' . base64_encode($filesDocs) . '"/>',
                 ];
-            }
-            else{
+            } else {
                 $files[] = [
                     'docId' => $docId,
                     'key' => false,
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
-                    'fileUrl' =>   $s3->url('documents/documents.PNG'),
+                    'fileUrl' => $s3->url('documents/documents.PNG'),
                     'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
@@ -206,23 +223,23 @@ class UserController extends Controller
             'permissions'
         ));
         if ($request->hasFile('files')) {
-             $this->create_document($request->file('files'), $user->id);
+            $this->create_document($request->file('files'), $user->id);
         }
         return redirect()->route('admin.auth.user.show', $user)->withFlashSuccess(__('alerts.backend.users.updated'));
     }
 
     public function create_document($files, $userId)
     {
-        foreach($files as $file){
-          
-            $name = time().'_'.$file->getClientOriginalName();
+        foreach ($files as $file) {
+
+            $name = time() . '_' . $file->getClientOriginalName();
             $data = file_get_contents($file->getRealPath());
 
             // $name = time().'_'. $file->getClientOriginalName();
-            $filePath = 'documents/'.$userId.'/'. $name;
+            $filePath = 'documents/' . $userId . '/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
+            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
 
             // Team::create(['user_id' => $userId, 'documents' => $name]);
 
@@ -230,11 +247,11 @@ class UserController extends Controller
         }
 
     }
-    
+
     public function create_userImage($file, $userId)
     {
-        $name = time().'_'. $file->getClientOriginalName();
-        $filePath = 'images/'.$userId.'/'. $name;
+        $name = time() . '_' . $file->getClientOriginalName();
+        $filePath = 'images/' . $userId . '/' . $name;
         Storage::disk('s3')->put($filePath, file_get_contents($file));
     }
 
