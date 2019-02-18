@@ -9,7 +9,7 @@ class PatientController extends Controller
 {
    public function __construct()
    {
-       $this->middleware(['role:user|team onwer','permission:manage patients']);
+       $this->middleware(['role:user|team owner','permission:manage patients']);
    }
    
    public function index()
