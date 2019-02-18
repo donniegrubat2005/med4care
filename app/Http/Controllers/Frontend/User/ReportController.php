@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:user|team onwer','permission:reports']);
+        $this->middleware(['role:user|team owner','permission:reports']);
         
     }
     
