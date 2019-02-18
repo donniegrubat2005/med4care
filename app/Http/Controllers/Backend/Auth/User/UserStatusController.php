@@ -43,6 +43,9 @@ class UserStatusController extends Controller
 
     public function getActive(ManageUserRequest $request)
     {
+
+        $key = false;
+
         $user = $this->userRepository->doActive($request->status, $request->userId);
 
         if($user){
@@ -51,15 +54,14 @@ class UserStatusController extends Controller
                 'email' => $user->email,
                 'name' => $user->name,
                 'subject' => 'Email From ' . app_name(),
-                'message' => 'Your account is successfully activated please login here <a href="http://staging.med4care.online/login"> '. app_name() .'</a> with your account',
+                'message' => 'Your account has been approved. <br> Please login here <a href="http://staging.med4care.online/login"> '. app_name() .'</a> with your personal account.',
             ]));
+            $key = true;
         }
-
-        return response()->json($user);
+        return response()->json([
+            'key' => $key,
+        ]);
     }
-
-
-
 
 
     /**

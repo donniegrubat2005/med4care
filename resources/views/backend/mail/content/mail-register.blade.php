@@ -4,7 +4,7 @@
         @case('register')
             <div style="margin: 20 0 80 0">
                 <p style="font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">
-                    {{$data->message}}
+                    {!! $data->message !!}
                 </p>
                 <ul style="margin-left:-25px;">
                     <li style="margin-left:-25px; list-style-type: none;font-family:Avenir,Helvetica,sans-serif;box-sizing:border-box;color:#74787e;font-size:16px;line-height:1.5em;margin-top:0;text-align:left">

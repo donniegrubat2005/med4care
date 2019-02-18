@@ -31,11 +31,7 @@ class AccountController extends Controller
     {
         $this->userRepository = $userRepository;
       
-        $this->middleware(['role:user','permission:manage patients']);
-   
     }
-
-
 
     public function index()
     {
@@ -80,26 +76,7 @@ class AccountController extends Controller
         return view('frontend.user.account', compact('files'));
 
     }
-
-    
-    public function patients()
-    {
-       
-        return view('frontend.pages.patients');
-    }
-    // public function payments()
-    // {
-
-    //     return view('frontend.pages.payments');
-    // }
-    // public function reports()
-    // {
-
-    //     return view('frontend.pages.reports');
-    // }
-    
-    
-    
+  
     public function add_documents(Request $request)
     {
         

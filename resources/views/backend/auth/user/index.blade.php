@@ -46,8 +46,10 @@
                         <td class="text-center">{!! $user->confirmed_label !!}</td>
                         <td class="text-center">
                             @if ($user->active)
-                            <label class="badge badge-success">Active</label> @else
-                            <label class="badge badge-danger">Inactive</label> @endif
+                                <label class="badge badge-success">Active</label>
+                            @else
+                                <label class="badge badge-danger">Inactive</label>
+                            @endif
                         </td>
                         <td class="text-center">{!! $user->permissions_label !!}</td>
                         <td class="text-center">{!! $user->social_buttons !!}</td>
@@ -122,7 +124,7 @@
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{!! $user->confirmed_label !!}</td>
-                                <td>{!! $user->roles_label !!}</td>
+                                {{-- <td>{!! $user->roles_label !!}</td> --}}
                                 <td>{!! $user->permissions_label !!}</td>
                                 <td>{!! $user->social_buttons !!}</td>
                                 <td>{{ $user->updated_at->diffForHumans() }}</td>

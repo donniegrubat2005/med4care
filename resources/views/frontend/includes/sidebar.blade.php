@@ -23,9 +23,17 @@
 
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients') }}">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients.index') }}">
                     <i class="fa fa-users"></i> 
                     &nbsp; Manage Patients
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.reports.index') }}">
+                    {{-- <i class="fa fa-users"></i>  --}}
+                    <i class="fas fa-chart-bar"></i>
+                    &nbsp; Reports
                 </a>
             </li>
 
