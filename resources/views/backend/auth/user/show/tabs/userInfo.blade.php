@@ -9,12 +9,17 @@
 </style>
 
 
+
+<span id="alert-div">
+    
+</span>
+
+
 <table class="table table-light" id="table-info">
     <tbody>
-
         @if (!$user->status)
-            <tr>
-                <th id="statusLabel">Approval Status : <span class="badge badge-danger">Pending</span></th>
+            <tr id="tr-appr">
+                <th id="statusLabel">Approval Status : <span class="badge badge-danger">Pending.</span></th>
                 <td>
                     <label class="switch switch-label switch-pill switch-primary" style="position:absolute;  ">
                         {{ html()->checkbox('active',false, '1')->class('switch-input')->id('isActive') }}
@@ -25,11 +30,11 @@
         @endif
        
         <tr>
-            <th>User Code</th>
-            <td><strong clas="text-info">{{ $user->id_code }}</strong></td>
+            <th>ID Code</th>
+            <td><strong clas="text-info">{{ !is_null($user->id_code) ?  $user->id_code : 'N/A' }}</strong></td>
         </tr>
         <tr>
-            <th>@lang('labels.backend.access.users.tabs.content.overview.name')</th>
+            <th>Full Name</th>
             <td>{{ ucwords($user->name ) }}</td>
         </tr>
         <tr>
@@ -37,7 +42,7 @@
             <td><a href="javascript:;">{{ $user->email }} </td>
         </tr>
         <tr>
-            <th>User Role</th>
+            <th>Role</th>
             <td>
                 @foreach ($user->roles as $role)
                     {{ ucwords($role->name) }}

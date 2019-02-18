@@ -25,10 +25,13 @@
 @if (true)
 
 <div class="card">
+    
     <div class="card-header">
         <h4 class="card-title mb-0">
             @lang('labels.backend.access.users.management')
-            <small class="text-muted">@lang('labels.backend.access.users.view')</small>
+            <small class="text-muted">
+                @lang('labels.backend.access.users.view')
+            </small>
             <div class="btn-group float-right" role="group" aria-label="Basic example">
                 {!! $user->action_buttons !!}
             </div>

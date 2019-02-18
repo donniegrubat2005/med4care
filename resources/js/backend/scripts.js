@@ -40,8 +40,19 @@
                  'status': isActive,
                  'userId': userId
              },
-             success: function (response) {
-                window.location.reload();
+             success: function (resp) {
+                if(resp.key === true){
+                    $('#alert-div').append(`
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <i class="fas fa-check"></i>
+                            Account has been approved.
+                        </div>
+                    `);
+                    $('#tr-appr').remove();
+                }
              }
          });
 

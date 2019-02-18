@@ -5,6 +5,8 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
+use App\Http\Controllers\frontend\PatientController;
+
 
 /*
  * Frontend Controllers
@@ -37,15 +39,9 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::get('account/delete_document/{id}/{fileName}', [AccountController::class, 'delete_my_documents'])->name('delete_document');
 
 
+        Route::resource('patients', 'PatientController');
+        Route::resource('reports', 'ReportController');
 
-        // test sample routes for aireenmay lavador
-
-        Route::get('patients', [AccountController::class, 'patients'])->name('patients');
-        // Route::get('payments', [AccountController::class, 'payments'])->name('payments');
-        // Route::get('reports', [AccountController::class, 'reports'])->name('reports');
-
-
-        
 
         /*
          * User Profile Specific
