@@ -10,11 +10,10 @@ class PatientController extends Controller
    public function __construct()
    {
        $this->middleware(['role:user|team onwer','permission:manage patients']);
-       
    }
    
    public function index()
    {
-        return view('frontend.pages.patiens');
+        return view('frontend.pages.patients');
    }
 }
