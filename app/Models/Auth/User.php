@@ -18,7 +18,8 @@ use App\Models\Auth\Traits\Relationship\UserRelationship;
  */
 class User extends Authenticatable
 {
-    use HasRoles,
+    use
+        HasRoles,
         Notifiable,
         SendUserPasswordReset,
         SoftDeletes,
@@ -46,6 +47,7 @@ class User extends Authenticatable
         'verification_points',
         'confirmation_code',
         'confirmed',
+        'status',
         'timezone',
         'last_login_at',
         'last_login_ip',
@@ -78,5 +80,5 @@ class User extends Authenticatable
         'active' => 'boolean',
         'confirmed' => 'boolean',
     ];
-    
+
 }

@@ -93,57 +93,59 @@ class UserRepository extends BaseRepository
      */
     public function create(array $data)
     {
-        return DB::transaction(function () use ($data) {
+        return DB::transaction(
+            function () use ($data) {
 
 
-            $code = ($data['id_code']) ? $data['id_code'] : null;
+                $code = ($data['id_code']) ? $data['id_code'] : null;
 
-            $user = parent::create([
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
-                'id_code' => $code,
-                'confirmation_code' => md5(uniqid(mt_rand(), true)),
-                'verification_points' => ($data['userRole'] === 'user') ? 10 : 0,
-                'active' => 1,
-                'status' => ($data['userRole'] !== 'user') ? 0 : 1,
-                'password' => $data['password'],
-                // If users require approval or needs to confirm email
-                'confirmed' => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,
-            ]);
-
-            if ($user) {
-                /*
-                 * Add the default site role to the new user
-                 */
-
-                $this->insertModelHasRoles([
-                    'roleId' => $data['userRole'] === 'user' ? 3 : 4,
-                    'modelType' => 'App\Models\Auth\User',
-                    'modelId' => $user->id,
+                $user = parent::create([
+                    'first_name' => $data['first_name'],
+                    'last_name' => $data['last_name'],
+                    'email' => $data['email'],
+                    'id_code' => $code,
+                    'confirmation_code' => md5(uniqid(mt_rand(), true)),
+                    'verification_points' => ($data['userRole'] === 'user') ? 10 : 0,
+                    'active' => 1,
+                    'status' => ($data['userRole'] !== 'user') ? 0 : 1,
+                    'password' => $data['password'],
+                        // If users require approval or needs to confirm email
+                    'confirmed' => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,
                 ]);
+
+                if ($user) {
+                     /*
+                     * Add the default site role to the new user
+                     */
+
+                    $this->insertModelHasRoles([
+                        'roleId' => $data['userRole'] === 'user' ? 3 : 4,
+                        'modelType' => 'App\Models\Auth\User',
+                        'modelId' => $user->id,
+                    ]);
                 
 
                 // $user->assignRole(config('access.users.default_role'));
-            }
+                }
 
-            /*
-             * If users have to confirm their email and this is not a social account,
-             * and the account does not require admin approval
-             * send the confirmation email
-             *
-             * If this is a social account they are confirmed through the social provider by default
-             */
-            if (config('access.users.confirm_email')) {
+                /*
+                 * If users have to confirm their email and this is not a social account,
+                 * and the account does not require admin approval
+                 * send the confirmation email
+                 *
+                 * If this is a social account they are confirmed through the social provider by default
+                 */
+                if (config('access.users.confirm_email')) {
                 // Pretty much only if account approval is off, confirm email is on, and this isn't a social account.
-                $user->notify(new UserNeedsConfirmation($user->confirmation_code));
-            }
+                    $user->notify(new UserNeedsConfirmation($user->confirmation_code));
+                }
 
             /*
-             * Return the user object
-             */
-            return $user;
-        });
+                 * Return the user object
+                 */
+                return $user;
+            }
+        );
     }
 
 

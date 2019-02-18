@@ -37,30 +37,21 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item">
+            {{--
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.payments') }}">
                     <i class="fa fa-money"></i> 
                     Manage Payments
                 </a>
             </li>
 
-            
+
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.reports') }}">
                     <i class="fa fa-signal"></i> 
                     Reports
                 </a>
-            </li> --}}
-
-
-
-
-
-
-
-
-
-            {{--
+            </li> --}} {{--
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('general')) }} " href="{{ route('frontend.user.account') }}">
                     <i class="nav-icon icon-speedometer"></i>
