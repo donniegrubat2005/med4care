@@ -3,12 +3,12 @@
 return [
 
     /*
-     * Application captcha specific settings
-     */
+ * Application captcha specific settings
+ */
     'captcha' => [
         /*
-         * Whether the registration captcha is on or off
-         */
+     * Whether the registration captcha is on or off
+     */
         'registration' => env('REGISTRATION_CAPTCHA_STATUS', false),
     ],
 
@@ -30,8 +30,8 @@ return [
      */
     'users' => [
         /*
-         * Whether or not the user has to confirm their email when signing up
-         */
+     * Whether or not the user has to confirm their email when signing up
+     */
         'confirm_email' => env('CONFIRM_EMAIL', false),
 
         /*
@@ -82,13 +82,25 @@ return [
     ],
 
     /*
-    * Configuration for roles
-    */
+     * Configuration for roles
+     */
     'roles' => [
         /*
-         * Whether a role must contain a permission or can be used standalone as a label
-         */
+     * Whether a role must contain a permission or can be used standalone as a label
+     */
         'role_must_contain_permission' => true,
+
+        'administrator' => env('ROLE_ADMINISTRATOR', ''),
+
+        'executive' => env('ROLE_EXECUTIVE', ''),
+
+        'user' => env('ROLE_USER', ''),
+
+        'team_owner' => env('ROLE_TEAM_OWNER', ''),
+
+        'employee' => env('ROLE_EMPLOYEE', ''),
+
+
     ],
 
     /*

@@ -4,14 +4,24 @@
 
 
 
-<div class="row" style="margin-top:-400px;">
+
+<div class="row">
     <div class="col">
         <ul class="list-inline ">
-            <li>
-                <a href="{{ route('frontend.auth.login') }}">Login</a>
-                <a href="{{ route('frontend.auth.register') }}">Register</a>
+            <li class="list-inline-item">
+                <h4><a href="{{ route('frontend.auth.login') }}">Login</a></h4>
+            </li>
+            <li class="list-inline-item">
+                <h4><a href="{{ route('frontend.auth.register') }}">Register</a></h4>
             </li>
         </ul>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col">
         <div class="card">
             <div class="card-header">
                 <i class="fas fa-home"></i> @lang('navs.general.home')
@@ -26,6 +36,7 @@
 </div>
 <!--row-->
 
+<example-component></example-component>
 
 <!--row-->
 <div class="row">
@@ -46,5 +57,20 @@
     </div>
     <!--col-->
 </div>
+
 <!--row-->
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <i class="icon-user"></i> My Account
+            </div>
+            <div class="card-body">
+                lorem ipsum dollor {{-- @lang('strings.frontend.welcome_to', ['place' => app_name()]) --}}
+            </div>
+        </div>
+        <!--card-->
+    </div>
+    <!--col-->
+</div>
 @endsection

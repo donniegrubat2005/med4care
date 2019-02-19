@@ -47,6 +47,7 @@
 
 @endpush 
 @section('content')
+@include('includes.partials.messages') 
 
 <div class="card">
     <div class="card-header">

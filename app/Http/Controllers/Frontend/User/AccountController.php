@@ -39,6 +39,8 @@ class AccountController extends Controller
         $user = auth()->user();
         $files = [];
 
+        $percent = $user->verification_points;
+
         $s3 = Storage::disk('s3');
         $items = $s3->files('documents/'.$user->id);
         $documents = Team::where('user_id', $user->id)->get();
@@ -73,7 +75,7 @@ class AccountController extends Controller
             }
 
         }
-        return view('frontend.user.account', compact('files'));
+        return view('frontend.user.account', compact('files', 'percent'));
 
     }
   

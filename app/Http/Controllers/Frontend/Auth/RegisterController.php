@@ -73,20 +73,20 @@ class RegisterController extends Controller
         $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'userRole', 'id_code'));
 
         if ($request->hasFile('file')) {
-            
+
             $userId = $user->id;
 
-            foreach($request->file('file') as $file){
+            foreach ($request->file('file') as $file) {
 
 
-                $name = time().'_'. $file->getClientOriginalName();
+                $name = time() . '_' . $file->getClientOriginalName();
                 $data = file_get_contents($file->getRealPath());
     
                 // $name = time().'_'. $file->getClientOriginalName();
-                $filePath = 'documents/'.$userId.'/'. $name;
+                $filePath = 'documents/' . $userId . '/' . $name;
                 Storage::disk('s3')->put($filePath, file_get_contents($file));
-    
-                Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
+
+                Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
     
 
 
@@ -103,7 +103,7 @@ class RegisterController extends Controller
                 // Team::create(['user_id' => $userId, 'documents' => $name]);
             }
 
-            
+
         }
 
         

@@ -60,6 +60,7 @@ class UserStatusController extends Controller
         }
         return response()->json([
             'key' => $key,
+            'user' => $user
         ]);
     }
 

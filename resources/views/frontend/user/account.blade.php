@@ -61,9 +61,8 @@
             </div>
 
             <div class="card-body">
-
-                <div class="row-fluid">
-                    <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4">
                         <ul class="list-inline">
                             <li class="list-inline-item active">
                                 <div class="img-holder">
@@ -91,9 +90,20 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body" id="progress-content">
+                                <h6 class="card-title">{{$percent}}% {{ $percent === 100 ? 'Done' : 'Completion' }} </h6>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width:{{$percent}}%">{{$percent}}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
-                <div class="row-fluid">
+                <div class="row">
                     <div class="col-md-10">
                         <div class="nav-content" style="border-bottom:1px solid #f0f3f5">
                             <ul class="nav">

@@ -48,6 +48,8 @@
 @endpush
 
 @section('content') 
+@include('includes.partials.messages') 
+
 
     {{ html()->form('POST', route('admin.auth.user.store'))->attribute('enctype', 'multipart/form-data')->class('form-horizontal')->open()}}
         <div class="card">
