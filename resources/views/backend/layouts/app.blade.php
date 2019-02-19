@@ -15,16 +15,19 @@
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }} @stack('after-styles')
 
+   
+
 </head>
 
 <body class="{{ config('backend.body_classes') }}" id="mainUrl" uval="{{ url('/') }}">
+  
     @include('backend.includes.header')
 
-    <div class="app-body">
-    @include('backend.includes.sidebar')
-
+    <div class="app-body" id="app">
+        @include('backend.includes.sidebar')
         <main class="main">
-            @include('includes.partials.logged-in-as') {!! Breadcrumbs::render() !!}
+            @include('includes.partials.logged-in-as') 
+            {!! Breadcrumbs::render() !!}
 
             <div class="container-fluid">
                 <div class="animated fadeIn">
@@ -32,21 +35,28 @@
                         @yield('page-header')
                     </div>
                     <!--content-header-->
-                @include('includes.partials.messages') @yield('content')
+                    {{-- @include('includes.partials.messages')  --}}
+                    @yield('content')
                 </div>
                 <!--animated-->
             </div>
             <!--container-fluid-->
         </main>
         <!--main-->
-    @include('backend.includes.aside')
+        @include('backend.includes.aside')
     </div>
     <!--app-body-->
     @include('backend.includes.footer')
 
+
+
     <!-- Scripts -->
-    @stack('before-scripts') {!! script(mix('js/manifest.js')) !!} {!! script(mix('js/vendor.js')) !!} {!! script(mix('js/backend.js'))
-    !!} @stack('after-scripts')
+    @stack('before-scripts') 
+        {!! script(mix('js/manifest.js')) !!} 
+        {!! script(mix('js/vendor.js')) !!} 
+        {!! script(mix('js/backend.js')) !!} 
+        {{-- {!! script(mix('js/frontend.js')) !!}  --}}
+    @stack('after-scripts')
 
 
 </body>

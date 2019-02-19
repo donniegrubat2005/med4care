@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\Backend\Auth\Role\RoleController;
+use App\Http\Controllers\Backend\Auth\Permission\PermissionController;
 use App\Http\Controllers\Backend\Auth\User\UserController;
 use App\Http\Controllers\Backend\Auth\User\UserAccessController;
 use App\Http\Controllers\Backend\Auth\User\UserSocialController;
@@ -8,7 +10,6 @@ use App\Http\Controllers\Backend\Auth\User\UserStatusController;
 use App\Http\Controllers\Backend\Auth\User\UserSessionController;
 use App\Http\Controllers\Backend\Auth\User\UserPasswordController;
 use App\Http\Controllers\Backend\Auth\User\UserConfirmationController;
-
 /*
  * All route names are prefixed with 'admin.auth'.
  */
@@ -95,6 +96,22 @@ Route::group([
             Route::patch('/', [RoleController::class, 'update'])->name('role.update');
             Route::delete('/', [RoleController::class, 'destroy'])->name('role.destroy');
         });
+    });
+
+    /*
+     * Permission Management
+     */
+    Route::group(['namespace' => 'Permission'], function () {
+        Route::get('permission', [PermissionController::class, 'index'])->name('permission.index');
+        Route::get('permission/create', [PermissionController::class, 'create'])->name('permission.create');
+        Route::post('permission', [PermissionController::class, 'store'])->name('permission.store');
+
+        Route::group(['prefix' => 'permission/{permission}'], function () {
+            Route::get('edit', [PermissionController::class, 'edit'])->name('permission.edit');
+            Route::patch('/', [PermissionController::class, 'update'])->name('permission.update');
+            // Route::delete('/', [RoleController::class, 'destroy'])->name('role.destroy');
+        });
+        
     });
 
 });

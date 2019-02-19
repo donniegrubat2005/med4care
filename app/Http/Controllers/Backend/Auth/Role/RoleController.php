@@ -44,10 +44,7 @@ class RoleController extends Controller
     public function index(ManageRoleRequest $request)
     {
         return view('backend.auth.role.index')
-            ->withRoles($this->roleRepository
-                ->with('users', 'permissions')
-                ->orderBy('id', 'asc')
-                ->paginate(25));
+            ->withRoles($this->roleRepository->with('users', 'permissions')->orderBy('id', 'asc')->paginate(25));
     }
 
     /**
@@ -82,6 +79,7 @@ class RoleController extends Controller
      */
     public function edit(ManageRoleRequest $request, Role $role)
     {
+        // dd($role);
         if ($role->isAdmin()) {
             return redirect()->route('admin.auth.role.index')->withFlashDanger('You can not edit the administrator role.');
         }

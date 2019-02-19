@@ -4,7 +4,7 @@
  var doc = $(document);
 
  $(function () {
-     // Is Cosumer Active
+     // Is Customer Active
      doc.on('change', '#isActive', function () {
 
          var urlArr = $(location).attr("href").split('/');
@@ -41,8 +41,8 @@
                  'userId': userId
              },
              success: function (resp) {
-                if(resp.key === true){
-                    $('#alert-div').append(`
+                 if (resp.key === true) {
+                     $('#alert-div').append(`
                         <div class="alert alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -51,8 +51,19 @@
                             Account has been approved.
                         </div>
                     `);
-                    $('#tr-appr').remove();
-                }
+
+                     $('#tr-appr').remove();
+
+                     var points = resp.user.verification_points > 100 ? 100 : resp.user.verification_points;
+                     var vLabel = points === 100 ? 'Done' : 'Completion';
+
+                     $('#progress-content').show().html(
+                         `<h6 class="card-title">` + points + `% ` + vLabel + ` </h6>
+                         <div class="progress">
+                            <div class="progress-bar" style="width:` + points + `%">` + points + `%</div>
+                         </div>`
+                     );
+                 }
              }
          });
 
@@ -103,7 +114,7 @@
          var content = $('#doc-content');
 
          switch (userType) {
-             case 'team-owner':
+             case 'team owner':
                  content.removeClass('d-none');
                  var clone = $('#file-holder').clone();
                  clone.removeClass('d-none');

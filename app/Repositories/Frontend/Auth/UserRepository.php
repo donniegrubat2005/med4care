@@ -16,6 +16,8 @@ use App\Events\Frontend\Auth\UserProviderRegistered;
 use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 
 
+use App\Models\Auth\Role;
+
 
 /**
  * Class UserRepository.
@@ -118,8 +120,12 @@ class UserRepository extends BaseRepository
                      * Add the default site role to the new user
                      */
 
+                    $role = Role::where('name', $data['userRole'])->first();
+
+                    // $roleId = $role->id;
+
                     $this->insertModelHasRoles([
-                        'roleId' => $data['userRole'] === 'user' ? 3 : 4,
+                        'roleId' => $role->id,
                         'modelType' => 'App\Models\Auth\User',
                         'modelId' => $user->id,
                     ]);

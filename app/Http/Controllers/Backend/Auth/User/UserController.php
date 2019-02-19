@@ -126,13 +126,23 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
+
+        
+        // $percent = $this->userRepository->calculatePoints();
+
+        // dd($user->verification_points);
         $files = $this->get_documents($user->id);
 
         return view('backend.auth.user.show')
-            ->with(['files' => $files])
+            ->with(['files' => $files, 'percent' => $user->verification_points])
             ->withUser($user)
             ->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
     }
+
+    
+
+
+
     public function download($id)
     {
         $documents = Team::find($id);

@@ -109,6 +109,7 @@ class UserRepository extends BaseRepository
         return DB::transaction(function () use ($data) {
 
             $vp = 0;
+
             if (is_array($data['roles'])) {
                 foreach ($data['roles'] as $roles) {
                     if($roles === 'user')
@@ -118,6 +119,8 @@ class UserRepository extends BaseRepository
 
             $code = (!is_null($data['id_code'])) ? $data['id_code'] : null ;
 
+            $rKey = $this->checkUserRole($data['roles']);
+
             $user = parent::create([
                 'first_name' => $data['first_name'],
                 'id_code' => $code,
@@ -125,22 +128,12 @@ class UserRepository extends BaseRepository
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => $data['password'],
+                'status' => ($rKey) ? 0 : 1,
                 'active' => isset($data['active']) && $data['active'] == '1' ? 1 : 0,
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => isset($data['confirmed']) && $data['confirmed'] == '1' ? 1 : 0,
             ]);
         
-
-            // $message = 'You are register on med4care please login with your credentials \n email : '. $data['email'] .'\n'. 'password : '. $data['password'] ;
-            
-            // $credentials = ['name' => 'Med4Care', 'email' => $data['email'], 'message' => $message];
-
-
-
-
-
-
-
 
 
             // See if adding any additional permissions
@@ -171,6 +164,11 @@ class UserRepository extends BaseRepository
             throw new GeneralException(__('exceptions.backend.access.users.create_error'));
         });
     }
+
+
+    
+  
+
 
     /**
      * @param User  $user
@@ -388,12 +386,30 @@ class UserRepository extends BaseRepository
         }
     }
 
-
     public function doActive($status , $userId)
     {
         $user = User::find($userId);
+        $user->verification_points = ($user->verification_points + 10);
         $user->status = $status;
         $user->save();
         return $user;
     }
+
+    public function checkUserRole($roles = [])
+    {
+        $key = false;
+        foreach ($roles as $role) {
+            if($role === config('access.roles.team_owner')){
+                $key = true;
+            }
+        }
+        return $key;
+    }
+
+    public function calculatePoints($points, $percent)
+    {
+        $totalP = ($percent / 100) * $points;
+        return $totalP;
+    }
+
 }

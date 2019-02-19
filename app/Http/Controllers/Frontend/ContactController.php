@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Frontend\Contact\SendContact;
 use App\Http\Requests\Frontend\Contact\SendContactRequest;
+use App\Models\Auth\User;
 
 /**
  * Class ContactController.
@@ -32,5 +33,10 @@ class ContactController extends Controller
         Mail::send(new SendContact($request));
 
         return redirect()->back()->withFlashSuccess(__('alerts.frontend.contact.sent'));
+    }
+
+    public function getUsers()
+    {
+        return response()->json(User::all());
     }
 }
