@@ -7,6 +7,7 @@
 
 <div class="row">
     <div class="col-md-8">
+        @include('includes.partials.messages') 
         <div class="card">
             <div class="card-header">
                 {{-- <strong>Role Management</strong> --}}

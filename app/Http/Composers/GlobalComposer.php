@@ -21,36 +21,60 @@ class GlobalComposer
      */
     public function compose(View $view)
     {
-        $items = [];
         $user = auth()->user();
+        $items = [];
+
+        if(!is_null($user)){
+            
+            $items = $this->userPermissions($user->permissions);
+            // dd($accesses);
+            // foreach ( $accesses as  $access ) {
+              
+            //     $exp = explode(' ', $access->name);
+
+            //     $items[] = [
+            //         'name' => $access->name,
+            //         'route' => url($access->name)
+            //     ];
         
-        // $accesses = $this->getUserAccess($user);
+            // }
+        }
 
-        // foreach ( $accesses as  $access ) {
-
-        //     $exp = explode(' ', $access->name);
-
-        //     $items[] = [
-        //         'name' => $access->name,
-        //         'route' => url($access->name)
-        //     ];
-        // }
-
-
+        // dd($user->permissions);
+        
         $view->with([
-            'logged_in_user' => $user
+            'logged_in_user' => $user,
+            'permissions_user' => $items
         ]);
     }
 
-    public function getUserAccess($user)
+    public function userPermissions($permissions)
     {
+        $icons = ['step-backward', 'user' ,'chart-bar' ,'google-wallet'];
+        $items = [];
+        foreach ($permissions as $k =>  $permission) {
+          
+            $explode = explode(" ", $permission->name);
+           
+            $value = '';
+            $i = 1;
+            foreach ($explode as $exp ) {
+			 	$value .= $exp;
+			 	if ($i < count($explode)) {
+			 		$value .= '-';
+			 		$i++;
+			 	}
+			}
 
-        $permissions = DB::table('model_has_permissions')->join('permissions', 'model_has_permissions.permission_id', '=', 'permissions.id');
-       
-        if(!$user->isAdmin()){
-            $permissions = $permissions->where('model_id',  $user->id);
+            $items[] = [
+                'name' => ucwords($permission->name),
+                'route' => url(strtolower($value)),
+                'icon' =>  $icons[$k]
+            ];
         }
-        return $permissions->get();
+
+
+        return $items;
 
     }
 

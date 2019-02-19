@@ -6,6 +6,8 @@
 
 <div class="row">
     <div class="col-md-8">
+            @include('includes.partials.messages') 
+
         {{ html()->modelForm($role, 'PATCH', route('admin.auth.role.update', $role))->class('form-horizontal')->open() }}
             <div class="card">
                 <div class="card-header">
