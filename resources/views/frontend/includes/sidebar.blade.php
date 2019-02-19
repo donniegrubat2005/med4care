@@ -20,9 +20,17 @@
             </li>
 
 
+            @foreach ($permissions_user as $permission)
+                <li class="nav-item">
+                    <a class="nav-link " href="{{ $permission['route'] }}">
+                        <i class="fa fa-{{$permission['icon']}}"></i>
+                        &nbsp;&nbsp;{{$permission['name']}}
+                    </a>
+                </li>
+            @endforeach
 
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients.index') }}">
                     <i class="fa fa-users"></i> 
                     &nbsp; Manage Patients
@@ -31,11 +39,10 @@
 
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.reports.index') }}">
-                    {{-- <i class="fa fa-users"></i>  --}}
                     <i class="fas fa-chart-bar"></i>
                     &nbsp; Reports
                 </a>
-            </li>
+            </li> --}}
 
             {{--
             <li class="nav-item">
