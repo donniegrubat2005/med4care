@@ -129,7 +129,7 @@ class DepositController extends Controller
     {
         $items = [];
 
-        $wallets = Wallet::all();
+        $wallets = $this->walletRepository->getWallet();
 
         foreach ($wallets as $wallet) {
             $items[] =  [

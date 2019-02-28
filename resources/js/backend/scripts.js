@@ -204,10 +204,11 @@
          type: "get",
          url: mainUrl + '/wallet/deposit/getWallets',
          success: function (response) {
+             console.log(response)
              $("#depositName").autocomplete({
                  source: response,
                  search: function (event, ui) {
-                     console.log(ui)
+                    //  console.log(ui)
                  },
                  select: function (event, ui) {
                      $("#depositName").val(ui.item.label);
@@ -228,7 +229,7 @@
              $("#wallet_name").autocomplete({
                  source: response,
                  search: function (event, ui) {
-                     console.log(ui)
+                    // console.log(ui)
                  },
                  select: function (event, ui) {
                      $("#wallet_name").val(ui.item.label);

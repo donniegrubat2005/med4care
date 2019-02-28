@@ -36,7 +36,8 @@ class WalletRepository extends BaseRepository
     public function findOrFail(array $data)
     {
         $wallet = $this->model
-            ->where('name', $data['depositName']);
+            ->where('name', $data['depositName'])
+            ->where('user_id', auth()->id());
         if ($wallet->count() > 0) {
             return $wallet->first();
         }
@@ -67,10 +68,10 @@ class WalletRepository extends BaseRepository
             return $balance->balance;
         }
         return 0;
-        // $wallet = $this->model->query("s");
     }
 
-    public function getWallet(){
-       return $this->model->where('user_id', auth()->id())->get();
-    }   
+    public function getWallet()
+    {
+        return $this->model->where('user_id', auth()->id())->get();
+    }
 }

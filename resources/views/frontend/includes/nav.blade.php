@@ -54,8 +54,10 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{{ route('frontend.index') }}">
-        &nbsp; <img class="navbar-brand-full" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="50" height="20" alt="Med4Care Logo">
-        &nbsp; <strong class="navbar-brand-full">Med4Care</strong>
+        &nbsp; 
+        <img class="navbar-brand-full" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="50" height="20" alt="Med4Care Logo" >
+        &nbsp; 
+        <strong class="navbar-brand-full">Med4Care</strong>
        <img class="navbar-brand-minimized" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="30" height="20" alt="Med4Care Logo">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
