@@ -1,11 +1,6 @@
 <br>
 
-<style>
-    .img-doc {
-        width: 100%;
-        height: 260px;
-    }
-</style>
+
 <div class="row" style="margin-left:10px;">
     <div class="col-md-10">
         <h5>
@@ -43,7 +38,6 @@
                             </div>
                             <div class="card-body p-0">
                                 {!! $file['files'] !!}
-
                                 {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}" id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
                             </div>
                             <div class="card-footer">

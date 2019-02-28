@@ -111,12 +111,12 @@ class UserRepository extends BaseRepository
                     'active' => 1,
                     'status' => ($data['userRole'] !== 'user') ? 0 : 1,
                     'password' => $data['password'],
-                        // If users require approval or needs to confirm email
+                    // If users require approval or needs to confirm email
                     'confirmed' => config('access.users.requires_approval') || config('access.users.confirm_email') ? 0 : 1,
                 ]);
 
                 if ($user) {
-                     /*
+                    /*
                      * Add the default site role to the new user
                      */
 
@@ -129,9 +129,9 @@ class UserRepository extends BaseRepository
                         'modelType' => 'App\Models\Auth\User',
                         'modelId' => $user->id,
                     ]);
-                
 
-                // $user->assignRole(config('access.users.default_role'));
+
+                    // $user->assignRole(config('access.users.default_role'));
                 }
 
                 /*
@@ -142,11 +142,11 @@ class UserRepository extends BaseRepository
                  * If this is a social account they are confirmed through the social provider by default
                  */
                 if (config('access.users.confirm_email')) {
-                // Pretty much only if account approval is off, confirm email is on, and this isn't a social account.
+                    // Pretty much only if account approval is off, confirm email is on, and this isn't a social account.
                     $user->notify(new UserNeedsConfirmation($user->confirmation_code));
                 }
 
-            /*
+                /*
                  * Return the user object
                  */
                 return $user;
@@ -285,7 +285,7 @@ class UserRepository extends BaseRepository
     public function findOrCreateProvider($data, $provider)
     {
         // User email may not provided.
-        $user_email = $data->email ? : "{$data->id}@{$provider}.com";
+        $user_email = $data->email ?: "{$data->id}@{$provider}.com";
 
         // Check to see if there is a user with this email first.
         $user = $this->getByColumn($user_email, 'email');

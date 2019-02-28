@@ -81,6 +81,12 @@ return [
         'password_history' => env('PASSWORD_HISTORY', 3),
     ],
 
+    'wallet' => [
+        'store_type_current' => env('WALLET_TYPE_CURRENT', 'current'),
+        
+        'store_type_saving' => env('WALLET_TYPE_SAVING', 'saving'),
+    ],
+
     /*
      * Configuration for roles
      */

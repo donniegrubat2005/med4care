@@ -1,8 +1,7 @@
-<!DOCTYPE html> 
-@langrtl
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
+<!DOCTYPE html> @langrtl
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
 @else
-    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @endlangrtl
 
 <head>
@@ -12,35 +11,29 @@
     <title>@yield('title', app_name())</title>
     <meta name="description" content="@yield('meta_description', app_name())">
     <meta name="author" content="@yield('meta_author', 'Bayang-Yang')"> 
-    @yield('meta') {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}} 
-  
-    @stack('before-styles')
-        <!-- Check if the language is set to RTL, so apply the RTL layouts -->
-        <!-- Otherwise apply the normal LTR layouts -->
-        {{ style(mix('css/frontend.css')) }}
-        {{ style(mix('css/backend.css')) }} 
+    @yield('meta') 
+    {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
+
+     @stack('before-styles')
+    <!-- Check if the language is set to RTL, so apply the RTL layouts -->
+    <!-- Otherwise apply the normal LTR layouts -->
+        {{ style(mix('css/frontend.css')) }} 
+        {{  style(mix('css/backend.css'))  }} 
     @stack('after-styles')
-
-
 </head>
-
-<body class="{{ (Auth::check() ) ? config('backend.body_classes') : 'app flex-row align-items-center pace-done'   }}"  id="mainUrl" uval="{{ url('/') }}">
-
+<body class="{{ (Auth::check() ) ? config('backend.body_classes') : 'app flex-row align-items-center pace-done' }}" id="mainUrl" uval="{{ url('/') }}">
     @auth
         @include('frontend.includes.nav')
-        <div class="app-body" id="app">
+        <div class="app-body " id="app">
             @include('frontend.includes.sidebar')
-            <main class="main">
-                @include('includes.partials.logged-in-as')
-                @include('frontend.includes.breadcrumbs') 
-                {{-- {!! Breadcrumbs::render() !!} --}}
-
-                <div class="container-fluid">
-                    <div class="animated fadeIn">
+            <main class="main ">
+                @include('includes.partials.logged-in-as') 
+                {!! Breadcrumbs::render() !!}
+                <div class="container-fluid ">
+                    <div class="animated fadeIn ">
                         <div class="content-header">
                             @yield('page-header')
                         </div>
-
                         @yield('content')
                     </div>
                 </div>
@@ -49,18 +42,16 @@
         </div>
         @include('backend.includes.footer') 
     @else
-        <div class="container" id="app">
-            @yield('content')
-        </div>
-    @endauth 
-
-    @stack('before-scripts') 
+    <div class="container" id="app">
+        @yield('content')
+    </div>
+    @endauth @stack('before-scripts') 
         {!! script(mix('js/manifest.js')) !!} 
         {!! script(mix('js/vendor.js')) !!} 
-        {!! script(mix('js/backend.js')) !!} 
-        {{-- {!! script(mix('js/frontend.js')) !!}  --}}
-    @stack('after-scripts')  
-     
+        {!! script(mix('js/backend.js'))!!}
+        {!! script(mix('js/frontend.js')) !!} 
+    @stack('after-scripts')
+
 
 </body>
 

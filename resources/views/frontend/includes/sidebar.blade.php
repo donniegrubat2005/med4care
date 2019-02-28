@@ -2,7 +2,7 @@
     <nav class="sidebar-nav">
         <ul class="nav">
             <li class="nav-title">
-                <small>Navigations</small> {{-- Main Navigations --}} {{-- @lang('menus.backend.sidebar.general') --}}
+                @lang('menus.backend.sidebar.general')
             </li>
             <li class="nav-item">
 
@@ -13,24 +13,36 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.account') }}">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('account')) }} " href="{{ route('frontend.user.account') }}">
                     <i class="nav-icon icon-user"></i> 
                     @lang('menus.backend.sidebar.account')
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('wallet*')) }} " href="{{ route('frontend.user.wallet.index') }}">
+                    <i class="nav-icon icon-wallet"></i> 
+                    @lang('menus.backend.sidebar.wallet')                   
+                </a>
+            </li>
 
-            @foreach ($permissions_user as $permission)
+            {{-- @foreach ($permissions_user as $permission)
                 <li class="nav-item">
                     <a class="nav-link " href="{{ $permission['route'] }}">
+                        <i class="{{$permission['icon']}}"></i> {{$permission['name']}}
+                    </a>
+                </li>
+            @endforeach --}}
+
+            {{-- @foreach ($permissions_user as $permission)
+            <li class="nav-item">
+                <a class="nav-link " href="{{ $permission['route'] }}">
                         <i class="fa fa-{{$permission['icon']}}"></i>
                         &nbsp;&nbsp;{{$permission['name']}}
                     </a>
-                </li>
-            @endforeach
-
-
-            {{-- <li class="nav-item">
+            </li>
+            @endforeach --}} {{--
+            <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.patients.index') }}">
                     <i class="fa fa-users"></i> 
                     &nbsp; Manage Patients
@@ -42,9 +54,7 @@
                     <i class="fas fa-chart-bar"></i>
                     &nbsp; Reports
                 </a>
-            </li> --}}
-
-            {{--
+            </li> --}} {{--
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Request::segment(2)) }} " href="{{ route('frontend.user.payments') }}">
                     <i class="fa fa-money"></i> 

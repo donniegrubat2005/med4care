@@ -15,6 +15,7 @@ use App\Models\Auth\User;
 
 // use Illuminate\Contracts\Filesystem\Filesystem;
 // use Image;
+
 /**
  * Class AccountController.
  */
@@ -30,7 +31,6 @@ class AccountController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
-      
     }
 
     public function index()
@@ -42,10 +42,10 @@ class AccountController extends Controller
         $percent = $user->verification_points;
 
         $s3 = Storage::disk('s3');
-        $items = $s3->files('documents/'.$user->id);
+        $items = $s3->files('documents/' . $user->id);
         $documents = Team::where('user_id', $user->id)->get();
 
-        foreach($items as $sk => $item){
+        foreach ($items as $sk => $item) {
             $docId = $documents[$sk]->id;
             $docu = $documents[$sk]->documents;
             $filesDocs = $documents[$sk]->files;
@@ -60,10 +60,9 @@ class AccountController extends Controller
                     'dbFile' => $docu,
                     'fileName' => $docExt[0],
                     'fileUrl' =>   $s3->url($item),
-                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,'.base64_encode( $filesDocs ).'"/>' ,
+                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,' . base64_encode($filesDocs) . '"/>',
                 ];
-            }
-            else{
+            } else {
                 $files[] = [
                     'docId' => $docId,
                     'key' => false,
@@ -73,15 +72,13 @@ class AccountController extends Controller
                     'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
-
         }
         return view('frontend.user.account', compact('files', 'percent'));
-
     }
-  
+
     public function add_documents(Request $request)
     {
-        
+
         $userId = auth()->user()->id;
 
         $fileArray = [];
@@ -89,15 +86,15 @@ class AccountController extends Controller
         if ($request->hasFile('file')) {
 
             $file = $request->file('file');
-            
-            $name = time().'_'. $file->getClientOriginalName();
+
+            $name = time() . '_' . $file->getClientOriginalName();
             $data = file_get_contents($file->getRealPath());
 
             // $name = time().'_'. $file->getClientOriginalName();
-            $filePath = 'documents/'.$userId.'/'. $name;
+            $filePath = 'documents/' . $userId . '/' . $name;
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data ]);
+            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
 
 
 
@@ -116,34 +113,31 @@ class AccountController extends Controller
 
 
 
-            
+
             // $file = $request->file('file');
             // $name = time().'_'. $file->getClientOriginalName();
             // $filePath = 'documents/'.$userId.'/'. $name;
             // Storage::disk('s3')->put($filePath, file_get_contents($file));
 
             // Team::create(['user_id' => $userId, 'documents' => $name]);
-
         }
     }
 
     public function delete_my_documents($id, $file)
     {
         $userId = auth()->user()->id;
-       
-        $s3File = 'documents/'.$userId.'/'.$file;
 
-        if(Storage::disk('s3')->exists($s3File)) {
-          
+        $s3File = 'documents/' . $userId . '/' . $file;
+
+        if (Storage::disk('s3')->exists($s3File)) {
+
             $doc = Team::findOrFail($id);
             $doc->delete();
 
             Storage::disk('s3')->delete($s3File);
 
             return response()->json(true);
-
         }
         return response()->json(false);
     }
-
 }
