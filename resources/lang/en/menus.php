@@ -47,6 +47,7 @@ return [
             'dashboard' => 'Dashboard',
             'account'   => 'My Account',
             'general'   => 'General',
+            'wallet'    => 'Wallet',
             'history'   => 'History',
             'system'    => 'System',
         ],

@@ -10,16 +10,22 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
- 
+
 mix.setPublicPath('public');
 
 mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
     .sass('resources/sass/backend/app.scss', 'css/backend.css')
-    .js('resources/js/frontend/app.js', 'js/frontend.js')
+    .js([
+        'resources/js/frontend/app.js',
+    ], 'js/frontend.js')
     .js([
         'resources/js/backend/before.js',
         'resources/js/backend/app.js',
         'resources/js/backend/after.js',
+        'node_modules/smartwizard/dist/js/validator.min.js',
+        'node_modules/smartwizard/dist/js/jquery.smartWizard.min.js',
+        'node_modules/jquey-validation/dist/jquery.validate.js',
+        'node_modules/jquery-ui/external/requirejs/jquery-ui.js',
         'resources/js/backend/scripts.js'
     ], 'js/backend.js')
     .extract([

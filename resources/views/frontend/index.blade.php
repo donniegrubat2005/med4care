@@ -36,7 +36,6 @@
 </div>
 <!--row-->
 
-<example-component></example-component>
 
 <!--row-->
 <div class="row">

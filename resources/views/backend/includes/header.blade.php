@@ -2,10 +2,10 @@
   <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-  <a class="navbar-brand" href="#">
-        <strong>MED4CARE</strong>
-        {{-- <img class="navbar-brand-full" src="{{ asset('img/backend/brand/logo.svg') }}" width="89" height="25" alt="CoreUI Logo"> --}}
-        {{-- <img class="navbar-brand-minimized" src="{{ asset('img/backend/brand/sygnet.svg') }}" width="30" height="30" alt="CoreUI Logo"> --}}
+    <a class="navbar-brand" href="{{ url('/') }}">
+        &nbsp; <img class="navbar-brand-full" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="50" height="20" alt="Med4Care Logo">
+        &nbsp; <strong class="navbar-brand-full">Med4Care</strong>
+       <img class="navbar-brand-minimized" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="30" height="20" alt="Med4Care Logo">
     </a>
   <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -33,14 +33,14 @@
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-pill badge-danger">5</span>
-            </a>
+          <i class="icon-bell"></i>
+          <span class="badge badge-pill badge-danger">5</span>
+      </a>
     </li>
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#">
-                <i class="icon-list"></i>
-            </a>
+          <i class="icon-list"></i>
+      </a>
     </li>
     <li class="nav-item d-md-down-none">
       <a class="nav-link" href="#">

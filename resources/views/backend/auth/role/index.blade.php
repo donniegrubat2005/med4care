@@ -4,7 +4,6 @@
 
 @section('content')
 
-
 <div class="row">
     <div class="col-md-8">
         @include('includes.partials.messages') 

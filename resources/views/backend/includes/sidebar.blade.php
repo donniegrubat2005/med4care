@@ -9,16 +9,20 @@
                     <i class="nav-icon icon-speedometer"></i> @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('wallet*')) }} " href="{{ route('frontend.user.wallet.index') }}">
+                    <i class="nav-icon icon-wallet"></i> 
+                    @lang('menus.backend.sidebar.wallet')                   
+                </a>
+            </li>
             {{-- {{ active_class(Active::checkUriPattern('admin/dashboard')) }} --}}
-            @foreach ($permissions_user as $permission)
+            {{-- @foreach ($permissions_user as $permission)
                 <li class="nav-item">
                     <a class="nav-link " href="{{ $permission['route'] }}">
-                        <i class="fa fa-{{$permission['icon']}}"></i>
-                        &nbsp;&nbsp;{{$permission['name']}}
+                        <i class="{{$permission['icon']}}"></i> {{$permission['name']}}
                     </a>
                 </li>
-            @endforeach
+            @endforeach --}}
 
 
 

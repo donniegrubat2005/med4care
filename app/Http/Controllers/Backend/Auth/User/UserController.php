@@ -45,7 +45,7 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-        
+
         // return new SendEmail([
         //     'title' => 'register',
         //     'email' => 'sample@gmail.com',
@@ -127,7 +127,7 @@ class UserController extends Controller
     public function show(ManageUserRequest $request, User $user)
     {
 
-        
+
         // $percent = $this->userRepository->calculatePoints();
 
         // dd($user->verification_points);
@@ -139,7 +139,7 @@ class UserController extends Controller
             ->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
     }
 
-    
+
 
 
 
@@ -190,7 +190,6 @@ class UserController extends Controller
                     'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
-
         }
         return $files;
     }
@@ -252,10 +251,7 @@ class UserController extends Controller
             Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
 
             // Team::create(['user_id' => $userId, 'documents' => $name]);
-
-
         }
-
     }
 
     public function create_userImage($file, $userId)

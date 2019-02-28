@@ -7,12 +7,15 @@ use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
 use App\Http\Controllers\frontend\PatientController;
 use App\Http\Controllers\frontend\ReportController;
-
-
+use App\Http\Controllers\Frontend\User\Wallet\UserWalletController;
+use App\Http\Controllers\frontend\user\wallet\DepositController;
+use App\Http\Controllers\frontend\user\wallet\TransferController;
+use App\Http\Controllers\Frontend\User\Wallet\WithdrawController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
+
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('contact', [ContactController::class, 'index'])->name('contact');
 Route::post('contact/send', [ContactController::class, 'send'])->name('contact.send');
@@ -28,6 +31,9 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         /*
          * User Dashboard Specific
          */
+
+        Route::get('verification', [DashboardController::class, '_verification'])->name('dashboard');
+
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         /*
@@ -43,18 +49,44 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
         Route::resource('patients', 'PatientController');
 
-
-
-
         Route::resource('reports', 'ReportController');
+
+        Route::group(['namespace' => 'Wallet'], function () {
+
+
+            Route::get('wallet', [UserWalletController::class, 'index'])->name('wallet.index');
+
+
+
+            Route::group(['prefix' => 'wallet/deposit'], function () {
+                Route::get('/', [DepositController::class, 'index'])->name('wallet.deposit.index');
+                Route::get('create', [DepositController::class, 'create'])->name('wallet.deposit.create');
+                Route::post('post', [DepositController::class, 'store'])->name('wallet.deposit.post');
+                Route::get('getWallets', [DepositController::class, '_ge_wallets']);
+            });
+
+            Route::group(['prefix' => 'wallet/transfer'], function () {
+                Route::get('/', [TransferController::class, 'index'])->name('wallet.transfer.index');
+            });
+
+            Route::group(['prefix' => 'wallet/withdraw'], function () {
+                
+                Route::get('/', [WithdrawController::class, 'index'])->name('wallet.withdraw.index');
+                Route::post('post', [WithdrawController::class, 'store'])->name('wallet.withdraw.post');
+
+            });
+
+
+            // Route::group(['prefix' => 'wallet/{wallet}'], function () { });
+        });
+
+
+
 
 
         /*
          * User Profile Specific
          */
         Route::patch('profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
     });
 });
-
-

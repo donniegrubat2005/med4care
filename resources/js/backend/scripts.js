@@ -3,6 +3,13 @@
 
  var doc = $(document);
 
+ $.ajaxSetup({
+     headers: {
+         'X-XSRF-TOKEN': decodeURIComponent(/XSRF-Token=([^;]*)/ig.exec(document.cookie)[1])
+     }
+ });
+
+
  $(function () {
      // Is Customer Active
      doc.on('change', '#isActive', function () {
@@ -10,11 +17,6 @@
          var urlArr = $(location).attr("href").split('/');
          var userId = urlArr[urlArr.length - 1];
 
-         $.ajaxSetup({
-             headers: {
-                 'X-XSRF-TOKEN': decodeURIComponent(/XSRF-Token=([^;]*)/ig.exec(document.cookie)[1])
-             }
-         });
 
          var isActive;
 
@@ -188,4 +190,53 @@
          };
          reader.readAsDataURL(input.files[0]);
      }
+ }
+
+
+ //  for deposit form
+ $(function () {
+     deposit_load_wallets();
+     wwithdraw_load_wallets();
+ });
+
+ function deposit_load_wallets() {
+     $.ajax({
+         type: "get",
+         url: mainUrl + '/wallet/deposit/getWallets',
+         success: function (response) {
+             $("#depositName").autocomplete({
+                 source: response,
+                 search: function (event, ui) {
+                     console.log(ui)
+                 },
+                 select: function (event, ui) {
+                     $("#depositName").val(ui.item.label);
+                     $("#walletId").val(ui.item.value);
+                    //  $('#description').val(ui.item.description)
+                     return false;
+                 },
+             });
+         }
+     });
+ }
+
+ function wwithdraw_load_wallets() {
+     $.ajax({
+         type: "get",
+         url: mainUrl + '/wallet/deposit/getWallets',
+         success: function (response) {
+             $("#wallet_name").autocomplete({
+                 source: response,
+                 search: function (event, ui) {
+                     console.log(ui)
+                 },
+                 select: function (event, ui) {
+                     $("#wallet_name").val(ui.item.label);
+                     $("#wallet_id").val(ui.item.value);
+                     // $('#description').val(ui.item.description)
+                     return false;
+                 },
+             });
+         }
+     });
  }

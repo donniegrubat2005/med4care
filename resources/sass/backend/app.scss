@@ -6,17 +6,61 @@
  * Licensed under MIT (https://coreui.io/license)
  */
 
-// If you want to override variables do it here
 @import "variables";
+
+
 
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
+
+@import "~@coreui/icons/css/coreui-icons.min.css";
+@import "~@coreui/pace.min.css";
+@import "~@coreui/styles.css";
+
+// Import Smart Wizard
+@import "~smartwizard/dist/css/smart_wizard.css";
+@import "~smartwizard/dist/css/smart_wizard.min.css";
+@import "~smartwizard/dist/css/smart_wizard_theme_arrows.min.css";
+@import "~smartwizard/dist/css/smart_wizard_theme_circles.min.css";
+@import "~smartwizard/dist/css/smart_wizard_theme_dots.min.css";
+
+
+@import "~jquery-ui/themes/base/all.css";
+
+
+// @import "~@fortawesome/font-awesome/css/font-awesome.min.css";
+
+// If you want to override variables do it here
+// @import "variables";
+
+// @import "~@fortawesome/font-awesome/css/font-awesome.min.css";
+
+// // Import styles
+// // @import "~@coreui/coreui/scss/coreui";
+
+// // @import "~@coreui/icons/css/coreui-icons.min.css";
+
+
+// @import "../../../node_modules/@coreui/pace.min.css";
+
+
+// @import "../../../node_modules/@coreui/styles.css";
+
+
+// @import '../../../node_modules/form-wizard/css/smart_wizard';
+
+// @import '../../../node_modules/form-wizard/css/smart_wizard_theme_circles';
+
+// @import '../../../node_modules/form-wizard/css/smart_wizard_theme_arrows';
+
+// @import '../../../node_modules/form-wizard/css/smart_wizard_theme_dots';
+
 
 // If you want to add something do it here
 @import "custom";
 
 
 
-.img-thumbnail{
+.img-thumbnail {
     height: 200px !important;
 }

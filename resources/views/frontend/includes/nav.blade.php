@@ -14,8 +14,8 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownLanguageLink" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">@lang('menus.language-picker.language') ({{ strtoupper(app()->getLocale()) }})
-                    </a>
-    @include('includes.partials.lang')
+                </a>
+                @include('includes.partials.lang')
             </li>
             @endif @auth
             <li class="nav-item">
@@ -53,10 +53,10 @@
     <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">
-        <strong>MED4CARE</strong>
-        {{-- <img class="navbar-brand-full" src="{{ asset('img/backend/brand/logo.svg') }}" width="89" height="25" alt="CoreUI Logo">
-        <img class="navbar-brand-minimized" src="{{ asset('img/backend/brand/sygnet.svg') }}" width="30" height="30" alt="CoreUI Logo"> --}}
+    <a class="navbar-brand" href="{{ route('frontend.index') }}">
+        &nbsp; <img class="navbar-brand-full" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="50" height="20" alt="Med4Care Logo">
+        &nbsp; <strong class="navbar-brand-full">Med4Care</strong>
+       <img class="navbar-brand-minimized" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="30" height="20" alt="Med4Care Logo">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>

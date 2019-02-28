@@ -50,7 +50,7 @@ class GlobalComposer
 
     public function userPermissions($permissions)
     {
-        $icons = ['step-backward', 'user' ,'chart-bar' ,'google-wallet'];
+        $icons = ['cui-cog', 'cui-people' ,'cui-pie-chart' ,'nav-icon icon-wallet'];
         $items = [];
         foreach ($permissions as $k =>  $permission) {
           
