@@ -1,7 +1,5 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' ~ Withdraw')
-
-@push('after-scripts')
+@section('title', app_name() . ' ~ Add Accounts') @push('after-scripts')
 <style>
     .ul-nav-wizard .ul-label {
         font-size: 16px;
@@ -14,8 +12,8 @@
         margin-top: 24px;
     }
 </style>
-@endpush 
 
+@endpush 
 @section('content')
     @include('includes.partials.messages')
     <div class="card card-header-border">
@@ -23,9 +21,9 @@
             <div class="row">
                 <div class="col-md-3 p-5">
                     <button class="btn btn-ghost-primary btn-lg disabled  text-info" type="button" style="margin-top:-20px;">
-                            <i class="cui-account-logout"></i>
-                        <span >Withdraw Money</span>
-                    </button>
+                            <i class="icon-people"></i>
+                            <span >Wallet Account</span>
+                        </button>
                 </div>
                 <div class="col-md-6">
                     {{ html()->form('POST', route('frontend.user.wallet.withdraw.post')) ->attribute('data-toggle', 'validator') ->attribute('accept-charset',
@@ -34,23 +32,23 @@
                         <ul class="ul-nav-wizard">
                             <li class="col-md-3 col-sm-3 col-xs-12">
                                 <a href="#step-1">
-                                    <span class="ul-label">Amount</span> 
+                                    <span class="ul-label">Accounts</span> 
                                 </a>
                             </li>
                             <li class="col-md-3 col-sm-3 col-xs-12">
                                 <a href="#step-2">
-                                    <span class="ul-label">Withraw </span> 
-                                </a>
+                                        <span class="ul-label">Withraw </span> 
+                                    </a>
                             </li>
                             <li class="col-md-3 col-sm-3 col-xs-12">
                                 <a href="#step-3">
-                                    <span class="ul-label">Remarks</span> 
-                                </a>
+                                        <span class="ul-label">Remarks</span> 
+                                    </a>
                             </li>
                             <li class="col-md-3 col-sm-3 col-xs-12">
                                 <a href="#step-4"> 
-                                                <span class="ul-label">Done</span> 
-                                            </a>
+                                        <span class="ul-label">Done</span> 
+                                    </a>
                             </li>
                         </ul>
                         <hr class="mt-5">
@@ -61,23 +59,37 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-header ">
-                                                <span class="font-weight-normal" style="font-size:16px;"> Amount To Withdraw</span>
+                                                <span class="font-weight-normal" style="font-size:16px;"> Account Details</span>
                                             </div>
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-md-2"></div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="nf-email">Total Amount</label>
-                                                            <div class="input-group">
-                                                                <input class="form-control form-control-lg" id="amount" type="number" name="amount" placeholder="0" autocomplete="off" required>
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text">.00</span>
-                                                                </div>
-                                                            </div>
+                                                            <label for="nf-email">Name <span class="text-danger">*</span></label>
+                                                            <input class="form-control" id="amount" type="text" name="amount" autocomplete="off" required>
+                                                            <div class="help-block with-errors text-danger"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="nf-email">Account No.</label>
+                                                            <input class="form-control" id="amount" type="text" name="amount" placeholder="this fields auto generate" readonly>
                                                             <div class="help-block with-errors text-danger"></div>
                                                         </div>
                                                         <br>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="nf-email">Account Type <span class="text-danger">*</span></label>
+                                                            <select name="" class="form-control">
+                                                                <option value="savings">Savings</option>
+                                                                <option value="current">Current</option>
+                                                            </select>
+                                                            {{-- <input class="form-control" id="amount" type="text" name="amount" autocomplete="off" required> --}}
+                                                            <div class="help-block with-errors text-danger"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -118,9 +130,9 @@
                                                                         <input type="text" class="form-control" name="wallet_name" id="wallet_name">
                                                                         <input type="hidden" name="wallet_id" id="wallet_id">                                                                    {{-- <select name="withdraw_from" id="" class="form-control"
                                                                             required>  
-                                                                                <option value="saving">Savings</option>
-                                                                                <option value="saving">Current</option>
-                                                                            </select> --}}
+                                                                                    <option value="saving">Savings</option>
+                                                                                    <option value="saving">Current</option>
+                                                                                </select> --}}
                                                                     </div>
                                                                     <div class="help-block with-errors text-danger"></div>
                                                                 </div>
@@ -196,8 +208,8 @@
                 </div>
                 <div class="col-md-3 ">
                     <a href="{{route('frontend.user.wallet.index')}}" class="float-right" style="margin-right:15px; margin-top:10px;">
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>  Back
-                    </a>
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>  Back
+                        </a>
                 </div>
             </div>
         </div>
@@ -205,9 +217,9 @@
         <br>
     </div>
 @endsection
-@push('after-scripts')
-    <script type="text/javascript">
-        $(function(){
+ @push('after-scripts')
+<script type="text/javascript">
+    $(function(){
                 var doc = $(document);
                 $('#smartwizard').smartWizard({
                     theme: 'dots',
@@ -265,6 +277,6 @@
                     alert()
                 });
             });
+</script>
 
-    </script>
 @endpush

@@ -61,6 +61,9 @@
   },
   "dependencies": {
     "@coreui/icons": "^0.3.0",
+    "datatables": "^1.10.18",
+    "datatables.net-bs4": "^1.10.19",
+    "font-awesome": "^4.7.0",
     "jquery-form-validator": "^2.3.79",
     "smartwizard": "^4.3.1"
   }
