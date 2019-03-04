@@ -8,7 +8,7 @@
 
 @import "variables";
 
-
+@import "~font-awesome/css/font-awesome.css";
 
 // Import styles
 @import "~@coreui/coreui/scss/coreui";
@@ -17,13 +17,15 @@
 @import "~@coreui/pace.min.css";
 @import "~@coreui/styles.css";
 
+// Import datatables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
 // Import Smart Wizard
 @import "~smartwizard/dist/css/smart_wizard.css";
 @import "~smartwizard/dist/css/smart_wizard.min.css";
 @import "~smartwizard/dist/css/smart_wizard_theme_arrows.min.css";
 @import "~smartwizard/dist/css/smart_wizard_theme_circles.min.css";
 @import "~smartwizard/dist/css/smart_wizard_theme_dots.min.css";
-
 
 @import "~jquery-ui/themes/base/all.css";
 

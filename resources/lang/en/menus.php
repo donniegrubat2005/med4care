@@ -45,7 +45,7 @@ return [
 
         'sidebar' => [
             'dashboard' => 'Dashboard',
-            'account'   => 'My Account',
+            'account'   => 'My Profile',
             'general'   => 'General',
             'wallet'    => 'Wallet',
             'history'   => 'History',

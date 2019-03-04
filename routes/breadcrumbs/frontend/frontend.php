@@ -13,7 +13,7 @@ Breadcrumbs::for('frontend.user.account', function ($trail) {
 
 
 Breadcrumbs::for('frontend.user.wallet.index', function ($trail) {
-    $trail->push('My Wallet', route('frontend.user.wallet.index'));
+    $trail->push('Wallets', route('frontend.user.wallet.index'));
 });
 
 Breadcrumbs::for('frontend.user.wallet.deposit.index', function ($trail) {
@@ -35,6 +35,16 @@ Breadcrumbs::for('frontend.user.wallet.transfer.index', function ($trail) {
 Breadcrumbs::for('frontend.user.wallet.withdraw.index', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
     $trail->push('Transfer', route('frontend.user.wallet.withdraw.index'));
+});
+
+Breadcrumbs::for('frontend.user.wallet.accounts', function ($trail) {
+    $trail->parent('frontend.user.wallet.index');
+    $trail->push('Accounts', route('frontend.user.wallet.accounts'));
+});
+
+Breadcrumbs::for('frontend.user.wallet.account.create', function ($trail) {
+    $trail->parent('frontend.user.wallet.index');
+    $trail->push('Add Account', route('frontend.user.wallet.account.create'));
 });
 
 

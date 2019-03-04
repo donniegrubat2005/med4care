@@ -22,7 +22,8 @@
             <li class="nav-item">
                 <a class="nav-link {{ active_class(Active::checkUriPattern('wallet*')) }} " href="{{ route('frontend.user.wallet.index') }}">
                     <i class="nav-icon icon-wallet"></i> 
-                    @lang('menus.backend.sidebar.wallet')                   
+                    Wallets
+                    {{-- @lang('menus.backend.sidebar.wallet')                    --}}
                 </a>
             </li>
 

@@ -53,8 +53,15 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
         Route::group(['namespace' => 'Wallet'], function () {
 
+            Route::group(['prefix' => 'wallet'], function () {
+              
+                Route::get('/', [UserWalletController::class, 'index'])->name('wallet.index');
+              
+                Route::get('accounts', [UserWalletController::class, '_accounts'])->name('wallet.accounts');
+                Route::get('account/create', [UserWalletController::class, 'create'])->name('wallet.account.create');
+                
+            });
 
-            Route::get('wallet', [UserWalletController::class, 'index'])->name('wallet.index');
 
 
 

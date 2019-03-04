@@ -208,12 +208,12 @@
              $("#depositName").autocomplete({
                  source: response,
                  search: function (event, ui) {
-                    //  console.log(ui)
+                     //  console.log(ui)
                  },
                  select: function (event, ui) {
                      $("#depositName").val(ui.item.label);
                      $("#walletId").val(ui.item.value);
-                    //  $('#description').val(ui.item.description)
+                     //  $('#description').val(ui.item.description)
                      return false;
                  },
              });
@@ -229,7 +229,7 @@
              $("#wallet_name").autocomplete({
                  source: response,
                  search: function (event, ui) {
-                    // console.log(ui)
+                     // console.log(ui)
                  },
                  select: function (event, ui) {
                      $("#wallet_name").val(ui.item.label);

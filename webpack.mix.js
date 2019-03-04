@@ -24,8 +24,8 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
         'resources/js/backend/after.js',
         'node_modules/smartwizard/dist/js/validator.min.js',
         'node_modules/smartwizard/dist/js/jquery.smartWizard.min.js',
-        'node_modules/jquey-validation/dist/jquery.validate.js',
         'node_modules/jquery-ui/external/requirejs/jquery-ui.js',
+        'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
         'resources/js/backend/scripts.js'
     ], 'js/backend.js')
     .extract([

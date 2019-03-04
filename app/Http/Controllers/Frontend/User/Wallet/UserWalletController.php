@@ -16,23 +16,6 @@ class UserWalletController extends Controller
     {
         return view('frontend.pages.wallet.wallet');
     }
-
-    public function _transactions($name)
-    {
-        return view('frontend.pages.wallet');
-    }
-
-    public function _deposit()
-    {
-        return view('frontend.pages.deposit');
-    }
-    public function _transfer()
-    {
-        return view('frontend.pages.transfer');
-    }
-
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -40,9 +23,12 @@ class UserWalletController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.pages.wallet.accounts.wallet-new-account');
     }
-
+    public function _accounts()
+    {
+        return view('frontend.pages.wallet.accounts.wallet-account');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +37,7 @@ class UserWalletController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

@@ -1,23 +1,52 @@
 <div class="col-md-3">
     <div class="card card-header-border" id="card-balance">
         <div class="card-header">
-            Navigation
+           <strong class=""> 
+            <i class="icon-wallet"></i>   
+            WALLET</strong>
         </div>
         <div class="card-body ">
-            <h3 class="card-title text-center" > 
-                <i class="fas fa-dollar-sign text-muted"></i> <span style="font-size:40px;" class="text-info ">
-                    {{ isset($balance) ? number_format($balance, 2) : '0.00'}}
-                </span>
-                <p class="card-text text-muted small" style="font-size:14px; margin-top:5px;">Total Balance</p>
-            </h3>
+            <h1 class="card-title text-center text-info" > 
+                <p class="card-text text-muted small" style="font-size:14px; ">Total Balance</p>
+                {{ isset($balance) ? number_format($balance, 2) : '0.00'}}
+            </h1>
+            <hr>
+            <div class="row" >
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3">
+                    <span >
+                        <small class="text-muted">Current</small>
+                        <h3>0.00</h3>
+                    </span>
+                </div>
+                <div class="col-sm-3" >
+                    <span >
+                        <small class="text-muted">Savings</small>
+                        <h3>0.00</h3>
+                    </span>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
         </div>
         <div class="list-group" id="nav-wallet">
             <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'overview' ? ' nw-active' : ''}}"  href="{{route('frontend.user.wallet.deposit.index')}}">
+                <i class="icon-grid"></i> &nbsp;
                 Overview
                 <i class="fa fa-angle-right float-right mt-1"  aria-hidden="true"></i>
             </a>
             <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}" href="{{route('frontend.user.wallet.deposit.create')}}">
-                New Deposit
+               <i class="icon-login"></i> &nbsp;
+                Cash In
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a>
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}" href="{{route('frontend.user.wallet.deposit.create')}}">
+               <i class="icon-logout"></i> &nbsp;
+                Withdraw
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a>
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}" href="{{route('frontend.user.wallet.deposit.create')}}">
+                <i class="fas fa-exchange-alt "></i> &nbsp;
+                Transfer
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
             </a>
             {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default" id="dptype" href="javascript:;"

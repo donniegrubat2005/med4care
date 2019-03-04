@@ -1,19 +1,88 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' ~ Withdraw')
+@section('title', app_name() . ' ~ Accounts')
+
+
+
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <span>Accounts</span>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary btn-sm float-right" href="{{ route('frontend.user.wallet.account.create') }}">
+                            Add Account
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-light" id="accounts">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Account No.</th>
+                        <th>Account Name</th>
+                        <th>Account Type</th>
+                        <th>Date Created</th>
+                        <th class="text-center">action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ([1,2,3,4,2,3,4,5,56,] as $item)
+                        <tr>
+                            <td>asd</td>
+                            <td>asd</td>
+                            <td>asd</td>
+                            <td>asd</td>
+                            <td class="text-center">
+                                <div class="dropdown ">
+                                    <button id="my-dropdown" class="btn btn-secondary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        More
+                                    </button>
+                                    <div class="dropdown-menu " aria-labelledby="my-dropdown">
+                                        <a class="dropdown-item " href="#">View</a>
+                                        <a class="dropdown-item " href="#">Delete</a>
+                                        <a class="dropdown-item " href="#">Add Wallet</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr> 
+                    @endforeach
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection
+
 
 @push('after-scripts')
-<style>
-    .ul-nav-wizard .ul-label {
-        font-size: 16px;
-        font-weight: lighter;
-        margin-left: -5px;
-        z-index: 9999;
-    }
+    <script>
+        $(function(){
+            // alert()
+            $("#accounts").DataTable()
+        })
+    </script>
+@endpush
 
-    .ul-nav-wizard li a {
-        margin-top: 24px;
-    }
-</style>
+
+@if (false)
+    
+@push('after-scripts')
+    <style>
+        .ul-nav-wizard .ul-label {
+            font-size: 16px;
+            font-weight: lighter;
+            margin-left: -5px;
+            z-index: 9999;
+        }
+
+        .ul-nav-wizard li a {
+            margin-top: 24px;
+        }
+    </style>
 @endpush 
 
 @section('content')
@@ -23,8 +92,8 @@
             <div class="row">
                 <div class="col-md-3 p-5">
                     <button class="btn btn-ghost-primary btn-lg disabled  text-info" type="button" style="margin-top:-20px;">
-                            <i class="cui-account-logout"></i>
-                        <span >Withdraw Money</span>
+                        <i class="icon-people"></i>
+                        <span >Wallet Account</span>
                     </button>
                 </div>
                 <div class="col-md-6">
@@ -49,8 +118,8 @@
                             </li>
                             <li class="col-md-3 col-sm-3 col-xs-12">
                                 <a href="#step-4"> 
-                                                <span class="ul-label">Done</span> 
-                                            </a>
+                                    <span class="ul-label">Done</span> 
+                                </a>
                             </li>
                         </ul>
                         <hr class="mt-5">
@@ -205,6 +274,7 @@
         <br>
     </div>
 @endsection
+
 @push('after-scripts')
     <script type="text/javascript">
         $(function(){
@@ -268,3 +338,5 @@
 
     </script>
 @endpush
+
+@endif
