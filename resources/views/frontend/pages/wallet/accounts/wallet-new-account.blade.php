@@ -13,209 +13,168 @@
     }
 </style>
 
+
 @endpush 
 @section('content')
     @include('includes.partials.messages')
-    <div class="card card-header-border">
-        <div class="card-body p-0">
-            <div class="row">
-                <div class="col-md-3 p-5">
-                    <button class="btn btn-ghost-primary btn-lg disabled  text-info" type="button" style="margin-top:-20px;">
+<div class="card card-header-border">
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-md-3 p-5">
+                <button class="btn btn-ghost-primary btn-lg disabled  text-info" type="button" style="margin-top:-20px;">
                             <i class="icon-people"></i>
                             <span >Wallet Account</span>
                         </button>
-                </div>
-                <div class="col-md-6">
-                    {{ html()->form('POST', route('frontend.user.wallet.withdraw.post')) ->attribute('data-toggle', 'validator') ->attribute('accept-charset',
-                    'utf-8') ->attribute('id', 'myForm') ->open() }}
-                    <div id="smartwizard">
-                        <ul class="ul-nav-wizard">
-                            <li class="col-md-3 col-sm-3 col-xs-12">
-                                <a href="#step-1">
+            </div>
+            <div class="col-md-6">
+                {{ html()->form('POST', route('frontend.user.wallet.account.post')) ->attribute('data-toggle', 'validator') ->attribute('accept-charset',
+                'utf-8') ->attribute('id', 'myForm') ->open() }}
+                <div id="smartwizard">
+                    <ul class="ul-nav-wizard">
+                        <li class="col-md-3 col-sm-3 col-xs-12">
+                            <a href="#step-1">
                                     <span class="ul-label">Accounts</span> 
                                 </a>
-                            </li>
-                            <li class="col-md-3 col-sm-3 col-xs-12">
-                                <a href="#step-2">
-                                        <span class="ul-label">Withraw </span> 
-                                    </a>
-                            </li>
-                            <li class="col-md-3 col-sm-3 col-xs-12">
-                                <a href="#step-3">
-                                        <span class="ul-label">Remarks</span> 
-                                    </a>
-                            </li>
-                            <li class="col-md-3 col-sm-3 col-xs-12">
-                                <a href="#step-4"> 
-                                        <span class="ul-label">Done</span> 
-                                    </a>
-                            </li>
-                        </ul>
-                        <hr class="mt-5">
+                        </li>
+                        <li class="col-md-3 col-sm-3 col-xs-12">
+                            <a href="#step-2">
+                                    <span class="ul-label">Amount </span> 
+                                </a>
+                        </li>
+                        <li class="col-md-3 col-sm-3 col-xs-12">
+                            <a href="#step-3">
+                                    <span class="ul-label">Remarks</span> 
+                                </a>
+                        </li>
+                        <li class="col-md-3 col-sm-3 col-xs-12">
+                            <a href="#step-4"> 
+                                    <span class="ul-label">Done</span> 
+                                </a>
+                        </li>
+                    </ul>
+                    <hr class="mt-5">
 
-                        <div class="mt-2" style="border:none;">
-                            <div id="step-1">
-                                <div class="row" id="form-step-0" role="form" data-toggle="validator">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header ">
-                                                <span class="font-weight-normal" style="font-size:16px;"> Account Details</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="nf-email">Name <span class="text-danger">*</span></label>
-                                                            <input class="form-control" id="amount" type="text" name="amount" autocomplete="off" required>
-                                                            <div class="help-block with-errors text-danger"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="nf-email">Account No.</label>
-                                                            <input class="form-control" id="amount" type="text" name="amount" placeholder="this fields auto generate" readonly>
-                                                            <div class="help-block with-errors text-danger"></div>
-                                                        </div>
-                                                        <br>
+                    <div class="mt-2" style="border:none;">
+                        <div id="step-1">
+                            <div class="row" id="form-step-0" role="form" data-toggle="validator">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header ">
+                                            <span class="font-weight-normal" style="font-size:16px;"> Account Details</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Name <span class="text-danger">*</span></label>
+                                                        <input class="form-control" id="name" type="text" name="name" autocomplete="off" required>
+                                                        <div class="help-block with-errors text-danger"></div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <label for="nf-email">Account Type <span class="text-danger">*</span></label>
-                                                            <select name="" class="form-control">
-                                                                <option value="savings">Savings</option>
-                                                                <option value="current">Current</option>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="accountNo">Account No.</label>
+                                                        <input class="form-control" id="accountNo" type="text" name="accountNo" placeholder="this fields auto generate" readonly>
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="nf-email">Account Type <span class="text-danger">*</span></label>
+                                                        <select name="accountType" class="form-control" required>
+                                                                <option value="" >Choose Type</option>
+                                                                @foreach ($acctTypes as $type)
+                                                                    <option value="{{$type->id}}">{{$type->type}}</option>
+                                                                @endforeach
                                                             </select>
-                                                            {{-- <input class="form-control" id="amount" type="text" name="amount" autocomplete="off" required> --}}
-                                                            <div class="help-block with-errors text-danger"></div>
-                                                        </div>
+                                                        <div class="help-block with-errors text-danger"></div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="step-2" class="">
-                                <div class="row" id="form-step-1" role="form" data-toggle="validator">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <span class="font-weight-normal" style="font-size:16px;"> Withraw Form:</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <ul class="nav nav-tabs" role="tablist">
-                                                    <li class="nav-item">
-                                                        <a class="nav-link  active" href="#profile" role="tab" data-toggle="tab" aria-selected="true">Details:</a>
-                                                    </li>
-                                                </ul>
-
-                                                <!-- Tab panes -->
-                                                <div class="tab-content">
-                                                    <div role="tabpanel" class="tab-pane active" id="profile">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="name">Account No <span class="text-danger">*</span></label>
-                                                                        <input class="form-control" name="accnt_no" id="name" value="{{auth()->user()->id_code}}" type="text" placeholder="Required"
-                                                                            required>
-                                                                        <div class="help-block with-errors text-danger"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="ccnumber">Withdraw From?</label>
-                                                                        <input type="text" class="form-control" name="wallet_name" id="wallet_name">
-                                                                        <input type="hidden" name="wallet_id" id="wallet_id">                                                                    {{-- <select name="withdraw_from" id="" class="form-control"
-                                                                            required>  
-                                                                                    <option value="saving">Savings</option>
-                                                                                    <option value="saving">Current</option>
-                                                                                </select> --}}
-                                                                    </div>
-                                                                    <div class="help-block with-errors text-danger"></div>
-                                                                </div>
-                                                            </div>
-                                                            {{--
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="name">Date Of Birth</label>
-                                                                        <input class="form-control" id="name" type="date" placeholder="Required">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="row">
-                                                                        <div class="col-md-4">
-                                                                            <div class="form-group">
-                                                                                <label for="ccnumber">Phone</label>
-                                                                                <input class="form-control" id="ccnumber" type="text" placeholder="Required">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-8">
-                                                                            <div class="form-group">
-                                                                                <label for="ccnumber">&nbsp;</label>
-                                                                                <input class="form-control" id="ccnumber" type="text" placeholder="Required">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> --}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="step-3" class="">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                Remarks Content
-                                            </div>
-                                            <div class="card-body" style="padding: 30px 50px 50px 50px;">
-                                                <label for="remarks">Your Remarks here.</label>
-                                                <textarea name="remarks" id="remarks" cols="5" rows="4" class="form-control" placeholder=". . . . . ."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="step-4" class="">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <i class="fas fa-check  text-success"></i> Done
-                                            </div>
-                                            <div class="card-body text-center">
-                                                <p>
-                                                    Thank your for using our application.
-                                                </p>
-                                                <button type="submit" class="btn btn-primary" style="width: 100px;">Withdraw</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div id="step-2" class="">
+                            <div class="row" id="form-step-1" role="form" data-toggle="validator">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <span class="font-weight-normal" style="font-size:16px;"> Amount to deposit?</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-2"></div>
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <input class="form-control form-control-lg" name="amount" type="number" placeholder="0" required>
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text" id="my-addon">.00</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="help-block with-errors text-danger"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2"></div>
+                                            </div>
+                                            <br>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="step-3" class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Remarks Content
+                                        </div>
+                                        <div class="card-body" style="padding: 30px 50px 50px 50px;">
+                                            <label for="remarks">Your Remarks here.</label>
+                                            <textarea name="remarks" id="remarks" cols="5" rows="4" class="form-control" placeholder=". . . . . ."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="step-4" class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <i class="fas fa-check  text-success"></i> Done
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <p>
+                                                Thank your for using our application.
+                                            </p>
+                                            <button type="submit" class="btn btn-primary" style="width: 200px;">Save Account</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    {{ html()->form()->close() }}
                 </div>
-                <div class="col-md-3 ">
-                    <a href="{{route('frontend.user.wallet.index')}}" class="float-right" style="margin-right:15px; margin-top:10px;">
+                {{ html()->form()->close() }}
+            </div>
+            <div class="col-md-3 ">
+                <a href="{{route('frontend.user.wallet.index')}}" class="float-right" style="margin-right:15px; margin-top:10px;">
                             <i class="fa fa-angle-left" aria-hidden="true"></i>  Back
                         </a>
-                </div>
             </div>
         </div>
-        <br>
-        <br>
     </div>
+    <br>
+    <br>
+</div>
 @endsection
  @push('after-scripts')
 <script type="text/javascript">
@@ -277,6 +236,8 @@
                     alert()
                 });
             });
+
 </script>
+
 
 @endpush

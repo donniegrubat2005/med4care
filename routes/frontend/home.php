@@ -11,6 +11,8 @@ use App\Http\Controllers\Frontend\User\Wallet\UserWalletController;
 use App\Http\Controllers\frontend\user\wallet\DepositController;
 use App\Http\Controllers\frontend\user\wallet\TransferController;
 use App\Http\Controllers\Frontend\User\Wallet\WithdrawController;
+use App\Http\Controllers\frontend\user\wallet\WalletController;
+use App\Http\Controllers\Backend\Auth\User\UserController;
 /*
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
@@ -46,19 +48,22 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
         Route::post('account/add_documents', [AccountController::class, 'add_documents'])->name('add_documents.post');
         Route::get('account/delete_document/{id}/{fileName}', [AccountController::class, 'delete_my_documents'])->name('delete_document');
 
+        
+        Route::get('download/{id}', [UserController::class, 'download'])->name('download');
 
-        Route::resource('patients', 'PatientController');
-
-        Route::resource('reports', 'ReportController');
 
         Route::group(['namespace' => 'Wallet'], function () {
 
             Route::group(['prefix' => 'wallet'], function () {
               
                 Route::get('/', [UserWalletController::class, 'index'])->name('wallet.index');
-              
                 Route::get('accounts', [UserWalletController::class, '_accounts'])->name('wallet.accounts');
                 Route::get('account/create', [UserWalletController::class, 'create'])->name('wallet.account.create');
+                Route::post('account/post', [UserWalletController::class, 'store'])->name('wallet.account.post');   
+
+             
+                Route::get('overview', [WalletController::class, '_overview'])->name('wallet.overview');
+                Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
                 
             });
 
@@ -67,6 +72,7 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
             Route::group(['prefix' => 'wallet/deposit'], function () {
                 Route::get('/', [DepositController::class, 'index'])->name('wallet.deposit.index');
+                Route::get('overt', [DepositController::class, 'index'])->name('wallet.deposit.index');
                 Route::get('create', [DepositController::class, 'create'])->name('wallet.deposit.create');
                 Route::post('post', [DepositController::class, 'store'])->name('wallet.deposit.post');
                 Route::get('getWallets', [DepositController::class, '_ge_wallets']);

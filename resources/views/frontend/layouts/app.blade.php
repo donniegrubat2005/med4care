@@ -11,6 +11,7 @@
     <title>@yield('title', app_name())</title>
     <meta name="description" content="@yield('meta_description', app_name())">
     <meta name="author" content="@yield('meta_author', 'Bayang-Yang')"> 
+    <link rel="icon" type="image/x-icon" href="https://s3.eu-west-2.amazonaws.com/med4care-storage/images/logo/ico.png" />
     @yield('meta') 
     {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
 

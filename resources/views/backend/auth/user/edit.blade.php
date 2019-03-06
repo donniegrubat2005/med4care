@@ -132,7 +132,9 @@
                                         <h5 class="card-title">Documents :</h5>
                                     </div>
                                     <div class="col-sm-6">
-                                        <button type="button" class="btn btn-ghost-primary float-right" id="add-documents"> <i class="fa fa-plus-o" aria-hidden="true"></i> Document </button>
+                                        <button type="button" class="btn btn-ghost-primary float-right" id="add-documents"> 
+                                            <i class="fas fa-folder-plus"></i> File 
+                                        </button>
                                     </div>
                                 </div>
                                 

@@ -19,6 +19,7 @@
         padding: 5px;
         position: relative;
     }
+   
 </style>
 
 
@@ -40,72 +41,9 @@
     </div>
     <div class="card-body">
         <div class="row">
-            {{--
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-6" style="margin-top:7px;">
-                                <strong class="float-left">
-                                    <i class="icon-user"></i> Users
-                                </strong>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="dropdown float-right">
-                                    <button id="my-dropdown" class="btn  btn-ghost-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            More
-                                        </button>
-                                    <div class="dropdown-menu" aria-labelledby="my-dropdown">
-                                        <a class="dropdown-item" href="{{ route('admin.auth.user.create') }}">
-                                            <i class="icon-user-follow text-primary"></i>@lang('menus.backend.access.users.create')
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('admin.auth.user.deactivated') }}">
-                                            <i class="icon-user-unfollow text-warning"></i>@lang('menus.backend.access.users.deactivated')
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('admin.auth.user.deleted') }}">
-                                            <i class="icon-trash text-danger"></i>@lang('menus.backend.access.users.deleted')
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <table class="table table-responsive-sm table-hover">
-                            @foreach($users as $userTbl)
-                            <tr>
-                                <td>
-                                    <a href="{{route('admin.auth.user.show', $userTbl)}}">
-                                        <strong>{{ucwords($userTbl->first_name) }} {{ ucwords($userTbl->last_name) }}</strong>
-                                    </a>
-                                </td>
-                                <td class="text-right">
-                                    {!! $userTbl->status_label !!}
-                                </td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-7">
-                                <div class="float-left">
-                                    {!! $users->total() !!} {{ trans_choice('labels.backend.access.users.table.total', $users->total()) }}
-                                </div>
-                            </div>
-
-                            <div class="col-5">
-                                <div class="float-right">
-                                    {!! $users->render() !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body" style="border-top:2px solid lightblue">
+                <div class="card" style="border:none">
+                    <div class="card-body" >
                         <br>
                         <div class="row" style="margin-left:5px;">
                             <div class="col-md-2 img-holder">
@@ -114,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                @include('backend.auth.user.show.tabs.userInfo')
+                            @include('backend.auth.user.show.tabs.userInfo')
                             </div>
                             <div class="col-md-3">
                                 <h5>Permissions</h5>
@@ -144,67 +82,124 @@
                             <div class="col-md-12 mb-4">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active show" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">
-                                            <i class="fa fa-file-o"></i> Documents
+                                        <a class="nav-link active show tr-active" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">
+                                           <i class="cui-file"></i> Documents
                                         </a>
                                     </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active show" id="home3" role="tabpanel">
-                                        <h5>Available Documents</h5>
-                                        <hr> @empty(!$files)
-                                        <div class="row">
-                                            @foreach($files as $iKey => $file)
-                                            <div class="col-sm-2">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        Document <strong>{{ $iKey+=1 }}</strong>
-                                                    </div>
-                                                    <div class="card-body p-0">
-                                                        {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}"
-                                                            id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
-                                                    </div>
-                                                    <div class="card-footer">
-
-                                                        @if ($file['key'])
-                                                        <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
-                                                            <i class="fa fa-eye"></i> 
-                                                        </button>                                                        @endif
-
-                                                        <a href="{{route('admin.auth.user.download', $file['docId'] ) }}" class="btn btn-sm btn-outline-info">
-                                                            <i class="fa fa-download"></i> 
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <p class="badge badge-primary" id="delContent" style="position:absolute; font-size: 14px;">
+                                                    Available Documents
+                                                    {{-- <button class="btn btn-danger btn-sm" type="button"> 
+                                                        <i class="fas fa-trash"></i> 
+                                                        Delete
+                                                    </button> --}}
+                                                </p>
+                                                <table class="table table-responsive-sm table-bordered" id="tblUserFile">
+                                                    <thead>
+                                                        <tr class="tr-active">
+                                                            <th>
+                                                                <div class="custom-control custom-checkbox" id="cmdSelectAll">
+                                                                    <input type="checkbox" class="custom-control-input" id="selectAll">
+                                                                    <label class="custom-control-label" for="selectAll">File Name</label>
+                                                                </div>
+                                                            </th>
+                                                            <th>File Size</th>
+                                                            <th >Date Upload</th>
+                                                            <th class="text-muted small text-center">action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody-docs">
+                                                        @foreach ($files as $ik => $item)
+                                                        <tr>
+                                                            <td class="label-checkbox">
+                                                                <div class="custom-control custom-checkbox cmdCheckbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="{{ $ik }}-file">
+                                                                    <label class="custom-control-label" for="{{ $ik }}-file">
+                                                                        <a href="{{$item->filePath}}" target="_blank" class="text-info fileName">{{$item->fileName}}</a>
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{$item->fileSize}}</td>
+                                                            <td>{{$item->dateCreated}}</td>
+                                                            <td class="text-center">
+                                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                                    {{-- <button class="btn btn-danger btn-sm accntDeleteFile" type="button" id="{{$item->docId}}">
+                                                                        <i class="icon-trash"></i>
+                                                                    </button> --}}
+                                                                    <a href="{{ route('frontend.user.download', $item->docId ) }}" class="btn btn-primary btn-sm" title="Download">
+                                                                        <i class=" cui-cloud-download"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>    
                                             </div>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="imgModel-{{$iKey}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                                <div class="modal-dialog" role="document" style="border-radius:0px; border:1px solid #20a8d8">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">{{$file['fileName']}}</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body p-0">
-                                                            {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}"
-                                                                alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%">                                                            --}}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
                                         </div>
-                                        @else
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="alert alert-danger" role="alert">
-                                                    <strong><i>No documents available.</i></strong>
+                                        
+                                      
+
+                                        @if (false)
+                                            @empty(!$files)
+                                            <div class="row">
+                                                @foreach($files as $iKey => $file)
+                                                <div class="col-sm-2">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            {{ $file['dbFile'] }}
+                                                        </div>
+                                                        <div class="card-body p-0">
+                                                            {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}" alt="{{$file['fileName']}}"
+                                                                id="{{$file['dbFile']}}" class="img-thumbnail d-block img-doc"> --}}
+                                                        </div>
+                                                        <div class="card-footer">
+
+                                                            @if ($file['key'])
+                                                            <button class="btn btn-sm btn-outline-success" type="submit" data-toggle="modal" data-target="#imgModel-{{$iKey}}">
+                                                                    <i class="fa fa-eye"></i> 
+                                                                </button>                                                        @endif
+
+                                                            <a href="{{ route('admin.auth.user.download', $file['docId'] ) }}" class="btn btn-sm btn-outline-info">
+                                                                    <i class="fa fa-download"></i> 
+                                                                </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="imgModel-{{$iKey}}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document" style="border-radius:0px; border:1px solid #20a8d8">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">{{$file['fileName']}}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                            </div>
+                                                            <div class="modal-body p-0">
+                                                                {!! $file['files'] !!} {{-- <img src="{{ $file['fileUrl'] }}"
+                                                                    alt="{{$file['fileName']}}" class="img-thumbnail" style="width:100%">                                                            --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                            @else
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <strong><i>No documents available.</i></strong>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @endempty
+                                            @endempty
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -218,3 +213,39 @@
 
 @endif
 @endsection
+
+
+
+@push('after-scripts')
+    <script>
+    $(function(){
+        $('#tblUserFile').DataTable({
+            searching: true, paging: true, info: true,
+            "lengthChange": false
+        });
+
+        $(document).on('click', '#selectAll', function(){
+          
+            var tbody = $('#tbody-docs').find("input[type=checkbox]");
+            
+            if ($(this).is(':checked')) {
+               tbody.attr('checked', true);
+
+               $('#delContent').removeClass('d-none');
+            }
+            else{
+               tbody.removeAttr('checked');
+             
+               $('#delContent').addClass('d-none');
+
+            }
+        });
+
+
+
+        $(document).on('click', '.cmdCheckbox', function(){
+            // alert()
+        });
+    });
+    </script>
+@endpush

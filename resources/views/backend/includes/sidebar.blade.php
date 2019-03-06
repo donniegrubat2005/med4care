@@ -15,22 +15,9 @@
                     @lang('menus.backend.sidebar.wallet')                   
                 </a>
             </li>
-            {{-- {{ active_class(Active::checkUriPattern('admin/dashboard')) }} --}}
-            {{-- @foreach ($permissions_user as $permission)
-                <li class="nav-item">
-                    <a class="nav-link " href="{{ $permission['route'] }}">
-                        <i class="{{$permission['icon']}}"></i> {{$permission['name']}}
-                    </a>
-                </li>
-            @endforeach --}}
-
-
-
-
-
-            <li class="nav-title">
-                @lang('menus.backend.sidebar.system')
-            </li>
+            {{-- <li class="nav-title">
+                @lang('menus.backend.sidebar.component')
+            </li> --}}
 
             @if ($logged_in_user->isAdmin())
                 <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
@@ -69,10 +56,11 @@
             <li class="divider"></li>
 
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/log-viewer*'), 'open') }}">
+             
                 <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/log-viewer*')) }}" href="#">
                     <i class="nav-icon icon-list"></i> @lang('menus.backend.log-viewer.main')
                 </a>
-
+             
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer')) }}" href="{{ route('log-viewer::dashboard') }}">

@@ -16,14 +16,14 @@ Breadcrumbs::for('frontend.user.wallet.index', function ($trail) {
     $trail->push('Wallets', route('frontend.user.wallet.index'));
 });
 
-Breadcrumbs::for('frontend.user.wallet.deposit.index', function ($trail) {
+Breadcrumbs::for('frontend.user.wallet.overview', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
-    $trail->push('Deposit / Overview', route('frontend.user.wallet.deposit.index'));
+    $trail->push('Overview', route('frontend.user.wallet.deposit.index'));
 });
 
 Breadcrumbs::for('frontend.user.wallet.deposit.create', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
-    $trail->push('Deposit / Create', route('frontend.user.wallet.deposit.create'));
+    $trail->push('Cash In', route('frontend.user.wallet.deposit.create'));
 });
 
 

@@ -154,11 +154,12 @@
  // For account view & controller
  $(function () {
      doc.on('click', '.accntDeleteFile', function () {
+        // alert(file)
          var $this = $(this);
          if (confirm('Are you sure you want to delete this file')) {
-             var file = $this.parent().siblings('.card-body').find('img').attr('id');
+             var file = $this.parent().siblings('.label-checkbox').find('span').text();
              var docId = $this.attr('id');
-
+       
              $.get(mainUrl + "/account/delete_document/" + docId + "/" + file,
                  function (data, textStatus, jqXHR) {
                      if (data === true) {
@@ -194,50 +195,50 @@
 
 
  //  for deposit form
- $(function () {
-     deposit_load_wallets();
-     wwithdraw_load_wallets();
- });
+//  $(function () {
+//      deposit_load_wallets();
+//      wwithdraw_load_wallets();
+//  });
 
- function deposit_load_wallets() {
-     $.ajax({
-         type: "get",
-         url: mainUrl + '/wallet/deposit/getWallets',
-         success: function (response) {
-             console.log(response)
-             $("#depositName").autocomplete({
-                 source: response,
-                 search: function (event, ui) {
-                     //  console.log(ui)
-                 },
-                 select: function (event, ui) {
-                     $("#depositName").val(ui.item.label);
-                     $("#walletId").val(ui.item.value);
-                     //  $('#description').val(ui.item.description)
-                     return false;
-                 },
-             });
-         }
-     });
- }
+//  function deposit_load_wallets() {
+//      $.ajax({
+//          type: "get",
+//          url: mainUrl + '/wallet/deposit/getWallets',
+//          success: function (response) {
+//              console.log(response)
+//              $("#depositName").autocomplete({
+//                  source: response,
+//                  search: function (event, ui) {
+//                      //  console.log(ui)
+//                  },
+//                  select: function (event, ui) {
+//                      $("#depositName").val(ui.item.label);
+//                      $("#walletId").val(ui.item.value);
+//                      //  $('#description').val(ui.item.description)
+//                      return false;
+//                  },
+//              });
+//          }
+//      });
+//  }
 
- function wwithdraw_load_wallets() {
-     $.ajax({
-         type: "get",
-         url: mainUrl + '/wallet/deposit/getWallets',
-         success: function (response) {
-             $("#wallet_name").autocomplete({
-                 source: response,
-                 search: function (event, ui) {
-                     // console.log(ui)
-                 },
-                 select: function (event, ui) {
-                     $("#wallet_name").val(ui.item.label);
-                     $("#wallet_id").val(ui.item.value);
-                     // $('#description').val(ui.item.description)
-                     return false;
-                 },
-             });
-         }
-     });
- }
+//  function wwithdraw_load_wallets() {
+//      $.ajax({
+//          type: "get",
+//          url: mainUrl + '/wallet/deposit/getWallets',
+//          success: function (response) {
+//              $("#wallet_name").autocomplete({
+//                  source: response,
+//                  search: function (event, ui) {
+//                      // console.log(ui)
+//                  },
+//                  select: function (event, ui) {
+//                      $("#wallet_name").val(ui.item.label);
+//                      $("#wallet_id").val(ui.item.value);
+//                      // $('#description').val(ui.item.description)
+//                      return false;
+//                  },
+//              });
+//          }
+//      });
+//  }

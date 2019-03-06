@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Frontend\User\Wallet;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Frontend\Wallet\UserAccountRequest;
+use App\Repositories\Frontend\Wallet\UserAccountRepository;
 
 class UserWalletController extends Controller
 {
+    private $userAcctRepo;
+
+    public function __construct(UserAccountRepository $userAcctRepo)
+    {
+        $this->userAcctRepo = $userAcctRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +23,7 @@ class UserWalletController extends Controller
      */
     public function index()
     {
+
         return view('frontend.pages.wallet.wallet');
     }
     /**
@@ -23,11 +33,15 @@ class UserWalletController extends Controller
      */
     public function create()
     {
-        return view('frontend.pages.wallet.accounts.wallet-new-account');
+        $acctTypes = $this->userAcctRepo->getAccountTypes();
+
+        return view('frontend.pages.wallet.accounts.wallet-new-account', compact('acctTypes'));
     }
     public function _accounts()
     {
-        return view('frontend.pages.wallet.accounts.wallet-account');
+        $userAccounts = $this->userAcctRepo->getAccounts();
+
+        return view('frontend.pages.wallet.accounts.wallet-account', compact('userAccounts'));
     }
     /**
      * Store a newly created resource in storage.
@@ -35,9 +49,14 @@ class UserWalletController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserAccountRequest $request)
     {
-        
+        // dd($request->all());
+
+        $this->userAcctRepo->create($request->only('name', 'accountType', 'amount', 'remarks'));
+
+
+        return redirect()->route('frontend.user.wallet.accounts')->withFlashSuccess('New account has been created.');
     }
 
     /**
