@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', app_name())</title>
-    <meta name="description" content="@yield('meta_description', 'Laravel 5 Boilerplate')">
-    <meta name="author" content="@yield('meta_author', 'Anthony Rappa')"> @yield('meta') @stack('before-styles')
+    <meta name="description" content="@yield('meta_description', 'Med4Care')">
+    <link rel="icon" type="image/x-icon" href="https://s3.eu-west-2.amazonaws.com/med4care-storage/images/logo/ico.png" />
+
+    <meta name="author" content="@yield('meta_author', 'BayangYang')"> @yield('meta') @stack('before-styles')
     <!-- Check if the language is set to RTL, so apply the RTL layouts -->
     <!-- Otherwise apply the normal LTR layouts -->
     {{ style(mix('css/backend.css')) }} @stack('after-styles')

@@ -81,32 +81,18 @@ class RegisterController extends Controller
 
                 $name = time() . '_' . $file->getClientOriginalName();
                 $data = file_get_contents($file->getRealPath());
-    
-                // $name = time().'_'. $file->getClientOriginalName();
+                $extention = $file->getClientOriginalExtension();
+                $fileSize =  File::size($file) ;
                 $filePath = 'documents/' . $userId . '/' . $name;
+
                 Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-                Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
-    
-
-
-
-
-
-
-
-
-
-                // $name = time().'_'. $file->getClientOriginalName();
-                // $filePath = 'documents/'.$userId.'/'. $name;
-                // Storage::disk('s3')->put($filePath, file_get_contents($file));
-                // Team::create(['user_id' => $userId, 'documents' => $name]);
+                Team::create(['user_id' => $userId, 'documents' => $name, 'size' => $this->bytesToHuman($fileSize), 'extention' => $extention]);
+ 
             }
-
-
         }
 
-        
+
 
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.
@@ -115,8 +101,7 @@ class RegisterController extends Controller
 
             return redirect()->route('frontend.auth.login')->withFlashSuccess(
                 config('access.users.requires_approval') ?
-                    __('exceptions.frontend.auth.confirmation.created_pending') :
-                    __('exceptions.frontend.auth.confirmation.created_confirm')
+                    __('exceptions.frontend.auth.confirmation.created_pending') : __('exceptions.frontend.auth.confirmation.created_confirm')
             );
         } else {
             auth()->login($user);
@@ -125,5 +110,15 @@ class RegisterController extends Controller
 
             return redirect($this->redirectPath());
         }
+    }
+    public function bytesToHuman($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        for ($i = 0; $bytes > 1024; $i++) {
+            $bytes /= 1024;
+        }
+
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 }

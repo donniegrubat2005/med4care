@@ -126,21 +126,16 @@ class UserController extends Controller
      */
     public function show(ManageUserRequest $request, User $user)
     {
-
-
-        // $percent = $this->userRepository->calculatePoints();
-
-        // dd($user->verification_points);
-        $files = $this->get_documents($user->id);
+        $files = $this->userRepository->getUserFile($user);
+        // dd($files);
+        // $files = Team::where('user_id', $user->id)->get();
+        // $files = $this->get_documents($user->id);
 
         return view('backend.auth.user.show')
             ->with(['files' => $files, 'percent' => $user->verification_points])
             ->withUser($user)
             ->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
     }
-
-
-
 
 
     public function download($id)
@@ -155,43 +150,70 @@ class UserController extends Controller
             return Storage::disk('s3')->download($s3File);
         }
     }
+
     public function get_documents($userId)
     {
-        $files = [];
-        $documents = Team::where('user_id', $userId)->get();
-        $s3 = Storage::disk('s3');
-        $items = $s3->files('documents/' . $userId);
-        // header('Content-type: image/jpg');
-        foreach ($items as $sk => $item) {
-            $docId = $documents[$sk]->id;
-            $docu = $documents[$sk]->documents;
-            $filesDocs = $documents[$sk]->files;
+        $items   = [];
+        $dbFiles = Team::where('user_id', $userId)->get();
+        $s3      = Storage::disk('s3');
+        $s3Files = $s3->files('documents/' . $userId);
 
+        foreach ($dbFiles as $fk => $file) {
             $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
-            $docExt = explode('.', $documents[$sk]->documents);
 
-            if (in_array($docExt[1], $ext)) {
-
-                $files[] = [
-                    'docId' => $docId,
+            if (in_array($dbFiles[$fk]->extention, $ext)) {
+                $items[] = [
                     'key' => true,
-                    'dbFile' => $docu,
-                    'fileName' => $docExt[0],
-                    'fileUrl' => $s3->url($item),
-                    'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,' . base64_encode($filesDocs) . '"/>',
+                    'docId' => $file->id,
+                    'dbFile' => $file->documents,
+                    'fileName' => $file->documents,
+                    'fileUrl' => $s3->url($s3Files[$fk]),
+                    'files' => '<img class="img-thumbnail d-block img-doc" src="' . $s3->url($s3Files[$fk]) . '"/>',
                 ];
             } else {
-                $files[] = [
-                    'docId' => $docId,
+                $items[] = [
                     'key' => false,
-                    'dbFile' => $docu,
-                    'fileName' => $docExt[0],
-                    'fileUrl' => $s3->url('documents/documents.PNG'),
+                    'docId' => $file->id,
+                    'fileName' => $file->documents,
+                    'dbFile' => $file->documents,
+                    'fileUrl' => $s3->url($s3Files[$fk]),
                     'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
                 ];
             }
         }
-        return $files;
+        // dd( $items);
+
+
+        // foreach ($items as $sk => $item) {
+        //     $docId = $documents[$sk]->id;
+        //     $docu = $documents[$sk]->documents;
+        //     $filesDocs = $documents[$sk]->files;
+
+        //     $ext = array("jpg", "JPG", "jpeg", "JPEG", "png", "PNG", 'gif', 'GIF');
+        //     $docExt = explode('.', $documents[$sk]->documents);
+
+        //     if (in_array($docExt[1], $ext)) {
+
+        //         $files[] = [
+        //             'docId' => $docId,
+        //             'key' => true,
+        //             'dbFile' => $docu,
+        //             'fileName' => $docExt[0],
+        //             'fileUrl' => $s3->url($item),
+        //             'files' => '<img class="img-thumbnail d-block img-doc" src="data:image/jpeg;base64,' . base64_encode($filesDocs) . '"/>',
+        //         ];
+        //     } else {
+        //         $files[] = [
+        //             'docId' => $docId,
+        //             'key' => false,
+        //             'dbFile' => $docu,
+        //             'fileName' => $docExt[0],
+        //             'fileUrl' => $s3->url('documents/documents.PNG'),
+        //             'files' => '<img src="https://image.flaticon.com/icons/png/512/202/202322.png" class="img-thumbnail d-block img-doc">',
+        //         ];
+        //     }
+        // }
+        return $items;
     }
 
     /**
@@ -243,15 +265,37 @@ class UserController extends Controller
 
             $name = time() . '_' . $file->getClientOriginalName();
             $data = file_get_contents($file->getRealPath());
-
-            // $name = time().'_'. $file->getClientOriginalName();
+            $extention = $file->getClientOriginalExtension();
+            $fileSize =  File::size($file);
             $filePath = 'documents/' . $userId . '/' . $name;
+
             Storage::disk('s3')->put($filePath, file_get_contents($file));
 
-            Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
+            Team::create(['user_id' => $userId, 'documents' => $name, 'size' => $this->bytesToHuman($fileSize), 'extention' => $extention]);
+
+
+            // $name = time() . '_' . $file->getClientOriginalName();
+            // $data = file_get_contents($file->getRealPath());
+
+            // // $name = time().'_'. $file->getClientOriginalName();
+            // $filePath = 'documents/' . $userId . '/' . $name;
+            // Storage::disk('s3')->put($filePath, file_get_contents($file));
+
+            // Team::create(['user_id' => $userId, 'documents' => $name, 'files' => $data]);
 
             // Team::create(['user_id' => $userId, 'documents' => $name]);
         }
+    }
+
+    public function bytesToHuman($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        for ($i = 0; $bytes > 1024; $i++) {
+            $bytes /= 1024;
+        }
+
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 
     public function create_userImage($file, $userId)

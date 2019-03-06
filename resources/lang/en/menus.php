@@ -50,6 +50,7 @@ return [
             'wallet'    => 'Wallet',
             'history'   => 'History',
             'system'    => 'System',
+            'component'    => 'Component',
         ],
     ],
 

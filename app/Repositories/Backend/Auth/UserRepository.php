@@ -23,6 +23,8 @@ use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Frontend\Contact\SendContact;
+use App\Models\Auth\Team;
+use Illuminate\Support\Facades\Storage;
 
 
 /**
@@ -113,7 +115,7 @@ class UserRepository extends BaseRepository
             if (is_array($data['roles'])) {
                 foreach ($data['roles'] as $roles) {
                     if ($roles === 'user')
-                    $v = 10;
+                        $v = 10;
                 }
             }
 
@@ -410,5 +412,21 @@ class UserRepository extends BaseRepository
     {
         $totalP = ($percent / 100) * $points;
         return $totalP;
+    }
+    public function getUserFile($user)
+    {
+        $items = [];
+        $files =  Team::where('user_id', $user->id)->get();
+
+        foreach ($files as $fk => $file) {
+            $items[] = (object)[
+                'docId' => $file->id,
+                'fileSize' => $file->size,
+                'fileName' =>  $file->documents,
+                'filePath' =>  Storage::disk('s3')->url('documents/' . $user->id . '/' . $file->documents),
+                'dateCreated' => $file->created_at
+            ];
+        }
+        return $items;
     }
 }

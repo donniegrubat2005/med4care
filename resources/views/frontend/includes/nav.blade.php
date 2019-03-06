@@ -53,13 +53,11 @@
     <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="{{ route('frontend.index') }}">
-        &nbsp; 
-        <img class="navbar-brand-full" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="50" height="20" alt="Med4Care Logo" >
-        &nbsp; 
-        <strong class="navbar-brand-full">Med4Care</strong>
-       <img class="navbar-brand-minimized" src="https://www.med4.care/wp-content/uploads/2018/05/logo.png" width="30" height="20" alt="Med4Care Logo">
-    </a>
+     <a class="navbar-brand" href="{{ route('frontend.index') }}">
+        <img class="navbar-brand-full" width="20" height="20" alt="Med4Care Logo" src="https://s3.eu-west-2.amazonaws.com/med4care-storage/images/logo/ico.png" alt="Med4Care">
+        &nbsp; <strong class="navbar-brand-full">Med4Care</strong>
+        <img class="navbar-brand-minimized" width="20" height="20" alt="Med4Care Logo" src="https://s3.eu-west-2.amazonaws.com/med4care-storage/images/logo/ico.png" alt="Med4Care">
+    </a> 
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
