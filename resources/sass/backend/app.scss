@@ -8,9 +8,9 @@
 
 @import "variables";
 
-@import "~font-awesome/css/font-awesome.css";
+@import "../../js/backend/font-awesome/css/font-awesome.css";
 
-// Import styles
+// Import Core UI
 @import "~@coreui/coreui/scss/coreui";
 
 @import "~@coreui/icons/css/coreui-icons.min.css";
@@ -18,27 +18,23 @@
 @import "~@coreui/styles.css";
 
 // Import datatables
-@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+@import "../../js/backend/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
 
 
 // Import Smart Wizard
-@import "~smartwizard/dist/css/smart_wizard.css";
-@import "~smartwizard/dist/css/smart_wizard.min.css";
-@import "~smartwizard/dist/css/smart_wizard_theme_arrows.min.css";
-@import "~smartwizard/dist/css/smart_wizard_theme_circles.min.css";
-@import "~smartwizard/dist/css/smart_wizard_theme_dots.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_arrows.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_circles.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_dots.min.css";
 
 // Import remodal
-@import "~remodal/dist/remodal.css";
-@import "~remodal/dist/remodal-default-theme.css";
+@import "../../js/backend/remodal/dist/remodal.css";
+@import "../../js/backend/remodal/dist/remodal-default-theme.css";
 
 
-// dropzone
-@import "~dropzone/dist/dropzone.css";
-
-
-
-@import "~jquery-ui/themes/base/all.css";
+// Import Jquery UI
+@import "../../js/backend/jquery-ui/themes/base/all.css";
 
 
  
