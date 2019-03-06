@@ -78,7 +78,6 @@ class RegisterController extends Controller
 
             foreach ($request->file('file') as $file) {
 
-
                 $name = time() . '_' . $file->getClientOriginalName();
                 $data = file_get_contents($file->getRealPath());
                 $extention = $file->getClientOriginalExtension();
