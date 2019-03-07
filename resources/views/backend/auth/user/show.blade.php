@@ -1,5 +1,5 @@
 @extends('backend.layouts.app') 
-@section('title', __('labels.backend.access.users.management') . ' | ' . __('labels.backend.access.users.view'))
+@section('title', __('labels.backend.access.users.management') . ' ~ ' . ucwords($user->name))
 
 @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
@@ -91,21 +91,20 @@
                                     <div class="tab-pane active show" id="home3" role="tabpanel">
                                         <div class="row mt-3">
                                             <div class="col-md-12">
-                                                <p class="badge badge-primary" id="delContent" style="position:absolute; font-size: 14px;">
-                                                    Available Documents
-                                                    {{-- <button class="btn btn-danger btn-sm" type="button"> 
-                                                        <i class="fas fa-trash"></i> 
-                                                        Delete
-                                                    </button> --}}
-                                                </p>
+                                                <h5 style="position: absolute">Available Documents</h5>
+                                                {{-- <button class="btn btn-danger btn-sm" type="button" style="position: absolute; margin-left:180px; z-index: 999;"> 
+                                                    <i class="fas fa-trash"></i> 
+                                                    Delete
+                                                </button>  --}}
                                                 <table class="table table-responsive-sm table-bordered" id="tblUserFile">
                                                     <thead>
                                                         <tr class="tr-active">
                                                             <th>
-                                                                <div class="custom-control custom-checkbox" id="cmdSelectAll">
+                                                                {{-- <div class="custom-control custom-checkbox" id="cmdSelectAll">
                                                                     <input type="checkbox" class="custom-control-input" id="selectAll">
                                                                     <label class="custom-control-label" for="selectAll">File Name</label>
-                                                                </div>
+                                                                </div> --}}
+                                                                File Name
                                                             </th>
                                                             <th>File Size</th>
                                                             <th >Date Upload</th>
@@ -116,12 +115,13 @@
                                                         @foreach ($files as $ik => $item)
                                                         <tr>
                                                             <td class="label-checkbox">
-                                                                <div class="custom-control custom-checkbox cmdCheckbox">
+                                                                    <a href="{{$item->filePath}}" target="_blank" class="text-info fileName">{{$item->fileName}}</a>
+                                                                {{-- <div class="custom-control custom-checkbox cmdCheckbox">
                                                                     <input type="checkbox" class="custom-control-input" id="{{ $ik }}-file">
                                                                     <label class="custom-control-label" for="{{ $ik }}-file">
                                                                         <a href="{{$item->filePath}}" target="_blank" class="text-info fileName">{{$item->fileName}}</a>
                                                                     </label>
-                                                                </div>
+                                                                </div> --}}
                                                             </td>
                                                             <td>{{$item->fileSize}}</td>
                                                             <td>{{$item->dateCreated}}</td>
@@ -224,28 +224,6 @@
             "lengthChange": false
         });
 
-        $(document).on('click', '#selectAll', function(){
-          
-            var tbody = $('#tbody-docs').find("input[type=checkbox]");
-            
-            if ($(this).is(':checked')) {
-               tbody.attr('checked', true);
-
-               $('#delContent').removeClass('d-none');
-            }
-            else{
-               tbody.removeAttr('checked');
-             
-               $('#delContent').addClass('d-none');
-
-            }
-        });
-
-
-
-        $(document).on('click', '.cmdCheckbox', function(){
-            // alert()
-        });
     });
     </script>
 @endpush
