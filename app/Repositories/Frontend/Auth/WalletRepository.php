@@ -86,7 +86,12 @@ class WalletRepository extends BaseRepository
     }
     public function getWallet()
     {
-        return $this->model->where('user_id', auth()->id())->get();
+        $wallet = $this->model->where('user_id', auth()->id());
+       
+        if($wallet->count() > 0) {
+            return $wallet->get();
+        }
+        return false;
     }
     public function getWalletType()
     {

@@ -175,7 +175,7 @@
                 <div class="row p-4">
                     <div class="col-md-12">
                         <div class="qa-message-list" id="wallmessages">
-                            @if ($wallets->count() > 0) 
+                            @if ($wallets) 
                                 @foreach ($wallets as $wallet) 
                                     @foreach ($wallet->transactions as $transaction)
                                     <div class="message-item" id="m1">

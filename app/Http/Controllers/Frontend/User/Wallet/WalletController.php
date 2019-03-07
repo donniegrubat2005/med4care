@@ -30,7 +30,8 @@ class WalletController extends Controller
     public function _overview()
     {
         $nvActive  = 'overview';
-        $wallets = $this->walletRepository->getWallet(); //all wallets
+        $wallets = $this->walletRepository->getWallet();  
+        // dd( $wallets);
         $balance = $this->walletRepository->getBalance();
         $walletTypes = $this->walletRepository->getWalletType();
         $myAccounts = $this->walletRepository->myAccounts();
