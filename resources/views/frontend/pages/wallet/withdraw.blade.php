@@ -12,8 +12,9 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {{ html()->form('POST', route('frontend.user.wallet.cash-in.post'))->attribute('data-toggle', 'validator')->attribute('accept-charset','utf-8')->open()
-                        }}
+                        {{-- {{ 
+                            html()->form('POST', route('frontend.user.wallet.cash-in.post'))->attribute('data-toggle', 'validator')->attribute('accept-charset','utf-8')->open()
+                        }} --}}
                         <div class="form-group">
                             <label for="wallet">Withdraw from? <span class="text-danger">*</span></label>
                             <select class="form-control js-example-disabled-results" id="wallet" name="walletId" required>
@@ -39,7 +40,7 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-secondary">Withdraw</button>
                         </div>
-                        {{ html()->form()->close() }}
+                        {{-- {{ html()->form()->close() }} --}}
                     </div>
                 </div>
 
