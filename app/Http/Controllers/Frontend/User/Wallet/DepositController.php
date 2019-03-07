@@ -30,14 +30,15 @@ class DepositController extends Controller
      */
     public function index()
     {
-        $items = [];
-
+        $nvActive  = 'cash-in';
         $wallets = $this->walletRepository->getWallet();
         $balance = $this->walletRepository->getBalance();
+        $walletTypes = $this->walletRepository->getWalletType();
+        $myAccounts = $this->walletRepository->myAccounts();
+      
+        return view('frontend.pages.wallet.cash-in', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
 
-        $nvActive  = 'overview';
 
-        return view('frontend.pages.wallet.deposits.deposit-overview', compact('nvActive', 'balance', 'wallets'));
     }
     /**
      * Show the form for creating a new resource.

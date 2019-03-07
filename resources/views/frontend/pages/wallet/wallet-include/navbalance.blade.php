@@ -19,6 +19,12 @@
                 Overview
                 <i class="fa fa-angle-right float-right mt-1"  aria-hidden="true"></i>
             </a>
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash-in' ? ' nw-active' : ''}}"  
+                href="{{route('frontend.user.wallet.cash-in')}}">
+                <i class="icon-login"></i> &nbsp;
+                Cash In
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a>
             {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                <i class="icon-login"></i> &nbsp;

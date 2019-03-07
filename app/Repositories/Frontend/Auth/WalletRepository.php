@@ -22,10 +22,7 @@ class WalletRepository extends BaseRepository
     }
     public function _create(array $data)
     {
-
         return DB::transaction(function () use ($data) {
-
-
             $wallet = parent::create([
                 'name' => $data['name'],
                 'balance' => $data['amount'],
@@ -34,20 +31,6 @@ class WalletRepository extends BaseRepository
                 'user_account_id' =>  $data['account'],
             ]);
             return $wallet->id;
-            
-             
-
-           
-
-
-            // $wallet = parent::create([
-            //     'name' => $data['depositName'],
-            //     'balance' => $data['amount'],
-            //     'description' => $data['description'],
-            //     'holder_type' => $data['depositType'],
-            //     'user_id' => auth()->id(),
-            // ]);
-            // return $wallet->id;
         });
     }
     public function findOrFail(array $data)
@@ -77,8 +60,11 @@ class WalletRepository extends BaseRepository
     }
     public function getBalance()
     {
-        $balance =  DB::table('user_wallets')->select(DB::raw('IFNULL(Sum(user_wallets.balance),0) as balance'))->where('user_id', auth()->id())->first();
-
+        $balance =  DB::table('user_accounts')
+                    ->select(DB::raw('IFNULL(Sum(user_wallets.balance),0) as balance'))
+                    ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
+                    ->where('user_id', auth()->id())
+                    ->first();
         if ($balance) {
             return $balance->balance;
         }
@@ -86,9 +72,8 @@ class WalletRepository extends BaseRepository
     }
     public function getWallet()
     {
-        $wallet = $this->model->where('user_id', auth()->id());
-       
-        if($wallet->count() > 0) {
+        $wallet = $this->model->getWalllets();
+        if ($wallet->count() > 0) {
             return $wallet->get();
         }
         return false;
@@ -100,6 +85,21 @@ class WalletRepository extends BaseRepository
     public function myAccounts()
     {
         return UserAccounts::where('user_id', auth()->id())->orderBy('name')->get();
+    }
+
+    public function getWalletTransactions()
+    {
+        $items = [];
+        $wallets = $this->model->getWalllets();
+        if ($wallets->count() > 0) {
+            foreach ($wallets->get() as $wallet) {
+                $items[] = [
+                    'wallet' => $wallet,
+                    'transactions' => Transactions::where('wallet_id', $wallet->id)->get()
+                ];
+            }
+        }
+        return $items;
     }
     
 }
