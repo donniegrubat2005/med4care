@@ -33,15 +33,20 @@ class WalletRepository extends BaseRepository
             return $wallet->id;
         });
     }
-    public function findOrFail(array $data)
+    public function findWallet(array $data)
     {
-        $wallet = $this->model
-            ->where('name', $data['depositName'])
-            ->where('user_id', auth()->id());
-        if ($wallet->count() > 0) {
-            return $wallet->first();
-        }
-        return false;
+        $wallet = $this->model->find($data['walletId']);
+
+       return $wallet;
+
+
+        // $wallet = $this->model
+        //     ->where('name', $data['depositName'])
+        //     ->where('user_id', auth()->id());
+        // if ($wallet->count() > 0) {
+        //     return $wallet->first();
+        // }
+        // return false;
     }
     public function updateWalletBalance($id, $amount, $type, $optr)
     {

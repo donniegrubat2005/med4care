@@ -18,6 +18,7 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
     .js([
         'resources/js/frontend/app.js',
     ], 'js/frontend.js')
+
     .js([
         'resources/js/backend/before.js',
         'resources/js/backend/app.js',
@@ -26,7 +27,8 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
         'resources/js/backend/smartwizard/dist/js/jquery.smartWizard.min.js',
         'resources/js/backend/jquery-ui/external/requirejs/jquery-ui.js',
         'resources/js/backend/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
-        'resources/js/backend/remodal/dist/remodal.min.js', 
+        'resources/js/backend/remodal/dist/remodal.min.js',
+        'resources/js/backend/select2/select2.min.js',
         'resources/js/backend/scripts.js'
     ], 'js/backend.js')
     .extract([

@@ -63,9 +63,14 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
 
              
                 Route::get('overview', [WalletController::class, 'index'])->name('wallet.overview');
+              
                 Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
 
                 Route::get('cash-in', [DepositController::class, 'index'])->name('wallet.cash-in');
+                Route::post('cash-in/post', [DepositController::class, 'store'])->name('wallet.cash-in.post');
+
+                Route::get('withdraw', [WithdrawController::class, 'index'])->name('wallet.withdraw');
+
 
             });
 

@@ -19,13 +19,18 @@
                 Overview
                 <i class="fa fa-angle-right float-right mt-1"  aria-hidden="true"></i>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash-in' ? ' nw-active' : ''}}"  
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash-in' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.cash-in')}}">
                 <i class="icon-login"></i> &nbsp;
-                Cash In
+                Cash In / Deposit
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
             </a>
-            {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'withdraw' ? ' nw-active' : ''}}"
+                href="{{route('frontend.user.wallet.withdraw')}}">
+                <i class="icon-logout"></i> &nbsp;
+                Cash out / Withdraw
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a> {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                <i class="icon-login"></i> &nbsp;
                 Cash In
@@ -140,5 +145,6 @@
         margin-left: 666px;
     }
 </style>
+
 
 @endpush

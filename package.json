@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@coreui/icons": "^0.3.0",
+    "combobox": "^1.0.1",
     "datatables": "^1.10.18",
     "datatables.net-bs4": "^1.10.19",
     "dropzone": "^5.5.1",

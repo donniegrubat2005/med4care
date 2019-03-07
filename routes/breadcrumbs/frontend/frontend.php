@@ -32,10 +32,10 @@ Breadcrumbs::for('frontend.user.wallet.transfer.index', function ($trail) {
     $trail->push('Transfer', route('frontend.user.wallet.transfer.index'));
 });
 
-// Breadcrumbs::for('frontend.user.wallet.withdraw.index', function ($trail) {
-//     $trail->parent('frontend.user.wallet.index');
-//     $trail->push('Transfer', route('frontend.user.wallet.withdraw.index'));
-// });
+Breadcrumbs::for('frontend.user.wallet.withdraw', function ($trail) {
+    $trail->parent('frontend.user.wallet.index');
+    $trail->push('Transfer', route('frontend.user.wallet.withdraw'));
+});
 
 Breadcrumbs::for('frontend.user.wallet.accounts', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
