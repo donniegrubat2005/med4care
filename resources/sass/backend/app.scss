@@ -8,14 +8,13 @@
 
 @import "variables";
 
-// @import "../../js/backend/font-awesome/css/font-awesome.css";
+@import "../../js/backend/font-awesome/css/font-awesome.css";
 
 // Import Core UI
 @import "~@coreui/coreui/scss/coreui";
-
 @import "~@coreui/icons/css/coreui-icons.min.css";
-@import "~@coreui/pace.min.css";
-@import "~@coreui/styles.css";
+@import "pace.min.css";
+@import "styles.css";
 
 // Import datatables
 @import "../../js/backend/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
