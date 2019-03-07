@@ -1,5 +1,7 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' ~ Overview') @push('after-styles')
+@section('title', app_name() . ' ~ Overview') 
+
+@push('after-styles')
 <style>
     .message-item {
         margin-bottom: 25px;
@@ -160,7 +162,6 @@
         background: linear-gradient(left, #22ADD4, #1E98BA);
     }
 </style>
-
 @endpush 
 @section('content')
 <div class="row">
@@ -192,14 +193,14 @@
                                                                     </strong>
                                                                 </li>
                                                                 <li>Amount :  <strong> {{number_format($transac->amount, 2)}}</strong></li>
-                                                                <li>Date : {{ \Carbon\Carbon::parse($transac->created_at)->format('M. d, Y H:i:s A')}} </li>
+                                                                <li>Date : {{ \Carbon\Carbon::parse($transac->created_at)->format('M. d, Y H:i:s A') }} </li>
                                                                 <li>By :   <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="qa-message-content">
-                                                    @if (!is_null($transac->remarks)) 
+                                                    @if ($transac->remarks)) 
                                                         {{$transac->remarks}} 
                                                     @else
                                                         <i>No remarks available.</i> 

@@ -25,19 +25,17 @@ class WalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { }
-
-    public function _overview()
-    {
+    { 
         $nvActive  = 'overview';
-        $wallets = $this->walletRepository->getWallet();
         $balance = $this->walletRepository->getBalance();
+        $wallets = $this->walletRepository->getWallet();
         $walletTypes = $this->walletRepository->getWalletType();
-        $transactions = $this->walletRepository->getWalletTransactions();
         $myAccounts = $this->walletRepository->myAccounts();
+        $transactions = $this->walletRepository->getWalletTransactions();
       
         return view('frontend.pages.wallet.overview', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts', 'transactions'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
