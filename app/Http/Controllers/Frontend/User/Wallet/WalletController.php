@@ -30,12 +30,13 @@ class WalletController extends Controller
     public function _overview()
     {
         $nvActive  = 'overview';
-        $wallets = $this->walletRepository->getWallet(); //all wallets
+        $wallets = $this->walletRepository->getWallet();
         $balance = $this->walletRepository->getBalance();
         $walletTypes = $this->walletRepository->getWalletType();
+        $transactions = $this->walletRepository->getWalletTransactions();
         $myAccounts = $this->walletRepository->myAccounts();
-
-        return view('frontend.pages.wallet.overview', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
+      
+        return view('frontend.pages.wallet.overview', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts', 'transactions'));
     }
     /**
      * Show the form for creating a new resource.
@@ -55,9 +56,10 @@ class WalletController extends Controller
      */
     public function store(WalletRequest $request)
     {
-        $walletId = $this->walletRepository->_create($request->only('account','name','walletType', 'amount', 'description'));
+        // dd($request->all());
+        $walletId = $this->walletRepository->_create($request->only('account', 'name', 'walletType', 'amount', 'description'));
 
-        if($walletId){
+        if ($walletId) {
             $this->transactionsRepository->_deposit([
                 'amount' => $request->amount,
                 'wallet_id' => $walletId,
@@ -66,7 +68,6 @@ class WalletController extends Controller
         }
 
         return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('New wallet has been created.');
-        
     }
 
     /**

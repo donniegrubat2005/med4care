@@ -19,30 +19,36 @@
                 Overview
                 <i class="fa fa-angle-right float-right mt-1"  aria-hidden="true"></i>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}"
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash-in' ? ' nw-active' : ''}}"  
+                href="{{route('frontend.user.wallet.cash-in')}}">
+                <i class="icon-login"></i> &nbsp;
+                Cash In
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a>
+            {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                <i class="icon-login"></i> &nbsp;
                 Cash In
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}"
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'withdraw' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                <i class="icon-logout"></i> &nbsp;
                 Withdraw
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}"
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'transfer' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                 <i class="fas fa-exchange-alt "></i> &nbsp;
                 Transfer
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
             </a>
-            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'create' ? ' nw-active' : ''}}"
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'wallet' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                 <i class="icon-wallet"></i> &nbsp;
                 Wallets
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
-            </a>
+            </a> --}}
         </div>
     </div>
 </div>
@@ -60,11 +66,10 @@
                     <div class="form-group">
                         <label for="account">Accounts <span class="text-danger">*</span></label>
                         <select name="account" id="account" class="form-control">
-                                @foreach ($myAccounts as $myAccount)
-                                    <option value="{{ $myAccount->id}}">{{ ucwords($myAccount->name) }}</option>
-                                @endforeach
-                            </select>
-
+                            @foreach ($myAccounts as $myAccount)
+                                <option value="{{ $myAccount->id}}">{{ ucwords($myAccount->name) }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -81,10 +86,10 @@
                     <div class="form-group">
                         <label for="walletType">Wallet Type <span class="text-danger">*</span></label>
                         <select name="walletType" id="walletType" class="form-control">
-                                @foreach ($walletTypes as $walletType)
-                                    <option value="{{$walletType->id}}">{{ ucwords($walletType->type) }}</option>
-                                @endforeach
-                            </select>
+                            @foreach ($walletTypes as $walletType)
+                                <option value="{{$walletType->id}}">{{ ucwords($walletType->type) }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -117,8 +122,6 @@
                 </div>
             </div>
             {{ html()->form()->close() }}
-
-
         </div>
     </div>
 </div>
