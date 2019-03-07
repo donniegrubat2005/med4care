@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' | Deposit | Overview') @push('after-styles')
+@section('title', app_name() . ' ~ Overview') @push('after-styles')
 
 <style>
     .message-item {
@@ -170,7 +170,7 @@
 <div class="row">
     @include('frontend.pages.wallet.wallet-include.navbalance', [ $nvActive, $walletTypes, $myAccounts] )
     <div class="col-md-9">
-    @include('includes.partials.messages')
+        @include('includes.partials.messages')
         <div class="card card-header-border">
             <div class="card-header">
                 <strong>OVERVIEW</strong>
@@ -179,58 +179,62 @@
                 <div class="row p-4">
                     <div class="col-md-12">
                         <div class="qa-message-list" id="wallmessages">
-                            @if (!empty($wallets->count() > 0)) @foreach ($wallets as $wallet) @foreach ($wallet->transactions as $transaction)
-                            <div class="message-item" id="m1">
-                                <div class="message-inner">
-                                    <div class="message-head clearfix">
-                                        <div class="user-detail">
-                                            <h5 class="handle">{{ucwords($transaction->type)}}</h5>
-                                            {{--
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <ul class="list-unstyled">
-                                                        <li> To : {{ucwords($wallet->holder_type)}} </li>
-                                                        <li> Amount : {{ucwords($wallet->holder_type)}} </li>
-                                                    </ul>
-                                                </div>
-                                            </div> --}}
-                                            <div class="post-meta">
-                                                <div class="asker-meta">
-                                                    <span class="qa-message-what float-left">
-                                                                     Amount : <strong> {{number_format($transaction->amount, 2)}}</strong>
+                            @if ($wallets->count() > 0) 
+                                @foreach ($wallets as $wallet) 
+                                    @foreach ($wallet->transactions as $transaction)
+                                    <div class="message-item" id="m1">
+                                        <div class="message-inner">
+                                            <div class="message-head clearfix">
+                                                <div class="user-detail">
+                                                    <h5 class="handle">{{ucwords($transaction->type)}}</h5>
+                                                    {{--
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <ul class="list-unstyled">
+                                                                <li> To : {{ucwords($wallet->holder_type)}} </li>
+                                                                <li> Amount : {{ucwords($wallet->holder_type)}} </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div> --}}
+                                                    <div class="post-meta">
+                                                        <div class="asker-meta">
+                                                            <span class="qa-message-what float-left">
+                                                                Amount : <strong> {{number_format($transaction->amount, 2)}}</strong>
+                                                            </span>
+                                                            <br>
+                                                            <span class="qa-message-when">
+                                                                <span class="qa-message-when-data ">
+                                                                    {{ \Carbon\Carbon::parse($transaction->created_at)->format('M. d, Y H:i:s A')}}
                                                                 </span>
-                                                    <br>
-                                                    <span class="qa-message-when">
-                                                                    <span class="qa-message-when-data ">
-                                                                        {{ \Carbon\Carbon::parse($transaction->created_at)->format('M. d, Y H:i:s A')}}
-                                                                    </span>
-                                                    </span>
-                                                    <span class="qa-message-who">
+                                                            </span>
+                                                            <span class="qa-message-who">
                                                                     <span class="qa-message-who-pad">by </span>
-                                                    <span class="qa-message-who-data">
-                                                                        <a href="./index.php?qa=user&qa_1=admin">
-                                                                            {{ ucwords(auth()->user()->first_name ) }}
-                                                                        </a>
-                                                                    </span>
-                                                    </span>
+                                                                    <span class="qa-message-who-data">
+                                                                    <a href="./index.php?qa=user&qa_1=admin">
+                                                                        {{ ucwords(auth()->user()->first_name ) }}
+                                                                    </a>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="qa-message-content">
+                                                @if (!is_null($transaction->remarks)) {{$transaction->remarks}} @else
+                                                <i>No remarks available.</i> @endif
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="qa-message-content">
-                                        @if (!is_null($transaction->remarks)) {{$transaction->remarks}} @else
-                                        <i>No remarks available.</i> @endif
+                                    @endforeach 
+                                @endforeach 
+                            @else
+                                <div class="message-item">
+                                    <div class="message-inner">
+                                        <div class="user-detail" style="padding:10px;">
+                                            <h5 class="handle"><i>No Transaction Available</i></h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            @endforeach @endforeach @else
-                            <div class="message-item">
-                                <div class="message-inner">
-                                    <div class="user-detail" style="padding:10px;">
-                                        <h5 class="handle"><i>No Transaction Available</i></h5>
-                                    </div>
-                                </div>
-                            </div>
                             @endif
                         </div>
                     </div>
@@ -241,10 +245,5 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 </div>
 @endsection
