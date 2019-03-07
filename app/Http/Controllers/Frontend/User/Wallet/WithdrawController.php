@@ -25,7 +25,13 @@ class WithdrawController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.wallet.withdraw');
+
+        $nvActive  = 'withdraw';
+        $wallets = $this->walletRepository->getWallet();
+        $balance = $this->walletRepository->getBalance();
+        $walletTypes = $this->walletRepository->getWalletType();
+        $myAccounts = $this->walletRepository->myAccounts();
+        return view('frontend.pages.wallet.withdraw', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
     }
 
     /**

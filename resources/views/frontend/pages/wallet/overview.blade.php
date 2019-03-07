@@ -1,7 +1,5 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' ~ Overview') 
-
-@push('after-styles')
+@section('title', app_name() . ' ~ Overview') @push('after-styles')
 <style>
     .message-item {
         margin-bottom: 25px;
@@ -162,12 +160,15 @@
         background: linear-gradient(left, #22ADD4, #1E98BA);
     }
 </style>
+
+
 @endpush 
 @section('content')
+
 <div class="row">
-    @include('frontend.pages.wallet.wallet-include.navbalance', [ $nvActive, $walletTypes, $myAccounts] )  
+    @include('frontend.pages.wallet.wallet-include.navbalance', [ $nvActive, $walletTypes, $myAccounts] )
     <div class="col-md-9">
-        @include('includes.partials.messages')
+    @include('includes.partials.messages')
         <div class="card card-header-border">
             <div class="card-header">
                 <strong>OVERVIEW</strong>
@@ -176,48 +177,45 @@
                 <div class="row p-4">
                     <div class="col-md-12">
                         <div class="qa-message-list" id="wallmessages">
-                            @if ($transactions) 
-                                @foreach ($transactions as $transaction) 
-                                    @foreach ($transaction['transactions'] as $transac)
-                                        <div class="message-item" id="m1">
-                                            <div class="message-inner">
-                                                <div class="message-head clearfix">
-                                                    <div class="user-detail">
-                                                        <h4 class="handle">{{ucwords($transac->type)}}</h4>
-                                                        <div class="post-meta mt-2">
-                                                            <ul class="list-unstyled">
-                                                                <li>
-                                                                    {{$transac->type === 'deposit' ? 'To' : 'From ' }}  : 
-                                                                    <strong>
-                                                                        {{ ucwords($transaction['wallet']->name) }}
-                                                                    </strong>
-                                                                </li>
-                                                                <li>Amount :  <strong> {{number_format($transac->amount, 2)}}</strong></li>
-                                                                <li>Date : {{ \Carbon\Carbon::parse($transac->created_at)->format('M. d, Y H:i:s A') }} </li>
-                                                                <li>By :   <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="qa-message-content">
-                                                    @if ($transac->remarks)) 
-                                                        {{$transac->remarks}} 
-                                                    @else
-                                                        <i>No remarks available.</i> 
-                                                    @endif
-                                                </div>
+                            @if ($transactions) @foreach ($transactions as $transaction) @foreach ($transaction['transactions'] as $transac)
+                            <div class="message-item" id="m1">
+                                <div class="message-inner">
+                                    <div class="message-head clearfix">
+                                        <div class="user-detail">
+                                            <h4 class="handle">{{ucwords($transac->type)}}</h4>
+                                            <div class="post-meta ">
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        {{$transac->type === 'deposit' ? 'To' : 'From ' }} :
+                                                        <strong>
+                                                            {{ ucwords($transaction['wallet']->name) }}
+                                                        </strong>
+                                                    </li>
+                                                    <li>Amount : <strong> {{number_format($transac->amount, 2)}}</strong></li>
+                                                    <li>Date : {{ \Carbon\Carbon::parse($transac->created_at)->format('M. d,
+                                                        Y H:i:s A') }} </li>
+                                                    <li>By : <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
+                                                </ul>
                                             </div>
                                         </div>
-                                    @endforeach 
-                                @endforeach 
-                            @else
-                                <div class="message-item">
-                                    <div class="message-inner">
-                                        <div class="user-detail" style="padding:10px;">
-                                            <h5 class="handle"><i>No Transaction Available</i></h5>
-                                        </div>
+                                    </div>
+                                    <div class="qa-message-content" >
+                                        @if ($transac->remarks) 
+                                            {{ ucfirst($transac->remarks) }} 
+                                        @else
+                                            <i>No remarks available.</i> 
+                                        @endif
                                     </div>
                                 </div>
+                            </div>
+                            @endforeach @endforeach @else
+                            <div class="message-item">
+                                <div class="message-inner">
+                                    <div class="user-detail" style="padding:10px;">
+                                        <h5 class="handle"><i>No Transaction Available</i></h5>
+                                    </div>
+                                </div>
+                            </div>
                             @endif
                         </div>
                     </div>

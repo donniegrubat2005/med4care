@@ -35,10 +35,7 @@ class DepositController extends Controller
         $balance = $this->walletRepository->getBalance();
         $walletTypes = $this->walletRepository->getWalletType();
         $myAccounts = $this->walletRepository->myAccounts();
-      
         return view('frontend.pages.wallet.cash-in', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
-
-
     }
     /**
      * Show the form for creating a new resource.
@@ -62,25 +59,16 @@ class DepositController extends Controller
      */
     public function store(DepositRequest $request)
     {
-        $walletId = null;
 
-        $wallet =  $this->walletRepository->findOrFail($request->only('depositName'));
+        $deposit =  $this->transactionsRepository->_deposit($request->only('walletId', 'amount', 'remarks'));
 
-        if (!$wallet) {
+        if ($deposit) {
+            $wallet =  $this->walletRepository->findWallet($request->only('walletId'));
+            $wallet->balance = ($wallet->balance + $request->amount);
+            $wallet->save();
 
-            $walletId = $this->walletRepository->_create($request->only('depositName', 'depositType', 'amount', 'description'));
-        } else {
-            $walletId = $wallet->id;
-
-            $this->walletRepository->updateWalletBalance($walletId, $request->amount, $request->depositType, 'add');
+            return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('Deposit has been save.');
         }
-        $this->transactionsRepository->_deposit([
-            'amount' => $request->amount,
-            'wallet_id' => $walletId,
-            'remarks' => $request->description,
-        ]);
-
-        return redirect()->route('frontend.user.wallet.deposit.index')->withFlashSuccess('Deposit successfully save.');
     }
 
     /**

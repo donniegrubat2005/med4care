@@ -30,29 +30,8 @@ class DepositRequest extends FormRequest
     public function rules()
     {
         return [
-            'depositName' => ['required', 'string', 'max:191'],
-            'depositType' => ['required'],
+            'walletId' => ['required'],
             'amount' => ['required'],
         ];
-
-        // return [
-        //     'userRole'             => ['required'],
-        //     'id_code'              => ['string', 'max:191', Rule::unique('users')],
-        //     'first_name'           => ['required', 'string', 'max:191'],
-        //     'last_name'            => ['required', 'string', 'max:191'],
-        //     'email'                => ['required', 'string', 'email', 'max:191', Rule::unique('users')],
-        //     'password'             => ['required', 'string', 'min:6', 'confirmed'],
-        //     'g-recaptcha-response' => ['required_if:captcha_status,true', new CaptchaRule()],
-        // ];
     }
-
-    /**
-     * @return array
-     */
-    // public function messages()
-    // {
-    //     return [
-    //         'g-recaptcha-response.required_if' => __('validation.required', ['attribute' => 'captcha']),
-    //     ];
-    // }
 }

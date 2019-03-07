@@ -27,9 +27,10 @@ class TransactionsRepository extends BaseRepository
                 'type' => 'deposit',
                 'amount' => $data['amount'],
                 'confirm' => 1,
-                'wallet_id' =>  $data['wallet_id'],
+                'wallet_id' =>  $data['walletId'],
                 'remarks' =>  $data['remarks'],
             ]);
+            return  $trans;
         });
     }
     public function _withdraw(array $data)

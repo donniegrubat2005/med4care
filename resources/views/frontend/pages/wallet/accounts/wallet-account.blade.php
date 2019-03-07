@@ -43,7 +43,7 @@
                             </button>
                             <div class="dropdown-menu " aria-labelledby="my-dropdown">
                                 <a class="dropdown-item " href="#">View Details</a>
-                                <a class="dropdown-item " href="#">Add Wallet</a>
+                                <a class="dropdown-item " href="{{route('frontend.user.wallet.overview')}}">Add Wallet</a>
                                 <a class="dropdown-item " href="#">Add Cards</a>
                             </div>
                         </div>
