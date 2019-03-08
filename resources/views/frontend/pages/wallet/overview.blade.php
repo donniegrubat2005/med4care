@@ -187,15 +187,16 @@
                                                     <div class="post-meta ">
                                                         <ul class="list-unstyled">
                                                             <li>
-                                                                {{$transac->transaction_type === 'deposit' ? 'To' : 'From ' }} :
-                                                                <strong>
-                                                                    {{ ucwords($transac->wallet_name) }}
-                                                                </strong>
+                                                                <strong>{{$transac->transaction_type === 'deposit' ? 'To' : 'From ' }}</strong> : {{ ucwords($transac->wallet_name) }}
                                                             </li>
-                                                            <li>Amount : <strong> {{number_format($transac->transaction_amount, 2)}}</strong></li>
-                                                            <li>Date : {{ \Carbon\Carbon::parse($transac->transaction_create)->format('M. d,
-                                                                Y H:i:s A') }} </li>
-                                                            <li>By : <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
+                                                            <li>
+                                                                <strong>Amount</strong> : <u class="text-danger"> {{number_format($transac->transaction_amount, 2)}}</u>
+                                                            </li>
+                                                            <li>
+                                                                <strong>Date</strong> : {{ \Carbon\Carbon::parse($transac->transaction_create)->format('M. d, Y H:i:s a.') }} </li>
+                                                            <li>
+                                                                <strong>Transact By</strong> : {{ ucwords(auth()->user()->first_name ) }} 
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
