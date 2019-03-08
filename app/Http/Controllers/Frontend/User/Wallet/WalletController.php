@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Auth\WalletRepository;
 use App\Repositories\Frontend\Auth\TransactionsRepository;
 use App\Http\Requests\Frontend\Wallet\WalletRequest;
+use App\Models\Auth\Wallet;
 
 class WalletController extends Controller
 {
@@ -25,14 +26,14 @@ class WalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
+    {
         $nvActive  = 'overview';
         $balance = $this->walletRepository->getBalance();
         $wallets = $this->walletRepository->getWallet();
         $walletTypes = $this->walletRepository->getWalletType();
         $myAccounts = $this->walletRepository->myAccounts();
-        $transactions = $this->walletRepository->getWalletTransactions();
-      
+        $transactions = $this->transactionsRepository->getTransactions();
+
         return view('frontend.pages.wallet.overview', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts', 'transactions'));
     }
 
@@ -58,9 +59,10 @@ class WalletController extends Controller
         $walletId = $this->walletRepository->_create($request->only('account', 'name', 'walletType', 'amount', 'description'));
 
         if ($walletId) {
-            $this->transactionsRepository->_deposit([
+            $this->transactionsRepository->_transactions([
                 'amount' => $request->amount,
                 'wallet_id' => $walletId,
+                'tranType' => 'deposit',
                 'remarks' => 'deposit for new wallet'
             ]);
         }
@@ -68,6 +70,19 @@ class WalletController extends Controller
         return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('New wallet has been created.');
     }
 
+    public function walletBalance($id)
+    {
+        $items = [];
+        $wallet = Wallet::find($id);
+
+        if ($wallet) {
+            return $items = [
+                'toDisplay' => number_format($wallet->balance, 2),
+                'balance' => $wallet->balance
+            ];
+        }
+        return number_format(0, 2);
+    }
     /**
      * Display the specified resource.
      *

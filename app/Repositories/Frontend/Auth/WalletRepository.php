@@ -100,11 +100,14 @@ class WalletRepository extends BaseRepository
             foreach ($wallets->get() as $wallet) {
                 $items[] = [
                     'wallet' => $wallet,
-                    'transactions' => Transactions::where('wallet_id', $wallet->id)->get()
+                    'transactions' => Transactions::where('wallet_id', $wallet->id)->orderBy('created_at','desc')->get()
                 ];
             }
         }
         return $items;
+    }
+    public function getWalletBalance(){
+
     }
     
 }

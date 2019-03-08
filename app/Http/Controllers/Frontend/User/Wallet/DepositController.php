@@ -59,8 +59,12 @@ class DepositController extends Controller
      */
     public function store(DepositRequest $request)
     {
-
-        $deposit =  $this->transactionsRepository->_deposit($request->only('walletId', 'amount', 'remarks'));
+        $deposit =  $this->transactionsRepository->_transactions([
+            'wallet_id' => $request->walletId,
+            'amount' => $request->amount,
+            'remarks' => $request->remarks,
+            'tranType' => 'deposit'
+        ]);
 
         if ($deposit) {
             $wallet =  $this->walletRepository->findWallet($request->only('walletId'));

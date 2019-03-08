@@ -177,46 +177,48 @@
                 <div class="row p-4">
                     <div class="col-md-12">
                         <div class="qa-message-list" id="wallmessages">
-                            @if ($transactions) @foreach ($transactions as $transaction) @foreach ($transaction['transactions'] as $transac)
-                            <div class="message-item" id="m1">
-                                <div class="message-inner">
-                                    <div class="message-head clearfix">
-                                        <div class="user-detail">
-                                            <h4 class="handle">{{ucwords($transac->type)}}</h4>
-                                            <div class="post-meta ">
-                                                <ul class="list-unstyled">
-                                                    <li>
-                                                        {{$transac->type === 'deposit' ? 'To' : 'From ' }} :
-                                                        <strong>
-                                                            {{ ucwords($transaction['wallet']->name) }}
-                                                        </strong>
-                                                    </li>
-                                                    <li>Amount : <strong> {{number_format($transac->amount, 2)}}</strong></li>
-                                                    <li>Date : {{ \Carbon\Carbon::parse($transac->created_at)->format('M. d,
-                                                        Y H:i:s A') }} </li>
-                                                    <li>By : <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
-                                                </ul>
+                            @empty(!$transactions)
+                                @foreach ($transactions as $transac)
+                                    <div class="message-item" id="m1">
+                                        <div class="message-inner">
+                                            <div class="message-head clearfix">
+                                                <div class="user-detail">
+                                                    <h4 class="handle">{{ucwords($transac->transaction_type)}}</h4>
+                                                    <div class="post-meta ">
+                                                        <ul class="list-unstyled">
+                                                            <li>
+                                                                {{$transac->transaction_type === 'deposit' ? 'To' : 'From ' }} :
+                                                                <strong>
+                                                                    {{ ucwords($transac->wallet_name) }}
+                                                                </strong>
+                                                            </li>
+                                                            <li>Amount : <strong> {{number_format($transac->transaction_amount, 2)}}</strong></li>
+                                                            <li>Date : {{ \Carbon\Carbon::parse($transac->transaction_create)->format('M. d,
+                                                                Y H:i:s A') }} </li>
+                                                            <li>By : <strong>{{ ucwords(auth()->user()->first_name ) }}</strong> </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="qa-message-content" >
+                                                @if ($transac->transaction_remarks) 
+                                                    {{ ucfirst($transac->transaction_remarks) }} 
+                                                @else
+                                                    <i>No remarks available.</i> 
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="qa-message-content" >
-                                        @if ($transac->remarks) 
-                                            {{ ucfirst($transac->remarks) }} 
-                                        @else
-                                            <i>No remarks available.</i> 
-                                        @endif
+                                @endforeach
+                            @else
+                                <div class="message-item">
+                                    <div class="message-inner">
+                                        <div class="user-detail" style="padding:10px;">
+                                            <h5 class="handle"><i>No Transaction Available</i></h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            @endforeach @endforeach @else
-                            <div class="message-item">
-                                <div class="message-inner">
-                                    <div class="user-detail" style="padding:10px;">
-                                        <h5 class="handle"><i>No Transaction Available</i></h5>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
+                            @endempty
                         </div>
                     </div>
                 </div>

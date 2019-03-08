@@ -50,13 +50,20 @@ class WithdrawController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        $transaction = $this->transactionsRepository->_withdraw(
-            $request->only('amount', 'acct_no', 'wallet_id', 'remarks')
-        );
+        $transaction = $this->transactionsRepository->_transactions([
+            'tranType' => 'withdraw',
+            'wallet_id' => $request->walletId,
+            'amount' => $request->amount,
+            'remarks' => $request->remarks
+        ]);
+
         if ($transaction) {
-            $this->walletRepository->updateWalletBalance($request->wallet_id, $request->amount, '', 'subtract');
+            $wallet =  $this->walletRepository->findWallet($request->only('walletId'));
+            $wallet->balance = ($wallet->balance - $request->amount);
+            $wallet->save();
+
+            return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('Withdraw has done.');
         }
-        return redirect()->route('frontend.user.wallet.deposit.index')->withFlashSuccess('Withdraw has done.');
     }
 
     /**

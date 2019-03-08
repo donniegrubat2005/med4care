@@ -30,7 +30,8 @@ class WithdrawRequest extends FormRequest
     public function rules()
     {
         return [
-         
+         'walletId' => ['required'],
+         'amount' => ['required']
         ];
     }
 
