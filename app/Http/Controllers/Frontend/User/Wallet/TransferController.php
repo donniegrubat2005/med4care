@@ -4,9 +4,20 @@ namespace App\Http\Controllers\frontend\user\wallet;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Frontend\Auth\WalletRepository;
+use App\Repositories\Frontend\Auth\TransactionsRepository;
 
 class TransferController extends Controller
 {
+    private $walletRepository;
+
+    private $transactionsRepository;
+
+    public function __construct(WalletRepository $walletRepository, TransactionsRepository $transactionsRepository)
+    {
+        $this->walletRepository = $walletRepository;
+        $this->transactionsRepository = $transactionsRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,13 @@ class TransferController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.wallet.transfers.transfer-new');
+        $nvActive  = 'transfer';
+        $balance = $this->walletRepository->getBalance();
+        $wallets = $this->walletRepository->getWallet();
+        $walletTypes = $this->walletRepository->getWalletType();
+        $myAccounts = $this->walletRepository->myAccounts();
+
+        return view('frontend.pages.wallet.transfers.transfer', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
     }
 
     /**

@@ -67,11 +67,11 @@ class DepositController extends Controller
         ]);
 
         if ($deposit) {
-            $wallet =  $this->walletRepository->findWallet($request->only('walletId'));
+            $wallet =  $this->walletRepository->findWallet($request->walletId);
             $wallet->balance = ($wallet->balance + $request->amount);
             $wallet->save();
 
-            return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('Deposit has been save.');
+            return redirect()->back()->withFlashSuccess('Deposit has been save.');
         }
     }
 

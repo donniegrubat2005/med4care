@@ -50,6 +50,7 @@ class WithdrawController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
+        // dd($request->all());
         $transaction = $this->transactionsRepository->_transactions([
             'tranType' => 'withdraw',
             'wallet_id' => $request->walletId,
@@ -58,11 +59,11 @@ class WithdrawController extends Controller
         ]);
 
         if ($transaction) {
-            $wallet =  $this->walletRepository->findWallet($request->only('walletId'));
+            $wallet =  $this->walletRepository->findWallet($request->walletId);
             $wallet->balance = ($wallet->balance - $request->amount);
             $wallet->save();
 
-            return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('Withdraw has done.');
+            return redirect()->back()->withFlashSuccess('Withdraw has done.');
         }
     }
 

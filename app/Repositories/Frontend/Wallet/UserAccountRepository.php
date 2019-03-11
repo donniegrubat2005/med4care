@@ -66,4 +66,28 @@ class UserAccountRepository extends BaseRepository
     {
         return UserAccountType::orderBy('type', 'asc')->get();
     }
+
+    public function getUserWallet($acctNo)
+    {
+        return DB::table('user_accounts')
+            ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
+            ->join('user_wallet_type', 'user_wallets.user_wallet_type_id', '=', 'user_wallet_type.id')
+            ->select(DB::raw('
+                user_wallet_type.type as wallet_type,
+                user_wallets.`name` as wallet_name,
+                user_wallets.id as wallet_id,
+                IFNULL(user_wallets.balance , 0) as wallet_balance,
+                user_accounts.account_no
+            '))
+            ->where('user_accounts.account_no', $acctNo)
+            ->get();
+    }
+    public function getUserAccountId($acctNo)
+    {
+        $userAcctId = UserAccounts::where('account_no', $acctNo)->first();
+     
+        return ($userAcctId) ? $userAcctId->id : false ;
+    }
+
+    
 }

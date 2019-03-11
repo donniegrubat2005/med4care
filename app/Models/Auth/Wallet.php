@@ -3,6 +3,7 @@
 namespace App\Models\Auth;
 
 use App\Models\Auth\Transactions;
+use App\Models\Auth\WalletType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -34,10 +35,8 @@ class Wallet extends Model
         return $this->hasMany(Transactions::class);
     }
 
-    public function getWalllets()
+    public function walletType()
     {
-        return DB::table('user_accounts')
-            ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
-            ->where('user_accounts.user_id', auth()->id());
+        return $this->belongsTo(WalletType::class, 'user_wallet_type_id');
     }
 }

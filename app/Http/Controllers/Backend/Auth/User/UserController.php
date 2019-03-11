@@ -45,16 +45,7 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-
-        // return new SendEmail([
-        //     'title' => 'register',
-        //     'email' => 'sample@gmail.com',
-        //     'name' => 'bryan',
-        //     'subject' => 'Email From ' . app_name(),
-        //     'password' => '1112321',
-        //     'message' => 'You are register from ' . app_name() . ' with your credentials.'
-        // ]);
-        return view('backend.auth.user.index')->withUsers($this->userRepository->getActivePaginated(25, 'id', 'asc'));
+        return view('backend.auth.user.index')->withUsers($this->userRepository->getActivePaginated(3, 'id', 'asc'));
     }
 
     /**
