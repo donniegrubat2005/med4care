@@ -13,11 +13,12 @@ use App\Http\Controllers\Frontend\Auth\PasswordExpiredController;
  * Frontend Access Controllers
  * All route names are prefixed with 'frontend.auth'.
  */
+
 Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
     /*
-    * These routes require the user to be logged in
-    */
+     * These routes require the user to be logged in
+     */
     Route::group(['middleware' => 'auth'], function () {
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 

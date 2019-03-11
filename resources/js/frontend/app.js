@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -22,8 +21,15 @@ window.Vue = Vue;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component('loading', require('./components/core/loading.vue').default)
+
+
+Vue.component('deposit-content', require('./components/wallet/contents/deposit-content.vue').default)
+Vue.component('transfer-content', require('./components/wallet/contents/transfer-content.vue').default)
+
+Vue.component('user-wallet', require('./components/wallet/user-wallet.vue').default)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

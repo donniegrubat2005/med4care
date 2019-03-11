@@ -7,6 +7,8 @@
 @endsection
 
 @section('content')
+@include('includes.partials.messages') 
+
 <div class="card">
     <div class="card-body">
         <div class="row">

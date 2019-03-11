@@ -15,11 +15,21 @@ mix.setPublicPath('public');
 
 mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
     .sass('resources/sass/backend/app.scss', 'css/backend.css')
-    .js('resources/js/frontend/app.js', 'js/frontend.js')
+    .js([
+        'resources/js/frontend/app.js',
+    ], 'js/frontend.js')
+
     .js([
         'resources/js/backend/before.js',
         'resources/js/backend/app.js',
-        'resources/js/backend/after.js'
+        'resources/js/backend/after.js',
+        'resources/js/backend/smartwizard/dist/js/validator.min.js',
+        'resources/js/backend/smartwizard/dist/js/jquery.smartWizard.min.js',
+        'resources/js/backend/jquery-ui/external/requirejs/jquery-ui.js',
+        'resources/js/backend/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
+        'resources/js/backend/remodal/dist/remodal.min.js',
+        'resources/js/backend/select2/select2.min.js',
+        'resources/js/backend/scripts.js'
     ], 'js/backend.js')
     .extract([
         'jquery',
@@ -33,6 +43,8 @@ mix.sass('resources/sass/frontend/app.scss', 'css/frontend.css')
         '@fortawesome/free-regular-svg-icons',
         '@fortawesome/free-solid-svg-icons'
     ]);
+
+
 
 if (mix.inProduction() || process.env.npm_lifecycle_event !== 'hot') {
     mix.version();

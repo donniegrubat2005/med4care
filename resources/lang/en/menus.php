@@ -45,9 +45,12 @@ return [
 
         'sidebar' => [
             'dashboard' => 'Dashboard',
+            'account'   => 'My Profile',
             'general'   => 'General',
+            'wallet'    => 'Wallet',
             'history'   => 'History',
             'system'    => 'System',
+            'component'    => 'Component',
         ],
     ],
 

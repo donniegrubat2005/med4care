@@ -1,6 +1,8 @@
 <?php
 
+
 use App\Http\Controllers\Backend\Auth\Role\RoleController;
+use App\Http\Controllers\Backend\Auth\Permission\PermissionController;
 use App\Http\Controllers\Backend\Auth\User\UserController;
 use App\Http\Controllers\Backend\Auth\User\UserAccessController;
 use App\Http\Controllers\Backend\Auth\User\UserSocialController;
@@ -8,7 +10,6 @@ use App\Http\Controllers\Backend\Auth\User\UserStatusController;
 use App\Http\Controllers\Backend\Auth\User\UserSessionController;
 use App\Http\Controllers\Backend\Auth\User\UserPasswordController;
 use App\Http\Controllers\Backend\Auth\User\UserConfirmationController;
-
 /*
  * All route names are prefixed with 'admin.auth'.
  */
@@ -29,6 +30,10 @@ Route::group([
         Route::get('user/deactivated', [UserStatusController::class, 'getDeactivated'])->name('user.deactivated');
         Route::get('user/deleted', [UserStatusController::class, 'getDeleted'])->name('user.deleted');
 
+        // is user active
+        Route::post('/active', [UserStatusController::class, 'getActive'])->name('user.active');
+        Route::get('/download/{id}', [UserController::class, 'download'])->name('user.download');
+
         /*
          * User CRUD
          */
@@ -45,6 +50,9 @@ Route::group([
             Route::get('edit', [UserController::class, 'edit'])->name('user.edit');
             Route::patch('/', [UserController::class, 'update'])->name('user.update');
             Route::delete('/', [UserController::class, 'destroy'])->name('user.destroy');
+
+
+
 
             // Account
             Route::get('account/confirm/resend', [UserConfirmationController::class, 'sendConfirmationEmail'])->name('user.account.confirm.resend');
@@ -89,4 +97,22 @@ Route::group([
             Route::delete('/', [RoleController::class, 'destroy'])->name('role.destroy');
         });
     });
+
+    /*
+     * Permission Management
+     */
+    Route::group(['namespace' => 'Permission'], function () {
+        Route::get('permission', [PermissionController::class, 'index'])->name('permission.index');
+        Route::get('permission/create', [PermissionController::class, 'create'])->name('permission.create');
+        Route::post('permission', [PermissionController::class, 'store'])->name('permission.store');
+
+        Route::group(['prefix' => 'permission/{permission}'], function () {
+            Route::get('edit', [PermissionController::class, 'edit'])->name('permission.edit');
+            Route::patch('/', [PermissionController::class, 'update'])->name('permission.update');
+            // Route::delete('/', [RoleController::class, 'destroy'])->name('role.destroy');
+        });
+        
+    });
+
 });
+

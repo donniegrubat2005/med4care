@@ -9,10 +9,15 @@
                     <i class="nav-icon icon-speedometer"></i> @lang('menus.backend.sidebar.dashboard')
                 </a>
             </li>
-
-            <li class="nav-title">
-                @lang('menus.backend.sidebar.system')
+            <li class="nav-item">
+                <a class="nav-link {{ active_class(Active::checkUriPattern('wallet*')) }} " href="{{ route('frontend.user.wallet.index') }}">
+                    <i class="nav-icon icon-wallet"></i> 
+                    @lang('menus.backend.sidebar.wallet')                   
+                </a>
             </li>
+            {{-- <li class="nav-title">
+                @lang('menus.backend.sidebar.component')
+            </li> --}}
 
             @if ($logged_in_user->isAdmin())
                 <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/auth*'), 'open') }}">
@@ -39,6 +44,11 @@
                                 @lang('labels.backend.access.roles.management')
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ active_class(Active::checkUriPattern('admin/auth/permission*')) }}" href="{{ route('admin.auth.permission.index') }}">
+                                Permission
+                            </a>
+                        </li>
                     </ul>
                 </li>
             @endif
@@ -46,10 +56,11 @@
             <li class="divider"></li>
 
             <li class="nav-item nav-dropdown {{ active_class(Active::checkUriPattern('admin/log-viewer*'), 'open') }}">
+             
                 <a class="nav-link nav-dropdown-toggle {{ active_class(Active::checkUriPattern('admin/log-viewer*')) }}" href="#">
                     <i class="nav-icon icon-list"></i> @lang('menus.backend.log-viewer.main')
                 </a>
-
+             
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a class="nav-link {{ active_class(Active::checkUriPattern('admin/log-viewer')) }}" href="{{ route('log-viewer::dashboard') }}">

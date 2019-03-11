@@ -18,7 +18,8 @@ use App\Models\Auth\Traits\Relationship\UserRelationship;
  */
 class User extends Authenticatable
 {
-    use HasRoles,
+    use
+        HasRoles,
         Notifiable,
         SendUserPasswordReset,
         SoftDeletes,
@@ -37,13 +38,16 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'id_code',
         'avatar_type',
         'avatar_location',
         'password',
         'password_changed_at',
         'active',
+        'verification_points',
         'confirmation_code',
         'confirmed',
+        'status',
         'timezone',
         'last_login_at',
         'last_login_ip',

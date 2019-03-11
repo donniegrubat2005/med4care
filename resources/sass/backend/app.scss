@@ -6,11 +6,44 @@
  * Licensed under MIT (https://coreui.io/license)
  */
 
-// If you want to override variables do it here
 @import "variables";
 
-// Import styles
-@import "~@coreui/coreui/scss/coreui";
+@import "../../js/backend/font-awesome/css/font-awesome.css";
 
-// If you want to add something do it here
+// Import Core UI
+@import "~@coreui/coreui/scss/coreui";
+@import "~@coreui/icons/css/coreui-icons.min.css";
+@import "pace.min.css";
+@import "styles.css";
+
+// Import datatables
+@import "../../js/backend/datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
+
+// Import Smart Wizard
+@import "../../js/backend/smartwizard/dist/css/smart_wizard.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_arrows.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_circles.min.css";
+@import "../../js/backend/smartwizard/dist/css/smart_wizard_theme_dots.min.css";
+
+// Import remodal
+@import "../../js/backend/remodal/dist/remodal.css";
+@import "../../js/backend/remodal/dist/remodal-default-theme.css";
+
+// combobox
+@import "../../js/backend/select2/select2.min.css";
+
+
+// Import Jquery UI
+@import "../../js/backend/jquery-ui/themes/base/all.css";
+
+
+
 @import "custom";
+
+
+
+.img-thumbnail {
+    height: 200px !important;
+}

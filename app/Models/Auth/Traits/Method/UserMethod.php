@@ -98,4 +98,10 @@ trait UserMethod
     {
         return config('access.users.requires_approval') && ! $this->confirmed;
     }
+
+    public function isStatus()
+    {
+        return $this->status;        
+    }
+
 }

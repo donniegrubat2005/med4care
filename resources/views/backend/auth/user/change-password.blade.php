@@ -7,6 +7,8 @@
 @endsection
 
 @section('content')
+@include('includes.partials.messages') 
+
 {{ html()->form('PATCH', route('admin.auth.user.change-password.post', $user))->class('form-horizontal')->open() }}
     <div class="card">
         <div class="card-body">
