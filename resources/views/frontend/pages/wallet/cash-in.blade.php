@@ -58,7 +58,6 @@
      $(".js-example-disabled-results").select2(); 
    
     });
-
 </script>
 
 

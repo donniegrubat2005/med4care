@@ -24,7 +24,7 @@
                     <th>Account Name</th>
                     <th>Account Type</th>
                     <th>Date Created</th>
-                    <th class="text-center">Amount To Deposit</th>
+                    {{-- <th class="text-center">Amount To Deposit</th> --}}
                     <th class="text-center">action</th>
                 </tr>
             </thead>
@@ -35,7 +35,7 @@
                     <td>{{ ucwords( $uA->name ) }}</td>
                     <td>{{ ucwords( $uA->account_type ) }}</td>
                     <td>{{ $uA->created_at }}</td>
-                    <td class="text-center">{{ number_format($uA->amount, 2) }}</td>
+                    {{-- <td class="text-center">{{ number_format($uA->amount, 2) }}</td> --}}
                     <td class="text-center">
                         <div class="dropdown ">
                             <button id="my-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,8 +43,8 @@
                             </button>
                             <div class="dropdown-menu " aria-labelledby="my-dropdown">
                                 <a class="dropdown-item " href="#">View Details</a>
-                                <a class="dropdown-item " href="{{route('frontend.user.wallet.overview')}}">Add Wallet</a>
-                                <a class="dropdown-item " href="#">Add Cards</a>
+                                <a class="dropdown-item " href="{{ route('frontend.user.wallet.list', $uA->account_no) }}">View Wallet</a>
+                                {{-- <a class="dropdown-item " href="#">Add Cards</a> --}}
                             </div>
                         </div>
                     </td>
@@ -63,7 +63,9 @@
         })
 </script>
 
-@endpush @if (false) @push('after-scripts')
+@endpush 
+@if (false) 
+@push('after-scripts')
 <style>
     .ul-nav-wizard .ul-label {
         font-size: 16px;
@@ -329,4 +331,5 @@
             });
 </script>
 
-@endpush @endif
+@endpush
+ @endif

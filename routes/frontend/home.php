@@ -65,21 +65,30 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
                 //ajax call back
                 Route::get('walletBalance/{id}', [WalletController::class, 'walletBalance']);
 
-                //
                 Route::get('overview', [WalletController::class, 'index'])->name('wallet.overview');
               
+                // Deposit
                 Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
-
                 Route::get('cash-in', [DepositController::class, 'index'])->name('wallet.cash-in');
                 Route::post('cash-in/post', [DepositController::class, 'store'])->name('wallet.cash-in.post');
-
                 Route::get('withdraw', [WithdrawController::class, 'index'])->name('wallet.withdraw');
-
                 Route::post('withdraw/post', [WithdrawController::class, 'store'])->name('wallet.withdraw.post');
+
+                // Transfer
+                Route::get('transfer', [TransferController::class, 'index'])->name('wallet.transfer');
+
+
+                // new wallet route
+                // Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
+                // Route::get('account/{accountNo}/{type}', [UserWalletController::class, '_wallets'])->name('wallet.view');   
 
 
             });
 
+            Route::group(['prefix' => 'wallet/{accountNo}'], function () {
+                 Route::get('list', [UserWalletController::class, '_wallets'])->name('wallet.list');   
+
+            });
 
             // Route::group(['prefix' => 'wallet/deposit'], function () {
             //     Route::get('/', [DepositController::class, 'index'])->name('wallet.deposit.index');

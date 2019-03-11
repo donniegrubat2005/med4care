@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wallet\UserAccountRequest;
 use App\Repositories\Frontend\Wallet\UserAccountRepository;
+use App\Repositories\Frontend\Auth\WalletRepository;
 
 class UserWalletController extends Controller
 {
     private $userAcctRepo;
+    private $walletRepository;
 
-    public function __construct(UserAccountRepository $userAcctRepo)
+    public function __construct(UserAccountRepository $userAcctRepo, WalletRepository $walletRepository)
     {
         $this->userAcctRepo = $userAcctRepo;
+        $this->walletRepository = $walletRepository;
     }
 
     /**
@@ -43,6 +46,19 @@ class UserWalletController extends Controller
 
         return view('frontend.pages.wallet.accounts.wallet-account', compact('userAccounts'));
     }
+
+    public function _wallets($accountNo, Request $request)
+    {
+        $walletId = $request->wallet;
+        $totalTransaction =  $this->walletRepository->getTransactionTypeWithBalance($walletId);
+
+        return view('frontend.pages.wallet.wallet-view')
+            ->with(['key'=> !is_null($request->wallet) ? true : false, 'totalTransaction' => $totalTransaction])
+            ->withWallet($this->walletRepository->findWallet($walletId))
+            ->withUserAcctId($this->userAcctRepo->getUserAccountId($accountNo))
+            ->withWallets($this->userAcctRepo->getUserWallet($accountNo))
+            ->withWalletTypes($this->walletRepository->getWalletType());
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +67,6 @@ class UserWalletController extends Controller
      */
     public function store(UserAccountRequest $request)
     {
-        // dd($request->all());
 
         $this->userAcctRepo->create($request->only('name', 'accountType', 'amount', 'remarks'));
 
@@ -66,9 +81,7 @@ class UserWalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
+    { }
 
     /**
      * Show the form for editing the specified resource.

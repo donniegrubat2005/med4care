@@ -30,7 +30,16 @@
                 <i class="icon-logout"></i> &nbsp;
                 Cash out / Withdraw
                 <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
-            </a> {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
+            </a> 
+            
+            <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'transfer' ? ' nw-active' : ''}}"
+                href="{{route('frontend.user.wallet.transfer')}}">
+                <i class="fas fa-exchange-alt "></i> &nbsp;
+                Transfer
+                <i class="fa fa-angle-right float-right mt-1" aria-hidden="true"></i>
+            </a>
+            
+            {{-- <a class="list-group-item list-group-item-action flex-column align-items-start text-default {{ $nvActive === 'cash In' ? ' nw-active' : ''}}"
                 href="{{route('frontend.user.wallet.deposit.create')}}">
                <i class="icon-login"></i> &nbsp;
                 Cash In

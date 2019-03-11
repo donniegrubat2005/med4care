@@ -63,11 +63,11 @@ class WalletController extends Controller
                 'amount' => $request->amount,
                 'wallet_id' => $walletId,
                 'tranType' => 'deposit',
-                'remarks' => 'deposit for new wallet'
+                'remarks' => 'deposit for new wallet '. ucwords($request->name)
             ]);
         }
 
-        return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('New wallet has been created.');
+        return Redirect()->back()->withFlashSuccess('New wallet has been created.');
     }
 
     public function walletBalance($id)
