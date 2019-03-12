@@ -5,8 +5,6 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\User\AccountController;
 use App\Http\Controllers\Frontend\User\ProfileController;
 use App\Http\Controllers\Frontend\User\DashboardController;
-use App\Http\Controllers\frontend\PatientController;
-use App\Http\Controllers\frontend\ReportController;
 use App\Http\Controllers\Frontend\User\Wallet\UserWalletController;
 use App\Http\Controllers\frontend\user\wallet\DepositController;
 use App\Http\Controllers\frontend\user\wallet\TransferController;
@@ -61,11 +59,14 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
                 Route::get('account/create', [UserWalletController::class, 'create'])->name('wallet.account.create');
                 Route::post('account/post', [UserWalletController::class, 'store'])->name('wallet.account.post');   
 
+                Route::get('account/{id}', [UserWalletController::class, 'show'])->name('wallet.show');
              
                 //ajax call back
                 Route::get('walletBalance/{id}', [WalletController::class, 'walletBalance']);
-
-                Route::get('overview', [WalletController::class, 'index'])->name('wallet.overview');
+                Route::get('loadAccounts', [UserWalletController::class, 'ajax_load_accounts']);
+                Route::get('getWallet/{accntNo}', [UserWalletController::class, 'ajax_load_account_wallet']);
+                
+                // Route::get('overview', [WalletController::class, 'index'])->name('wallet.overview');
               
                 // Deposit
                 Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
@@ -75,19 +76,12 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
                 Route::post('withdraw/post', [WithdrawController::class, 'store'])->name('wallet.withdraw.post');
 
                 // Transfer
-                Route::get('transfer', [TransferController::class, 'index'])->name('wallet.transfer');
-
-
-                // new wallet route
-                // Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
-                // Route::get('account/{accountNo}/{type}', [UserWalletController::class, '_wallets'])->name('wallet.view');   
-
+                Route::post('transfer', [TransferController::class, 'store'])->name('wallet.transfer.post');
 
             });
 
             Route::group(['prefix' => 'wallet/{accountNo}'], function () {
                  Route::get('list', [UserWalletController::class, '_wallets'])->name('wallet.list');   
-
             });
 
             // Route::group(['prefix' => 'wallet/deposit'], function () {

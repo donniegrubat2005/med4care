@@ -52,6 +52,7 @@ class UserAccountRepository extends BaseRepository
         if ($userAccounts->count() > 0) {
             foreach ($userAccounts->get() as  $userAccount) {
                 $items[] = (object)[
+                    'id' =>   $userAccount->id,
                     'account_no' =>   $userAccount->account_no,
                     'name' =>   $userAccount->name,
                     'created_at' => \Carbon\Carbon::parse($userAccount->created_at)->format('M. d, Y'),
@@ -87,6 +88,10 @@ class UserAccountRepository extends BaseRepository
         $userAcctId = UserAccounts::where('account_no', $acctNo)->first();
      
         return ($userAcctId) ? $userAcctId->id : false ;
+    }
+    public function geUserAccounts()
+    {
+        return UserAccounts::all();
     }
 
     

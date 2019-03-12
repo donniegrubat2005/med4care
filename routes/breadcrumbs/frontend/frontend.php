@@ -53,15 +53,12 @@ Breadcrumbs::for('frontend.user.wallet.account.create', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
     $trail->push('Add Account', route('frontend.user.wallet.account.create'));
 });
-
-
-Breadcrumbs::for('frontend.auth.password.expired', function ($trail) {
-    $trail->parent('frontend.user.wallet.index');
-    $trail->push('Transfer', route('frontend.auth.password.expired'));
+Breadcrumbs::for('frontend.user.wallet.show', function ($trail, $id) {
+    $trail->parent('frontend.user.wallet.accounts');
+    $userAcc = UserAccounts::find($id)->name;
+    $trail->push(ucwords($userAcc), route('frontend.user.wallet.show',$id));
 });
 
-
-// $userAcc = UserAccounts::where('account_id')->first();
 
 Breadcrumbs::for('frontend.user.wallet.list', function ($trail, $id) {
     $userAcc = UserAccounts::where('account_no', $id)->first()->name;
@@ -70,6 +67,11 @@ Breadcrumbs::for('frontend.user.wallet.list', function ($trail, $id) {
 });
 
 
+
+Breadcrumbs::for('frontend.auth.password.expired', function ($trail) {
+    $trail->parent('frontend.user.wallet.index');
+    $trail->push('Transfer', route('frontend.auth.password.expired'));
+});
 
 
 

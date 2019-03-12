@@ -54,7 +54,7 @@ class WalletRepository extends BaseRepository
     }
     public function getBalance()
     {
-        $balance =  DB::table('user_accounts')
+        $balance = DB::table('user_accounts')
             ->select(DB::raw('IFNULL(Sum(user_wallets.balance),0) as balance'))
             ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
             ->where('user_id', auth()->id())
@@ -80,7 +80,6 @@ class WalletRepository extends BaseRepository
     {
         return UserAccounts::where('user_id', auth()->id())->orderBy('name')->get();
     }
-
     public function getTransactionTypeWithBalance($id)
     {
         $items = [];
@@ -133,5 +132,10 @@ class WalletRepository extends BaseRepository
             ];
         }
         return $items;
+    }
+    public function findUserAcctById($userAccntId)
+    {
+        $userAcct = UserAccounts::where('account_no', $userAccntId)->first();
+        return $userAcct->id;
     }
 }

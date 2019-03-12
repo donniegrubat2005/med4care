@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app') 
 @section('title', app_name() . ' ~ Accounts') 
 @section('content')
-    @include('includes.partials.messages')
+@include('includes.partials.messages')
 
 <div class="card card-header-border">
     <div class="card-header">
@@ -24,27 +24,28 @@
                     <th>Account Name</th>
                     <th>Account Type</th>
                     <th>Date Created</th>
-                    {{-- <th class="text-center">Amount To Deposit</th> --}}
                     <th class="text-center">action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($userAccounts as $uA)
                 <tr>
-                    <td><strong>{{ $uA->account_no }}</strong></td>
+                    <td>
+                       <a href="{{ route('frontend.user.wallet.show', $uA->id) }}" class="text-info h6">
+                        {{ $uA->account_no }}
+                       </a>
+                    </td>
                     <td>{{ ucwords( $uA->name ) }}</td>
                     <td>{{ ucwords( $uA->account_type ) }}</td>
                     <td>{{ $uA->created_at }}</td>
-                    {{-- <td class="text-center">{{ number_format($uA->amount, 2) }}</td> --}}
                     <td class="text-center">
                         <div class="dropdown ">
                             <button id="my-dropdown" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 More
                             </button>
                             <div class="dropdown-menu " aria-labelledby="my-dropdown">
-                                <a class="dropdown-item " href="#">View Details</a>
+                                <a class="dropdown-item " href="{{ route('frontend.user.wallet.show', $uA->id) }}">View Details</a>
                                 <a class="dropdown-item " href="{{ route('frontend.user.wallet.list', $uA->account_no) }}">View Wallet</a>
-                                {{-- <a class="dropdown-item " href="#">Add Cards</a> --}}
                             </div>
                         </div>
                     </td>

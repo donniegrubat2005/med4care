@@ -1,5 +1,6 @@
 @extends('frontend.layouts.app') 
-@section('title', app_name() . ' | My Wallet') @push('after-styles')
+@section('title', app_name() . ' ~ Wallet Modules') 
+@push('after-styles')
 <style>
     .card-content .card-body {
         padding: 40px;
@@ -22,7 +23,7 @@
 </style>
 @endpush 
 @section('content')
-<div class="row" style="margin-top:50px;">
+<div class="row">
     <div class="col-md-3 col-sm-12">
         <div class="card card-content bg-white">
             <a href="{{route('frontend.user.wallet.accounts')}}" class="card-hover">

@@ -32,7 +32,7 @@ class Wallet extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transactions::class);
+        return $this->hasMany(Transactions::class)->orderBy('created_at', 'Desc');
     }
 
     public function walletType()
