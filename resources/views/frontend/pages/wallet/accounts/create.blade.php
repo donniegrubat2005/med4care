@@ -37,11 +37,6 @@
                                     <span class="ul-label">Accounts</span> 
                                 </a>
                             </li>
-                            {{-- <li class="col-md-3 col-sm-3 col-xs-12">
-                                <a href="#step-2">
-                                    <span class="ul-label">Amount </span> 
-                                </a>
-                            </li> --}}
                             <li class="col-md-4 col-sm-3 col-xs-12">
                                 <a href="#step-2">
                                     <span class="ul-label">Remarks</span> 
@@ -74,7 +69,7 @@
                                                                         <i class="icon-key"></i>
                                                                     </span>
                                                                 </div>
-                                                                <input class="form-control" type="text" id="accountNo" name="accountNo" placeholder="This fields auto generated" readonly>
+                                                                <input class="form-control" type="text" id="accountNo" name="accountNo" placeholder="These field is auto generated" readonly>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -105,37 +100,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div id="step-2" class="">
-                                <div class="row" id="form-step-1" role="form" data-toggle="validator">
-                                    <div class="col-md-12">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <span class="font-weight-normal" style="font-size:16px;"> Amount to deposit?</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-md-2"></div>
-                                                    <div class="col-md-8">
-                                                        <div class="form-group">
-                                                            <div class="input-group">
-                                                                <input class="form-control form-control-lg" name="amount" type="number" placeholder="0" required>
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text" id="my-addon">.00</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="help-block with-errors text-danger"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-2"></div>
-                                                </div>
-                                                <br>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div id="step-2" class="">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -174,8 +138,8 @@
                 </div>
                 <div class="col-md-3 ">
                     <a href="{{route('frontend.user.wallet.index')}}" class="float-right" style="margin-right:15px; margin-top:10px;">
-                                <i class="fa fa-angle-left" aria-hidden="true"></i>  Back
-                            </a>
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>  Back
+                    </a>
                 </div>
             </div>
         </div>

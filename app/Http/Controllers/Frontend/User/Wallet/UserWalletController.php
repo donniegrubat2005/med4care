@@ -38,13 +38,13 @@ class UserWalletController extends Controller
     {
         $acctTypes = $this->userAcctRepo->getAccountTypes();
 
-        return view('frontend.pages.wallet.accounts.wallet-new-account', compact('acctTypes'));
+        return view('frontend.pages.wallet.accounts.create', compact('acctTypes'));
     }
     public function _accounts()
     {
         $userAccounts = $this->userAcctRepo->getAccounts();
 
-        return view('frontend.pages.wallet.accounts.wallet-account', compact('userAccounts'));
+        return view('frontend.pages.wallet.accounts.index', compact('userAccounts'));
     }
 
     public function _wallets($accountNo, Request $request)
@@ -53,7 +53,7 @@ class UserWalletController extends Controller
         $totalTransaction =  $this->walletRepository->getTransactionTypeWithBalance($walletId);
 
         return view('frontend.pages.wallet.wallet-view')
-            ->with(['key'=> !is_null($request->wallet) ? true : false, 'totalTransaction' => $totalTransaction])
+            ->with(['key'=> !is_null($walletId) ? $walletId : false, 'totalTransaction' => $totalTransaction])
             ->withWallet($this->walletRepository->findWallet($walletId))
             ->withUserAcctId($this->userAcctRepo->getUserAccountId($accountNo))
             ->withWallets($this->userAcctRepo->getUserWallet($accountNo))
@@ -71,7 +71,7 @@ class UserWalletController extends Controller
         $this->userAcctRepo->create($request->only('name', 'accountType', 'amount', 'remarks'));
 
 
-        return redirect()->route('frontend.user.wallet.accounts')->withFlashSuccess('New account has been created.');
+        return redirect()->route('frontend.user.wallet.accounts.index')->withFlashSuccess('New account has been created.');
     }
 
     /**
@@ -81,7 +81,9 @@ class UserWalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { }
+    {
+        return view('frontend.pages.wallet.accounts.show');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -114,6 +116,26 @@ class UserWalletController extends Controller
      */
     public function destroy($id)
     {
-        //
+      
+    }
+
+    public function ajax_load_accounts()
+    {
+        $items = [];
+        $accounts = $this->userAcctRepo->geUserAccounts();
+        foreach( $accounts as  $account){
+            $items[] = $account->account_no;
+        }
+        return response()->json($items);
+    }
+    public function ajax_load_account_wallet($accntNo)
+    {
+        $opts = '';
+        $wallets = $this->userAcctRepo->getUserWallet($accntNo);
+
+        foreach ($wallets as $wallet) {
+            $opts .= '<option value="'.$wallet->wallet_id.'">'.ucwords($wallet->wallet_name).'</option>'; 
+        }
+        return response()->json($opts);
     }
 }
