@@ -32,10 +32,7 @@ class UserAccountRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'accountType' => ['required'],
-            'amount' => ['required'],
         ];
-
-        
     }
 
     /**

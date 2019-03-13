@@ -5,7 +5,7 @@
     @include('frontend.pages.wallet.includes.wallets')
 
     <div class="col-md-9">
-    @include('includes.partials.messages')
+        @include('includes.partials.messages')
         <div class="card card-header-border">
             <div class="card-header">
                 <strong>Wallet Content</strong>

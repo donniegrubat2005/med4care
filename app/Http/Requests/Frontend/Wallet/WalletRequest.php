@@ -30,7 +30,8 @@ class WalletRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required',  'string', 'max:191', Rule::unique('user_wallets')]
+            'name' => ['required',  'string', 'max:191'],
+            'amount' => ['required']
         ];
     }
 

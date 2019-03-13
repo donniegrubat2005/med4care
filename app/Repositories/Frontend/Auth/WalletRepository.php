@@ -138,4 +138,15 @@ class WalletRepository extends BaseRepository
         $userAcct = UserAccounts::where('account_no', $userAccntId)->first();
         return $userAcct->id;
     }
+    public function isWalletNameExist($account, $name)
+    {
+        $wallet = $this->model
+        ->where('user_account_id', $account ) 
+        ->where('name', $name );
+
+        if($wallet->count() > 0){
+            return true;
+        }
+        return false;
+    }
 }

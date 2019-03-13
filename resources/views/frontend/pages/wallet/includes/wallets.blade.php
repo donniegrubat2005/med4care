@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="name">Name <span class="text-danger">*</span></label>
                             <input type="hidden" name="account" value="{{$userAcctId}}">
-                            <input class="form-control" id="name" name="name" type="text" placeholder="Required" required>
+                            <input class="form-control" id="name" name="name" type="text" placeholder="Required" autocomplete="off" required>
                         </div>
                     </div>
                 </div>

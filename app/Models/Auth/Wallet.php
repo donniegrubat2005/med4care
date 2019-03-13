@@ -28,8 +28,6 @@ class Wallet extends Model
      */
     protected $fillable = ['id', 'name', 'description', 'balance', 'holder_type', 'user_wallet_type_id', 'user_account_id', 'user_id'];
 
-    // public $timestamps = false;
-
     public function transactions()
     {
         return $this->hasMany(Transactions::class)->orderBy('created_at', 'Desc');

@@ -8,6 +8,7 @@ use App\Repositories\Frontend\Auth\WalletRepository;
 use App\Repositories\Frontend\Auth\TransactionsRepository;
 use App\Http\Requests\Frontend\Wallet\WalletRequest;
 use App\Models\Auth\Wallet;
+use App\Exceptions\GeneralException;
 
 class WalletController extends Controller
 {
@@ -55,9 +56,14 @@ class WalletController extends Controller
      */
     public function store(WalletRequest $request)
     {
-        // dd($request->all());
+   
+        if($this->walletRepository->isWalletNameExist($request->account, $request->name)){
+            throw new GeneralException('Wallet '. $request->name .' is already exist');
+        }
+     
         $walletId = $this->walletRepository->_create($request->only('account', 'name', 'walletType', 'amount', 'description'));
-
+     
+     
         if ($walletId) {
             $this->transactionsRepository->_transactions([
                 'amount' => $request->amount,
