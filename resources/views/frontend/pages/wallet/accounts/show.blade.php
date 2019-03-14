@@ -7,12 +7,24 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-8">
-                <table class="table table-light">
+            <div class="col-md-6">
+                <table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <a href="{{ route('frontend.user.wallet.accounts') }}" class="btn btn-secondary btn-sm float-left">
+                                   <i class="fa fa-angle-left" aria-hidden="true"></i> Back
+                                </a href="">
+                                <a  class="btn btn-info btn-sm float-right" id="btnEdit" data-remodal-target="editAccntModal">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <th>Account No.</th>
-                            <td><strong clas="tex-danger">{{$uAccount->account_no}}</strong></td>
+                            <td><strong class="text-info">{{$uAccount->account_no}}</strong></td>
                         </tr>
                         <tr>
                             <th>Account Name</th>
@@ -20,7 +32,7 @@
                         </tr>
                         <tr>
                             <th>Account Type</th>
-                            <td><a href="javascript:;">{{$uAccount->AccountType->type}}</a></td>
+                            <td>{{$uAccount->AccountType->type}}</td>
                         </tr>
                         <tr>
                             <th>Account Status</th>
@@ -35,22 +47,17 @@
                             <td> {{ $uAccount->created_at }} </td>
                         </tr>
                         <tr>
-                            <th>TOTAL BALANCE</th>
+                            <th>Balance</th>
                             <td><strong class="text-info">{{ number_format($walletBalance, 2) }}</strong></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-4">
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 mb-4">
+            <div class="col-md-6">
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active text-info" data-toggle="tab" href="#home3" role="tab" aria-controls="home">
-                            <i class="icon-wallet"></i> Wallet
+                            <i class="icon-wallet"></i> Wallets
                         </a>
                     </li>
                 </ul>
@@ -101,6 +108,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="remodal" id="modal-edit-account" data-remodal-id="editAccntModal" data-remodal-options="hashTracking: false, closeOnOutsideClick: false">
+            <div class="card card-header-border">
+                <div class="card-header">
+                    WALLET FORM :
+                </div>
+                <div class="card-body">
+                    
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection

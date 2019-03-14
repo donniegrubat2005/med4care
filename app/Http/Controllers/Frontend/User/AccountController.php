@@ -69,6 +69,7 @@ class AccountController extends Controller
             $name = time() . '_' . $file->getClientOriginalName();
             $data = file_get_contents($file->getRealPath());
             $extention = $file->getClientOriginalExtension();
+            
             $fileSize =  File::size($file) ;
             $filePath = 'documents/' . $userId . '/' . $name;
 
@@ -80,6 +81,17 @@ class AccountController extends Controller
         }
     }
 
+    
+    public function bytesToHuman($bytes)
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        for ($i = 0; $bytes > 1024; $i++) {
+            $bytes /= 1024;
+        }
+
+        return round($bytes, 2) . ' ' . $units[$i];
+    }
    
     public function delete_my_documents($id, $file)
     {

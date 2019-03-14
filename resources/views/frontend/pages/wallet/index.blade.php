@@ -1,27 +1,6 @@
 @extends('frontend.layouts.app') 
 @section('title', app_name() . ' ~ Wallet Modules') 
-@push('after-styles')
-<style>
-    .card-content .card-body {
-        padding: 40px;
-    }
 
-    .card-content {
-        border-radius: 8px;
-    }
-
-    .card-content .card-footer {
-        border-bottom-right-radius: 8px;
-        border-bottom-left-radius: 8px;
-    }
-
-    .card-hover:hover {
-        background-color: #f5f5f5;
-        border-radius: 8px;
-        text-decoration: none;
-    }
-</style>
-@endpush 
 @section('content')
 <div class="row">
     <div class="col-md-3 col-sm-12">
@@ -87,3 +66,8 @@
     </div> --}}
 </div>
 @endsection
+
+
+@push('after-styles')
+    <link rel="stylesheet" href="{{ asset('resources/frontend/sass/frontend/wallet/wallet-index.css') }}">
+@endpush 
