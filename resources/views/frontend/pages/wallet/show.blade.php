@@ -10,7 +10,8 @@
             <div class="card-header">
                 <strong>Wallet Content</strong>
                 <a href="{{ route('frontend.user.wallet.accounts') }}" class="float-right">
-                    < Back </a>
+                    < Back 
+                </a>
             </div>
             <div class="card-body">
                 @if (!$key)
@@ -354,6 +355,8 @@
             </div>
         </div>
     </div>
+
+    
 </div>
 @endsection
  @push('after-styles')
@@ -503,25 +506,8 @@
     }
 </style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@endpush @push('after-scripts')
+@endpush 
+@push('after-scripts')
 
 <script>
     var doc = $(document);

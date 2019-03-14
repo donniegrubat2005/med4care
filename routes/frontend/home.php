@@ -66,8 +66,6 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
                 Route::get('loadAccounts', [UserWalletController::class, 'ajax_load_accounts']);
                 Route::get('getWallet/{accntNo}', [UserWalletController::class, 'ajax_load_account_wallet']);
                 
-                // Route::get('overview', [WalletController::class, 'index'])->name('wallet.overview');
-              
                 // Deposit
                 Route::post('create', [WalletController::class, 'store'])->name('wallet.create');
                 Route::get('cash-in', [DepositController::class, 'index'])->name('wallet.cash-in');
@@ -81,28 +79,9 @@ Route::group(['middleware' => ['auth', 'password_expires']], function () {
             });
 
             Route::group(['prefix' => 'wallet/{accountNo}'], function () {
-                 Route::get('list', [UserWalletController::class, '_wallets'])->name('wallet.list');   
+                Route::get('list', [UserWalletController::class, '_wallets'])->name('wallet.list');   
             });
-
-            // Route::group(['prefix' => 'wallet/deposit'], function () {
-            //     Route::get('/', [DepositController::class, 'index'])->name('wallet.deposit.index');
-            //     // Route::get('overt', [DepositController::class, 'index'])->name('wallet.deposit.index');
-            //     // Route::get('create', [DepositController::class, 'create'])->name('wallet.deposit.create');
-            //     // Route::post('post', [DepositController::class, 'store'])->name('wallet.deposit.post');
-            //     // Route::get('getWallets', [DepositController::class, '_ge_wallets']);
-            // });
-
-            // Route::group(['prefix' => 'wallet/transfer'], function () {
-            //     Route::get('/', [TransferController::class, 'index'])->name('wallet.transfer.index');
-            // });
-
-            // Route::group(['prefix' => 'wallet/withdraw'], function () {
-            //     Route::get('/', [WithdrawController::class, 'index'])->name('wallet.withdraw.index');
-            //     Route::post('post', [WithdrawController::class, 'store'])->name('wallet.withdraw.post');
-            // });
-
-
-            // Route::group(['prefix' => 'wallet/{wallet}'], function () { });
+ 
         });
 
 
