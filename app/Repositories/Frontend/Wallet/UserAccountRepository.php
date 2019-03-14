@@ -3,11 +3,11 @@
 namespace App\Repositories\Frontend\Wallet;
 
 use App\Models\Auth\User;
-use App\Models\Auth\UserAccounts;
+use App\Models\Wallet\UserAccounts;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Exceptions\GeneralException;
-use App\Models\Auth\UserAccountType;
+use App\Models\Wallet\UserAccountType;
 
 /**
  * Class WalletRepository.
@@ -24,7 +24,7 @@ class UserAccountRepository extends BaseRepository
         return DB::transaction(function () use ($data) {
             $userAccount = parent::create([
                 'name' => $data['name'],
-                'amount' => $data['amount'],
+                'account_status' => 1,
                 'account_no' =>  $this->generateAccountNo(),
                 'description' => $data['remarks'],
                 'user_account_type_id' => $data['accountType'],
@@ -44,7 +44,10 @@ class UserAccountRepository extends BaseRepository
         else
             $this->generateAccountNo();
     }
-
+    public function findUA($id)
+    {
+        return $this->model->find($id);
+    }
     public function getAccounts()
     {
         $items = [];
@@ -54,6 +57,7 @@ class UserAccountRepository extends BaseRepository
                 $items[] = (object)[
                     'id' =>   $userAccount->id,
                     'account_no' =>   $userAccount->account_no,
+                    'status' =>   $userAccount->account_status,
                     'name' =>   $userAccount->name,
                     'created_at' => \Carbon\Carbon::parse($userAccount->created_at)->format('M. d, Y'),
                     'account_type' =>   UserAccountType::find($userAccount->user_account_type_id)->type,
@@ -86,13 +90,12 @@ class UserAccountRepository extends BaseRepository
     public function getUserAccountId($acctNo)
     {
         $userAcctId = UserAccounts::where('account_no', $acctNo)->first();
-     
-        return ($userAcctId) ? $userAcctId->id : false ;
+
+        return ($userAcctId) ? $userAcctId->id : false;
     }
     public function geUserAccounts()
     {
         return UserAccounts::all();
     }
-
     
 }

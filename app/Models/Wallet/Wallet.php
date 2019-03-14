@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Wallet;
 
-use App\Models\Auth\Transactions;
-use App\Models\Auth\WalletType;
+use App\Models\Wallet\Transactions;
+use App\Models\Wallet\WalletType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -27,8 +27,6 @@ class Wallet extends Model
      * @var array
      */
     protected $fillable = ['id', 'name', 'description', 'balance', 'holder_type', 'user_wallet_type_id', 'user_account_id', 'user_id'];
-
-    // public $timestamps = false;
 
     public function transactions()
     {

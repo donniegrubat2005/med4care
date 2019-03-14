@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Models\Auth;
-use App\Models\Auth\Wallet;
+namespace App\Models\Wallet;
+
+use App\Models\Wallet\Transactions;
+use App\Models\Wallet\UserAccounts;
 use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * Class SocialAccount.
  */
-class WalletType extends Model
+class UserAccountType extends Model
 {
     /**
      * The database table used by the model.
@@ -16,7 +19,7 @@ class WalletType extends Model
      */
     protected $primaryKey = 'id';
 
-    protected $table = 'user_wallet_type';
+    protected $table = 'user_account_type';
 
     /**
      * The attributes that are mass assignable.
@@ -27,9 +30,9 @@ class WalletType extends Model
 
     // public $timestamps = false;
 
-    public function wallets()
+    public function userAccounts()
     {
-        return $this->hasMany(Wallet::class);
+        return $this->hasMany(UserAccounts::class);
     }
    
 }

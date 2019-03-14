@@ -45,7 +45,7 @@ class UserController extends Controller
      */
     public function index(ManageUserRequest $request)
     {
-        return view('backend.auth.user.index')->withUsers($this->userRepository->getActivePaginated(3, 'id', 'asc'));
+        return view('backend.auth.user.index')->withUsers($this->userRepository->getActivePaginated(10, 'id', 'asc'));
     }
 
     /**

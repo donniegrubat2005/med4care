@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Auth\UserAccounts;
+use App\Models\Wallet\UserAccounts;
 
 
 

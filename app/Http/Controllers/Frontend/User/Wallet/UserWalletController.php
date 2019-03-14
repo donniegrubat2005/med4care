@@ -27,7 +27,7 @@ class UserWalletController extends Controller
     public function index()
     {
 
-        return view('frontend.pages.wallet.wallet');
+        return view('frontend.pages.wallet.index');
     }
     /**
      * Show the form for creating a new resource.
@@ -52,8 +52,8 @@ class UserWalletController extends Controller
         $walletId = $request->wallet;
         $totalTransaction =  $this->walletRepository->getTransactionTypeWithBalance($walletId);
 
-        return view('frontend.pages.wallet.wallet-view')
-            ->with(['key'=> !is_null($walletId) ? $walletId : false, 'totalTransaction' => $totalTransaction])
+        return view('frontend.pages.wallet.show')
+            ->with(['key' => !is_null($walletId) ? $walletId : false, 'totalTransaction' => $totalTransaction])
             ->withWallet($this->walletRepository->findWallet($walletId))
             ->withUserAcctId($this->userAcctRepo->getUserAccountId($accountNo))
             ->withWallets($this->userAcctRepo->getUserWallet($accountNo))
@@ -68,10 +68,9 @@ class UserWalletController extends Controller
     public function store(UserAccountRequest $request)
     {
 
-        $this->userAcctRepo->create($request->only('name', 'accountType', 'amount', 'remarks'));
+        $this->userAcctRepo->create($request->only('name', 'accountType',  'remarks'));
 
-
-        return redirect()->route('frontend.user.wallet.accounts.index')->withFlashSuccess('New account has been created.');
+        return redirect()->route('frontend.user.wallet.accounts')->withFlashSuccess('New account has been created.');
     }
 
     /**
@@ -82,7 +81,12 @@ class UserWalletController extends Controller
      */
     public function show($id)
     {
-        return view('frontend.pages.wallet.accounts.show');
+        // $balance = $this->walletRepository->getWalletsBalance($id);
+        
+        return view('frontend.pages.wallet.accounts.show')
+            ->withUAccount($this->userAcctRepo->findUA($id))
+            ->withWalletBalance($this->walletRepository->getWalletsBalance($id))
+            ->withWallets($this->walletRepository->findWalletsById($id));
     }
 
     /**
@@ -115,15 +119,13 @@ class UserWalletController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-      
-    }
+    { }
 
     public function ajax_load_accounts()
     {
         $items = [];
         $accounts = $this->userAcctRepo->geUserAccounts();
-        foreach( $accounts as  $account){
+        foreach ($accounts as  $account) {
             $items[] = $account->account_no;
         }
         return response()->json($items);
@@ -134,7 +136,7 @@ class UserWalletController extends Controller
         $wallets = $this->userAcctRepo->getUserWallet($accntNo);
 
         foreach ($wallets as $wallet) {
-            $opts .= '<option value="'.$wallet->wallet_id.'">'.ucwords($wallet->wallet_name).'</option>'; 
+            $opts .= '<option value="' . $wallet->wallet_id . '">' . ucwords($wallet->wallet_name) . '</option>';
         }
         return response()->json($opts);
     }
