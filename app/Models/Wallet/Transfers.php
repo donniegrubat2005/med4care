@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Wallet;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Traits\Uuid;
 
 /**
  * Class SocialAccount.
  */
-class transactions extends Model
+class Transfers extends Model
 {
-    use Uuid;
-
     /**
      * The database table used by the model.
      *
@@ -19,7 +16,7 @@ class transactions extends Model
      */
     protected $primaryKey = 'id';
 
-    protected $table = 'transactions';
+    protected $table = 'transfers';
 
 
     /**
@@ -27,5 +24,6 @@ class transactions extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'wallet_id', 'type', 'confirm', 'amount', 'remarks'];
+    protected $fillable = ['transfer_code', 'remarks','from_wallet_id', 'from_user_account_id'];
+
 }

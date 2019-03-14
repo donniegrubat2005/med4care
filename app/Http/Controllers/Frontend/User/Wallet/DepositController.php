@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\frontend\user\wallet;
 
-use App\Models\Auth\Wallet;
+use App\Models\Wallet\Wallet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Wallet\DepositRequest;
@@ -35,6 +35,7 @@ class DepositController extends Controller
         $balance = $this->walletRepository->getBalance();
         $walletTypes = $this->walletRepository->getWalletType();
         $myAccounts = $this->walletRepository->myAccounts();
+        
         return view('frontend.pages.wallet.cash-in', compact('nvActive', 'balance', 'wallets', 'walletTypes', 'myAccounts'));
     }
     /**
@@ -67,11 +68,11 @@ class DepositController extends Controller
         ]);
 
         if ($deposit) {
-            $wallet =  $this->walletRepository->findWallet($request->only('walletId'));
+            $wallet =  $this->walletRepository->findWallet($request->walletId);
             $wallet->balance = ($wallet->balance + $request->amount);
             $wallet->save();
 
-            return redirect()->route('frontend.user.wallet.overview')->withFlashSuccess('Deposit has been save.');
+            return redirect()->back()->withFlashSuccess('Deposit has been save.');
         }
     }
 

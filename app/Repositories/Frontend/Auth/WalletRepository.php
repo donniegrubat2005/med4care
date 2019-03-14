@@ -2,14 +2,14 @@
 
 namespace App\Repositories\Frontend\Auth;
 
-use App\Models\Auth\User;
-use App\Models\Auth\Wallet;
+use App\Models\Wallet\User;
+use App\Models\Wallet\Wallet;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Exceptions\GeneralException;
-use App\Models\Auth\WalletType;
-use App\Models\Auth\UserAccounts;
-use App\Models\Auth\Transactions;
+use App\Models\Wallet\WalletType;
+use App\Models\Wallet\UserAccounts;
+use App\Models\Wallet\Transactions;
 
 /**
  * Class WalletRepository.
@@ -33,20 +33,9 @@ class WalletRepository extends BaseRepository
             return $wallet->id;
         });
     }
-    public function findWallet(array $data)
+    public function findWallet($id)
     {
-        $wallet = $this->model->find($data['walletId']);
-
-       return $wallet;
-
-
-        // $wallet = $this->model
-        //     ->where('name', $data['depositName'])
-        //     ->where('user_id', auth()->id());
-        // if ($wallet->count() > 0) {
-        //     return $wallet->first();
-        // }
-        // return false;
+        return $this->model->find($id);
     }
     public function updateWalletBalance($id, $amount, $type, $optr)
     {
@@ -65,11 +54,11 @@ class WalletRepository extends BaseRepository
     }
     public function getBalance()
     {
-        $balance =  DB::table('user_accounts')
-                    ->select(DB::raw('IFNULL(Sum(user_wallets.balance),0) as balance'))
-                    ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
-                    ->where('user_id', auth()->id())
-                    ->first();
+        $balance = DB::table('user_accounts')
+            ->select(DB::raw('IFNULL(Sum(user_wallets.balance),0) as balance'))
+            ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
+            ->where('user_id', auth()->id())
+            ->first();
         if ($balance) {
             return $balance->balance;
         }
@@ -91,23 +80,81 @@ class WalletRepository extends BaseRepository
     {
         return UserAccounts::where('user_id', auth()->id())->orderBy('name')->get();
     }
-
-    public function getWalletTransactions()
+    public function getTransactionTypeWithBalance($id)
     {
         $items = [];
-        $wallets = $this->model->getWalllets();
-        if ($wallets->count() > 0) {
-            foreach ($wallets->get() as $wallet) {
-                $items[] = [
-                    'wallet' => $wallet,
-                    'transactions' => Transactions::where('wallet_id', $wallet->id)->orderBy('created_at','desc')->get()
-                ];
+        $transactions = $this->findWallet($id);
+        if (!is_null($transactions)) {
+            $transactions = $transactions->transactions()
+                ->selectRaw('transactions.type, IFNULL(SUM(transactions.amount),0) as amount')
+                ->groupBy('transactions.type')
+                ->orderBy('transactions.type', 'asc')
+                ->get();
+
+
+            foreach ($transactions as $trans) {
+
+                switch ($trans->type) {
+                    case 'deposit':
+                        $items[0] =  [
+                            'type' => $trans->type,
+                            'amount' => $trans->amount,
+                        ];
+                        break;
+                    case 'transfer':
+                        $items[1] =  [
+                            'type' => $trans->type,
+                            'amount' => $trans->amount,
+                        ];
+                        break;
+                    case 'withdraw':
+                        $items[2] =  [
+                            'type' => $trans->type,
+                            'amount' => $trans->amount,
+                        ];
+                        break;
+                }
             }
+        } else {
+            $items = [
+                0 => [
+                    'type'  => 'deposit',
+                    'amount' => '0.00'
+                ],
+                1 => [
+                    'type'  => 'transfer',
+                    'amount' => '0.00'
+                ],
+                2 => [
+                    'type'  => 'withdraw',
+                    'amount' => '0.00'
+                ],
+            ];
         }
         return $items;
     }
-    public function getWalletBalance(){
-
+    public function findUserAcctById($userAccntId)
+    {
+        $userAcct = UserAccounts::where('account_no', $userAccntId)->first();
+        return $userAcct->id;
     }
-    
+    public function isWalletNameExist($account, $name)
+    {
+        $wallet = $this->model
+            ->where('user_account_id', $account)
+            ->where('name', $name);
+
+        if ($wallet->count() > 0) {
+            return true;
+        }
+        return false;
+    }
+    public function findWalletsById($uaId)
+    {
+        return $this->model->where('user_account_id', $uaId)->get();
+    }
+    public function getWalletsBalance($uaId)
+    {
+        return $this->model->where('user_account_id', $uaId)->sum('balance') ;
+    }
 }

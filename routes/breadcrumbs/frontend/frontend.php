@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Wallet\UserAccounts;
+
 
 
 Breadcrumbs::for('frontend.user.dashboard', function ($trail) {
@@ -42,21 +44,34 @@ Breadcrumbs::for('frontend.user.wallet.accounts', function ($trail) {
     $trail->push('Accounts', route('frontend.user.wallet.accounts'));
 });
 
+Breadcrumbs::for('frontend.user.wallet.transfer', function ($trail) {
+    $trail->parent('frontend.user.wallet.index');
+    $trail->push('Transfer', route('frontend.user.wallet.transfer'));
+});
+
 Breadcrumbs::for('frontend.user.wallet.account.create', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
     $trail->push('Add Account', route('frontend.user.wallet.account.create'));
 });
+Breadcrumbs::for('frontend.user.wallet.show', function ($trail, $id) {
+    $trail->parent('frontend.user.wallet.accounts');
+    $userAcc = UserAccounts::find($id)->name;
+    $trail->push(ucwords($userAcc), route('frontend.user.wallet.show',$id));
+});
+
+
+Breadcrumbs::for('frontend.user.wallet.list', function ($trail, $id) {
+    $userAcc = UserAccounts::where('account_no', $id)->first()->name;
+    $trail->parent('frontend.user.wallet.accounts');
+    $trail->push(ucwords($userAcc), route('frontend.user.wallet.list', $id));
+});
+
 
 
 Breadcrumbs::for('frontend.auth.password.expired', function ($trail) {
     $trail->parent('frontend.user.wallet.index');
     $trail->push('Transfer', route('frontend.auth.password.expired'));
 });
-
-// Breadcrumbs::for('frontend.user.wallet.withdraw.index', function ($trail) {
-//     $trail->parent('frontend.user.wallet.index');
-//     $trail->push('Transfer', route('frontend.user.wallet.withdraw.index'));
-// });
 
 
 

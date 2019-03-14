@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Wallet;
 
-use App\Models\Auth\Transactions;
+use App\Models\Wallet\Transactions;
+use App\Models\Wallet\WalletType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -27,17 +28,13 @@ class Wallet extends Model
      */
     protected $fillable = ['id', 'name', 'description', 'balance', 'holder_type', 'user_wallet_type_id', 'user_account_id', 'user_id'];
 
-    // public $timestamps = false;
-
     public function transactions()
     {
-        return $this->hasMany(Transactions::class);
+        return $this->hasMany(Transactions::class)->orderBy('created_at', 'Desc');
     }
 
-    public function getWalllets()
+    public function walletType()
     {
-        return DB::table('user_accounts')
-            ->join('user_wallets', 'user_wallets.user_account_id', '=', 'user_accounts.id')
-            ->where('user_accounts.user_id', auth()->id());
+        return $this->belongsTo(WalletType::class, 'user_wallet_type_id');
     }
 }

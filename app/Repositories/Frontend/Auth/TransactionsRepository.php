@@ -3,8 +3,8 @@
 
 namespace App\Repositories\Frontend\Auth;
 
-use App\Models\Auth\User;
-use App\Models\Auth\Transactions;
+use App\Models\Wallet\User;
+use App\Models\Wallet\Transactions;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Models\Traits\Uuid;
