@@ -27,7 +27,7 @@ class UserWalletController extends Controller
     public function index()
     {
 
-        return view('frontend.pages.wallet.wallet');
+        return view('frontend.pages.wallet.index');
     }
     /**
      * Show the form for creating a new resource.
@@ -52,7 +52,7 @@ class UserWalletController extends Controller
         $walletId = $request->wallet;
         $totalTransaction =  $this->walletRepository->getTransactionTypeWithBalance($walletId);
 
-        return view('frontend.pages.wallet.wallet-view')
+        return view('frontend.pages.wallet.show')
             ->with(['key' => !is_null($walletId) ? $walletId : false, 'totalTransaction' => $totalTransaction])
             ->withWallet($this->walletRepository->findWallet($walletId))
             ->withUserAcctId($this->userAcctRepo->getUserAccountId($accountNo))
@@ -81,11 +81,12 @@ class UserWalletController extends Controller
      */
     public function show($id)
     {
-        $userAccounts = $this->userAcctRepo->findUA($id);
-
-        // dd( $userAccounts );
-
-        return view('frontend.pages.wallet.accounts.show');
+        // $balance = $this->walletRepository->getWalletsBalance($id);
+        
+        return view('frontend.pages.wallet.accounts.show')
+            ->withUAccount($this->userAcctRepo->findUA($id))
+            ->withWalletBalance($this->walletRepository->getWalletsBalance($id))
+            ->withWallets($this->walletRepository->findWalletsById($id));
     }
 
     /**

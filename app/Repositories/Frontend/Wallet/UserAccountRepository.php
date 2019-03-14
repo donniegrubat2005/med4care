@@ -3,11 +3,11 @@
 namespace App\Repositories\Frontend\Wallet;
 
 use App\Models\Auth\User;
-use App\Models\Auth\UserAccounts;
+use App\Models\Wallet\UserAccounts;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Exceptions\GeneralException;
-use App\Models\Auth\UserAccountType;
+use App\Models\Wallet\UserAccountType;
 
 /**
  * Class WalletRepository.
@@ -90,13 +90,12 @@ class UserAccountRepository extends BaseRepository
     public function getUserAccountId($acctNo)
     {
         $userAcctId = UserAccounts::where('account_no', $acctNo)->first();
-     
-        return ($userAcctId) ? $userAcctId->id : false ;
+
+        return ($userAcctId) ? $userAcctId->id : false;
     }
     public function geUserAccounts()
     {
         return UserAccounts::all();
     }
-
     
 }

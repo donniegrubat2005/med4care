@@ -2,14 +2,14 @@
 
 namespace App\Repositories\Frontend\Auth;
 
-use App\Models\Auth\User;
-use App\Models\Auth\Wallet;
+use App\Models\Wallet\User;
+use App\Models\Wallet\Wallet;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\BaseRepository;
 use App\Exceptions\GeneralException;
-use App\Models\Auth\WalletType;
-use App\Models\Auth\UserAccounts;
-use App\Models\Auth\Transactions;
+use App\Models\Wallet\WalletType;
+use App\Models\Wallet\UserAccounts;
+use App\Models\Wallet\Transactions;
 
 /**
  * Class WalletRepository.
@@ -93,7 +93,7 @@ class WalletRepository extends BaseRepository
 
 
             foreach ($transactions as $trans) {
-                  
+
                 switch ($trans->type) {
                     case 'deposit':
                         $items[0] =  [
@@ -102,13 +102,13 @@ class WalletRepository extends BaseRepository
                         ];
                         break;
                     case 'transfer':
-                          $items[1] =  [
+                        $items[1] =  [
                             'type' => $trans->type,
                             'amount' => $trans->amount,
                         ];
                         break;
                     case 'withdraw':
-                          $items[2] =  [
+                        $items[2] =  [
                             'type' => $trans->type,
                             'amount' => $trans->amount,
                         ];
@@ -141,12 +141,20 @@ class WalletRepository extends BaseRepository
     public function isWalletNameExist($account, $name)
     {
         $wallet = $this->model
-        ->where('user_account_id', $account ) 
-        ->where('name', $name );
+            ->where('user_account_id', $account)
+            ->where('name', $name);
 
-        if($wallet->count() > 0){
+        if ($wallet->count() > 0) {
             return true;
         }
         return false;
+    }
+    public function findWalletsById($uaId)
+    {
+        return $this->model->where('user_account_id', $uaId)->get();
+    }
+    public function getWalletsBalance($uaId)
+    {
+        return $this->model->where('user_account_id', $uaId)->sum('balance') ;
     }
 }

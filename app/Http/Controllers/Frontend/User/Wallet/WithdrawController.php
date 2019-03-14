@@ -50,7 +50,6 @@ class WithdrawController extends Controller
      */
     public function store(WithdrawRequest $request)
     {
-        // dd($request->all());
         $transaction = $this->transactionsRepository->_transactions([
             'tranType' => 'withdraw',
             'wallet_id' => $request->walletId,

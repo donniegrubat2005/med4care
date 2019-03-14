@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Frontend\Auth\WalletRepository;
 use App\Repositories\Frontend\Auth\TransactionsRepository;
-use App\Models\Auth\Transfers;
+use App\Models\Wallet\Transfers;
 use Illuminate\Support\Facades\DB;
 class TransferController extends Controller
 {

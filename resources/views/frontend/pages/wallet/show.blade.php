@@ -2,7 +2,7 @@
 @section('title', app_name() . ' ~ Wallet List') 
 @section('content')
 <div class="row">
-    @include('frontend.pages.wallet.includes.wallets')
+    @include('frontend.pages.wallet.includes.wallet-nav')
 
     <div class="col-md-9">
         @include('includes.partials.messages')

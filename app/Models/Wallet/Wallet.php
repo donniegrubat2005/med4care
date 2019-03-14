@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Auth;
+namespace App\Models\Wallet;
 
-use App\Models\Auth\Transactions;
-use App\Models\Auth\WalletType;
+use App\Models\Wallet\Transactions;
+use App\Models\Wallet\WalletType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
